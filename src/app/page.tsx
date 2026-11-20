@@ -7,7 +7,7 @@ import { ExamplePreview } from "@/components/landing/ExamplePreview";
 import { FloatingDocument } from "@/components/landing/FloatingDocument";
 import { ScrollStory } from "@/components/landing/ScrollStory";
 import { buttonVariants } from "@/components/ui/button";
-import { getContent, getLinks, getSection, isTodo } from "@/lib/content";
+import { getContent, getLinks, getSection, getSource, isTodo } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 // TODO(tech-a): read labels, tiers and weights from /api/rubric once rubric.json exists.
@@ -25,8 +25,9 @@ export default function Home() {
   const headline = getSection("landing", "Hero headline");
   const subline = getSection("landing", "Hero subline");
   const asks = [1, 2, 3].map((n) => getSection("landing", `Ask ${n}`));
+  const asksSource = getSource("landing", "All asks source");
   const why = getSection("landing", "Why it matters");
-  const whySource = getSection("landing", "Why it matters source");
+  const whySource = getSource("landing", "Why it matters source");
   const builtOn = getLinks("sources", "Built on");
   const learned = getContent("what-we-learned");
 
@@ -91,6 +92,19 @@ export default function Home() {
             </li>
           ))}
         </ol>
+        {asksSource && (
+          <p className="mt-6 text-sm text-muted-foreground">
+            Source:{" "}
+            <a
+              href={asksSource.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-midnight underline decoration-gold-edge underline-offset-4"
+            >
+              {asksSource.label}
+            </a>
+          </p>
+        )}
       </Section>
 
       {/* 3. How it works */}
@@ -154,9 +168,16 @@ export default function Home() {
           {isTodo(why) ? (
             <Placeholder text={why} />
           ) : (
-            <blockquote className="font-heading text-3xl font-medium leading-tight text-balance md:text-5xl">{why}</blockquote>
+            <blockquote className="font-heading text-2xl font-medium leading-snug text-balance md:text-4xl">{why}</blockquote>
           )}
-          {whySource && <Markdown className="mt-6 text-sm text-white/70 [&_a]:text-white">{whySource}</Markdown>}
+          {whySource && (
+            <p className="mt-6 text-sm text-white/70">
+              Source:{" "}
+              <a href={whySource.href} target="_blank" rel="noopener noreferrer" className="text-white underline underline-offset-4">
+                {whySource.label}
+              </a>
+            </p>
+          )}
         </Reveal>
       </Section>
 
