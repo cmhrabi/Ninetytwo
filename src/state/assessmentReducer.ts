@@ -4,12 +4,10 @@ import type { DocumentText, ErrorCode, SampleId } from "@/shared";
 export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // the server re-checks (Vercel caps bodies at 4.5 MB)
 export const ACCEPTED_EXTENSIONS = [".pdf", ".docx", ".txt"] as const;
 
-export type DocType = "hiring" | "leadership" | "consultation" | "procurement" | "education";
-
 export type Source = { kind: "sample"; id: SampleId } | { kind: "upload"; fileName: string };
 
 export type SetupState = {
-  docType: DocType;
+  criteria: string[] | null; // criterion ids to check; null = all (the default)
   source: Source | null;
   document: DocumentText | null;
   loading: "sample" | "extract" | null;
@@ -25,12 +23,13 @@ export type SetupAction =
   | { type: "load/failure"; requestId: number; code: ErrorCode }
   | { type: "reject"; requestId: number; code: ErrorCode } // client-side file check failed
   | { type: "consent"; value: boolean }
+  | { type: "criteria"; ids: string[] }
   | { type: "run" }
   | { type: "clear"; requestId: number }
   | { type: "reset"; requestId: number };
 
 export const initialSetup: SetupState = {
-  docType: "hiring",
+  criteria: null,
   source: null,
   document: null,
   loading: null,
@@ -70,6 +69,8 @@ export function setupReducer(state: SetupState, action: SetupAction): SetupState
       };
     case "consent":
       return { ...state, consent: action.value, ready: action.value && state.ready };
+    case "criteria":
+      return { ...state, criteria: action.ids, ready: false };
     case "run":
       return canRun(state) ? { ...state, ready: true } : state;
     case "clear":
@@ -79,10 +80,17 @@ export function setupReducer(state: SetupState, action: SetupAction): SetupState
   }
 }
 
-export const canRun = (s: SetupState) => s.document !== null && s.consent && s.loading === null;
+const hasCriteria = (s: SetupState) => s.criteria === null || s.criteria.length > 0;
+
+export const canRun = (s: SetupState) => s.document !== null && s.consent && s.loading === null && hasCriteria(s);
+
+/** The criterion ids to check: the selection, or every criterion when nothing was changed. */
+export const selectedIds = (s: Pick<SetupState, "criteria">, all: string[]) =>
+  s.criteria === null ? all : all.filter((id) => s.criteria!.includes(id));
 
 /** Why Run is disabled, or null when it can run. */
 export function runBlocker(s: SetupState): string | null {
+  if (!hasCriteria(s)) return "Choose at least one criterion to check.";
   if (s.loading) return "Reading your document…";
   if (!s.document) return "Choose a document or a sample first.";
   if (!s.consent) return "Tick the consent box to continue.";

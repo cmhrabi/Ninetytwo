@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { DocumentText } from "@/shared";
-import { canRun, checkFile, initialSetup, runBlocker, setupReducer, type SetupState } from "./assessmentReducer";
+import { canRun, checkFile, initialSetup, runBlocker, selectedIds, setupReducer, type SetupState } from "./assessmentReducer";
 
 const doc = (fileName: string): DocumentText => ({ fileName, paragraphs: [{ id: "p1", text: "Hello" }] });
 
@@ -93,5 +93,38 @@ describe("checkFile", () => {
   it("rejects other types and big files", () => {
     expect(checkFile({ name: "a.png", size: 10 })).toBe("unsupported_type");
     expect(checkFile({ name: "a.pdf", size: 4 * 1024 * 1024 + 1 })).toBe("too_large");
+  });
+});
+
+describe("criteria selection", () => {
+  const all = ["H1", "H3", "H5"];
+  const loaded = (...extra: Parameters<typeof setupReducer>[1][]) =>
+    apply(
+      { type: "load/start", requestId: 1, source: { kind: "sample", id: "weak" } },
+      { type: "load/success", requestId: 1, document: doc("weak.txt") },
+      { type: "consent", value: true },
+      ...extra,
+    );
+
+  it("selects every criterion by default", () => {
+    expect(selectedIds(initialSetup, all)).toEqual(all);
+    expect(canRun(loaded())).toBe(true);
+  });
+
+  it("keeps rubric order and drops unknown ids", () => {
+    const s = loaded({ type: "criteria", ids: ["H5", "X9", "H1"] });
+    expect(selectedIds(s, all)).toEqual(["H1", "H5"]);
+  });
+
+  it("blocks the run when nothing is selected", () => {
+    const s = loaded({ type: "criteria", ids: [] });
+    expect(canRun(s)).toBe(false);
+    expect(runBlocker(s)).toBe("Choose at least one criterion to check.");
+    expect(setupReducer(s, { type: "run" }).ready).toBe(false);
+  });
+
+  it("reset selects every criterion again", () => {
+    const s = setupReducer(loaded({ type: "criteria", ids: ["H1"] }), { type: "reset", requestId: 9 });
+    expect(s.criteria).toBeNull();
   });
 });

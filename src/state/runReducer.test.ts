@@ -85,3 +85,20 @@ describe("runReducer", () => {
     expect(anyCached(s)).toBe(true);
   });
 });
+
+describe("runReducer with a scoped rubric", () => {
+  it("judges and scores only the selected criteria", () => {
+    const scoped = { ...rubric, criteria: rubric.criteria.filter((c) => c.id === "H5") };
+    const s = apply(
+      { type: "run/start", runId: 1 },
+      { type: "run/scanned", runId: 1, scan, rubric: scoped },
+      { type: "card/done", runId: 1, result: cached("strong", "H1") }, // not selected: ignored
+      { type: "card/done", runId: 1, result: cached("strong", "H5") },
+    );
+    expect(s.order).toEqual(["H5"]);
+    expect(s.phase).toBe("done");
+    expect(resultsOf(s).map((r) => r.criterion)).toEqual(["H5"]);
+    expect(overallFor(s)?.percent).toBe(100);
+  });
+});
+
