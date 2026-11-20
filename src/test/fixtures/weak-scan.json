@@ -1,0 +1,24 @@
+{
+  "criteria": [
+    {
+      "criterion": "H1",
+      "hits": [
+        {
+          "paragraphId": "p3",
+          "label": "Equal opportunity employer statement and merit-based hiring"
+        }
+      ],
+      "redFlags": []
+    },
+    {
+      "criterion": "H3",
+      "hits": [],
+      "redFlags": []
+    },
+    {
+      "criterion": "H5",
+      "hits": [],
+      "redFlags": []
+    }
+  ]
+}

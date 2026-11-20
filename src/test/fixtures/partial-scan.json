@@ -1,0 +1,42 @@
+{
+  "criteria": [
+    {
+      "criterion": "H1",
+      "hits": [
+        {
+          "paragraphId": "p3",
+          "label": "Bans hiring discrimination; names First Nations, Inuit, Métis"
+        }
+      ],
+      "redFlags": []
+    },
+    {
+      "criterion": "H3",
+      "hits": [
+        {
+          "paragraphId": "p4",
+          "label": "Workforce should reflect communities, including Indigenous Peoples"
+        },
+        {
+          "paragraphId": "p5",
+          "label": "Indigenous candidates preferred for client-facing roles"
+        }
+      ],
+      "redFlags": []
+    },
+    {
+      "criterion": "H5",
+      "hits": [
+        {
+          "paragraphId": "p7",
+          "label": "New hires may request an informal mentor"
+        },
+        {
+          "paragraphId": "p8",
+          "label": "Annual promotion reviews using performance and time in role"
+        }
+      ],
+      "redFlags": []
+    }
+  ]
+}

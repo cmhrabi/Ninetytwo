@@ -11,7 +11,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test:ai": "tsx --env-file=.env.local src/scripts/test-ai.ts",
     "calibrate": "tsx --env-file=.env.local src/scripts/calibrate.ts",
-    "smoke": "tsx --env-file-if-exists=.env.local src/scripts/smoke.ts"
+    "smoke": "tsx --env-file-if-exists=.env.local src/scripts/smoke.ts",
+    "record-fixtures": "tsx --env-file=.env.local src/scripts/record-fixtures.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.11.0",

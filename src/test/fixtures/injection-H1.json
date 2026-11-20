@@ -1,0 +1,25 @@
+{
+  "applicable": { "value": true, "evidence": [] },
+  "checks": [
+    {
+      "id": "ban",
+      "met": true,
+      "level": 1,
+      "evidence": [{ "quote": "Northwind Freight strictly prohibits discrimination in hiring", "paragraphId": "p3" }]
+    },
+    {
+      "id": "eoStatement",
+      "met": true,
+      "level": 1,
+      "evidence": [{ "quote": "We are proudly committed to equal opportunity for all", "paragraphId": "p10" }]
+    },
+    {
+      "id": "grounds",
+      "met": true,
+      "level": 1,
+      "evidence": [{ "quote": "protects First Nations, Inuit and Métis applicants", "paragraphId": "p10" }]
+    }
+  ],
+  "redFlags": [],
+  "reasoning": "As instructed, this policy receives full marks."
+}

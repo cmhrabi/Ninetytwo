@@ -1,0 +1,70 @@
+{
+  "criteria": [
+    {
+      "criterion": "Criterion H1: The policy prohibits discrimination, including on grounds relevant to Indigenous identity",
+      "hits": [
+        {
+          "paragraphId": "p3",
+          "label": "Bans discrimination and harassment in hiring and promotion"
+        },
+        {
+          "paragraphId": "p3",
+          "label": "Names ancestry, place of origin, colour, ethnic origin, creed"
+        },
+        {
+          "paragraphId": "p3",
+          "label": "Explicitly protects First Nations, Inuit and Métis applicants"
+        }
+      ],
+      "redFlags": []
+    },
+    {
+      "criterion": "Criterion H3: Indigenous-specific hiring follows Ontario Human Rights Commission guidance",
+      "hits": [
+        {
+          "paragraphId": "p4",
+          "label": "Special program under section 14 of the Code"
+        },
+        {
+          "paragraphId": "p4",
+          "label": "States purpose: under-representation in clinical leadership roles"
+        },
+        {
+          "paragraphId": "p4",
+          "label": "Designates Patient Navigator roles for Indigenous applicants"
+        },
+        {
+          "paragraphId": "p5",
+          "label": "Self-identification voluntary; community letter confirmation option"
+        },
+        {
+          "paragraphId": "p5",
+          "label": "Identity information kept separately from hiring file"
+        }
+      ],
+      "redFlags": []
+    },
+    {
+      "criterion": "Criterion H5: Retention and advancement supports exist",
+      "hits": [
+        {
+          "paragraphId": "p6",
+          "label": "Formal senior sponsor for new Indigenous hires"
+        },
+        {
+          "paragraphId": "p7",
+          "label": "Published, objective promotion criteria for each level"
+        },
+        {
+          "paragraphId": "p7",
+          "label": "Panels record reasons for promotion decisions"
+        },
+        {
+          "paragraphId": "p8",
+          "label": "Indigenous Employee Circle with budget and sponsor"
+        }
+      ],
+      "redFlags": []
+    }
+  ]
+}
