@@ -119,7 +119,7 @@ export function EvidenceViewer({
     >
       <header className="flex items-start justify-between gap-3 border-b border-border px-4 py-3 sm:px-5">
         <div className="min-w-0">
-          <h2 id="evidence-viewer-title" className="font-sans text-base font-semibold text-midnight">
+          <h2 id="evidence-viewer-title" className="text-xl text-midnight">
             Document
           </h2>
           <ul aria-label="Highlight legend" className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">

@@ -27,10 +27,10 @@ const colours = [
 ];
 
 const statuses = [
-  { status: "Addressed" as const, ratio: "5.7" },
-  { status: "Partly addressed" as const, ratio: "5.4 (burnt orange, never gold)" },
-  { status: "Not found" as const, ratio: "6.1" },
-  { status: "Not applicable" as const, ratio: "6.6" },
+  { status: "Addressed" as const, ratio: "Solid midnight · white 13.7" },
+  { status: "Partly addressed" as const, ratio: "Gold wash + edge · midnight 12.4" },
+  { status: "Not found" as const, ratio: "Outline · midnight 13.7" },
+  { status: "Not applicable" as const, ratio: "Muted surface · indigo 7.0" },
 ];
 
 const typeScale = [
@@ -133,7 +133,7 @@ export default function DesignPage() {
           </div>
         </Block>
 
-        <Block title="Status" note="Icon and label on a tint. Ratios are text on its tint.">
+        <Block title="Status" note="Brand palette only: fill weight plus icon tell statuses apart. Ratios are text on its chip.">
           <ul className="flex flex-wrap gap-4">
             {statuses.map((s) => (
               <li key={s.status} className="space-y-2">

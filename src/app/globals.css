@@ -7,7 +7,8 @@
  * Rules (see /design):
  *  - Text on gold is always midnight, never white.
  *  - Gold on a white/light surface gets a --gold-edge border. Gold on midnight needs none.
- *  - "Partly addressed" is burnt orange, never gold, so status never reads as brand.
+ *  - Status chips use the brand palette, told apart by fill weight + icon (see StatusChip).
+ *    The status-* tokens remain for alerts: errors, warnings, red flags, verified marks.
  * Light theme only: midnight panels supply the contrast.
  */
 
