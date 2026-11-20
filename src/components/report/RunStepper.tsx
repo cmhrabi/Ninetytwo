@@ -3,6 +3,7 @@
 import { CircleCheck, CircleX, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { CardState, RunState } from "@/state/runReducer";
+import { criterionName } from "./format";
 
 type StepStatus = "waiting" | "active" | "done" | "failed";
 
@@ -20,7 +21,7 @@ export function RunStepper({ run }: { run: RunState }) {
         note={run.scan && !run.scan.aiScanned ? "Keyword scan only" : undefined}
       />
       {run.order.map((id) => (
-        <Step key={id} status={cardStep(run.cards[id])} label={`Judging ${id}`} />
+        <Step key={id} status={cardStep(run.cards[id])} label={`Checking ${run.rubric ? criterionName(run.rubric, id) : "criterion"}`} />
       ))}
     </ol>
   );

@@ -44,7 +44,6 @@ export function CriterionCard({
       <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <div className="mb-2 flex flex-wrap items-center gap-2 text-xs font-medium text-muted-foreground">
-            <span className="font-heading text-2xl leading-none text-midnight">{criterion.id}</span>
             <span className="rounded-full bg-surface px-2 py-0.5 ring-1 ring-border">{tierLabel[criterion.tier]}</span>
             <span>Weight ×{criterion.weight}</span>
             {result?.cached && <CachedBadge />}

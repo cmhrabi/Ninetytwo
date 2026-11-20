@@ -1,30 +1,56 @@
+import { ArrowRight, Sparkles } from "lucide-react";
 import type { Rubric } from "@/shared";
 
-// From ticket 04B's wording; product roadmap, not learning copy.
-const EXTRA = ["Assessing several documents together", "A gold-standard policy set reviewed by an Indigenous organization"];
+// Product roadmap, not learning copy.
+const EXTRAS = ["checking several documents at once", "a gold-standard policy set reviewed by an Indigenous organization"];
 
-/** Greyed cards for criteria and features that aren't scored yet. */
+/** Groups the rubric's comingNext entries by the area before ":" in their title, keeping rubric order. */
+function areasOf(rubric: Rubric): { area: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const c of rubric.comingNext) {
+    const area = c.title.includes(":") ? c.title.split(":")[0].trim() : "More";
+    counts.set(area, (counts.get(area) ?? 0) + 1);
+  }
+  return [...counts].map(([area, count]) => ({ area, count }));
+}
+
+/** Roadmap teaser: one compact banner instead of a card per upcoming check. */
 export function ComingNext({ rubric }: { rubric: Rubric }) {
-  const items = [
-    ...rubric.comingNext.map((c) => ({ key: c.id, code: c.id, title: c.title })),
-    ...EXTRA.map((title) => ({ key: title, code: null, title })),
-  ];
+  const areas = areasOf(rubric);
+  const total = rubric.comingNext.length;
   return (
-    <section aria-labelledby="coming-next">
-      <h2 id="coming-next" className="mb-4 text-2xl text-midnight">
-        Coming next
-      </h2>
-      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((c) => (
-          <li
-            key={c.key}
-            className="flex gap-2 rounded-2xl border border-dashed border-border bg-surface p-4 text-sm text-muted-foreground"
-          >
-            {c.code && <span className="font-mono text-xs leading-6">{c.code}</span>}
-            <span>{c.title}</span>
+    <section
+      aria-labelledby="coming-next"
+      className="rounded-3xl bg-midnight px-6 py-7 text-white md:px-10 md:py-9"
+    >
+      <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
+        <div>
+          <p className="mb-2 inline-flex items-center gap-1.5 text-xs font-semibold tracking-widest text-gold uppercase">
+            <Sparkles className="size-3.5" aria-hidden /> Coming next
+          </p>
+          <h2 id="coming-next" className="text-2xl text-white md:text-3xl">
+            Hiring is just the start.
+          </h2>
+          <p className="mt-2 max-w-xl text-sm text-white/70">
+            {total} more checks are on the way, so one upload covers more of your organization&rsquo;s response to
+            Call to Action 92. Plus: {EXTRAS.join(" and ")}.
+          </p>
+        </div>
+        <ul className="flex flex-wrap gap-2 md:max-w-sm md:justify-end">
+          {areas.map(({ area, count }) => (
+            <li
+              key={area}
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm"
+            >
+              {area}
+              <span className="rounded-full bg-gold/90 px-1.5 text-xs font-semibold text-midnight">+{count}</span>
+            </li>
+          ))}
+          <li className="inline-flex items-center gap-1 px-1 py-1.5 text-sm text-white/60">
+            and more <ArrowRight className="size-3.5" aria-hidden />
           </li>
-        ))}
-      </ul>
+        </ul>
+      </div>
     </section>
   );
 }

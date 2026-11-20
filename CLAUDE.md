@@ -42,7 +42,12 @@ through OpenRouter. There is no database: the server is stateless.
    unreachable. (Mocks in `src/mocks/` are for building the UI only.)
 8. **Server code stays on the server.** Nothing under `src/server/` is imported by a
    `"use client"` file. The API key is never in a `NEXT_PUBLIC_*` variable.
-9. **Every AI call is tested with a mock.** All model calls go through `completeJson()` in
+9. **Criterion ids (H1, H3, H5, and the `comingNext` codes) are internal keys, never UI text.**
+   Use them in code, URLs (`/api/judge/H1`), file names, tests and docs, but every user-facing
+   label names the criterion by `title` (headings) or `shortTitle` (stepper, weights line,
+   warnings, compact lists). Use `criterionName(rubric, id)` from `components/report/format.ts`.
+   The judge prompt tells the model not to mention ids in `reasoning`, since it is shown as is.
+10. **Every AI call is tested with a mock.** All model calls go through `completeJson()` in
    `src/server/services/openrouter.ts`. Tests mock `fetch` or use recorded fixtures in
    `src/test/fixtures/`; `npm test` never touches the network. A phase is done only when its
    tests pass.
@@ -217,10 +222,10 @@ or README in `node_modules/` before writing code against it.
    Every claim cited. Copy from `content/`.
 2. **Assess** (`/assess`): choose a document type, drop a file (PDF, DOCX, TXT) or pick a
    sample, tick a consent box ("processed in memory, never stored"). Then a live stepper:
-   "Reading document" → "Scanning document" (`/api/scan`) → the H1, H3 and H5 cards fill in as
-   each judge returns.
+   "Reading document" → "Scanning document" (`/api/scan`) → one "Checking <shortTitle>" step per
+   criterion, and the criterion cards fill in as each judge returns.
 3. **Report** (`/report`): radial score gauge and band, baseline warning banner, one card per
-   criterion (score chip, tier, weight; three columns: Evidence found with verified quotes,
+   criterion (title, never the H# id; score chip, tier, weight; three columns: Evidence found with verified quotes,
    Gaps with What Addressed looks like, Where to learn with cited resources), greyed "coming
    next" cards, evidence viewer, Print / Save PDF, "Not legal advice".
 4. **Methodology & Sources** (`/methodology`): rubric and weights, what the AI does and never
@@ -255,11 +260,13 @@ memory and in each request body; the rubric, samples and cached runs are files i
 
 ## Criteria and scoring
 
+Ids below are internal; the UI shows the `shortTitle` in brackets.
+
 | Criterion | Tier | Weight | Max points | Counts when |
 | --- | --- | --- | --- | --- |
-| H1 Prohibits discrimination, incl. on grounds relevant to Indigenous identity | Baseline (law) | ×3 | 6 | Always |
-| H3 Indigenous-specific hiring follows Ontario Human Rights Commission guidance | Conditional | ×2 | 4 | Only if the policy restricts hiring to, designates roles for, or prefers Indigenous candidates. Otherwise N/A and left out of the total |
-| H5 Retention and advancement supports exist | Leading practice | ×1 | 2 | Always |
+| H1 Prohibits discrimination, incl. on grounds relevant to Indigenous identity ("Prohibits discrimination") | Baseline (law) | ×3 | 6 | Always |
+| H3 Indigenous-specific hiring follows Ontario Human Rights Commission guidance ("Indigenous-specific hiring") | Conditional | ×2 | 4 | Only if the policy restricts hiring to, designates roles for, or prefers Indigenous candidates. Otherwise N/A and left out of the total |
+| H5 Retention and advancement supports exist ("Retention and advancement") | Leading practice | ×1 | 2 | Always |
 
 - Each criterion scores 0, 1 or 2 (status: Not found, Partly addressed, Addressed; or Not applicable).
 - A check counts as met only if at least one of its quotes is verified. Graded checks (H5) drop

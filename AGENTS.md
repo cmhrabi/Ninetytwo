@@ -7,3 +7,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Project rule: no criterion ids in the UI
+
+Criterion ids (H1, H3, H5, and `comingNext` codes like L1, P2) are internal keys. Never render them
+in user-facing text. Name criteria by `title` or `shortTitle` from `rubric.json`
+(`criterionName(rubric, id)` in `src/components/report/format.ts`). See CLAUDE.md hard rule 9.

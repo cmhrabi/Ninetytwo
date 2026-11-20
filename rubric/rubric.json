@@ -10,6 +10,7 @@
     {
       "id": "H1",
       "title": "The policy prohibits discrimination, including on grounds relevant to Indigenous identity",
+      "shortTitle": "Prohibits discrimination",
       "tier": "baseline",
       "weight": 3,
       "appliesWhen": "always",
@@ -47,6 +48,7 @@
     {
       "id": "H3",
       "title": "Indigenous-specific hiring follows Ontario Human Rights Commission guidance",
+      "shortTitle": "Indigenous-specific hiring",
       "tier": "conditional",
       "weight": 2,
       "appliesWhen": "The policy restricts hiring to, designates roles for, or prefers Indigenous candidates. 'Encouraged to apply' alone does not count.",
@@ -87,6 +89,7 @@
     {
       "id": "H5",
       "title": "Retention and advancement supports exist",
+      "shortTitle": "Retention and advancement",
       "tier": "leading",
       "weight": 1,
       "appliesWhen": "always",

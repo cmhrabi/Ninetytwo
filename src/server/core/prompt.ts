@@ -65,7 +65,7 @@ export function buildJudgePrompt(
           "- 'Encouraged to apply' alone does not count: a policy that only encourages a group to apply does not meet the condition.",
         ]),
     "- Return one entry in checks for every check id listed above, and only those ids. Use only the red-flag ids listed above.",
-    "- reasoning: one or two sentences describing what the policy contains for this criterion. Never give advice or recommendations.",
+    "- reasoning: one or two sentences describing what the policy contains for this criterion. Never give advice or recommendations. Do not mention criterion or check ids (such as H1 or eoStatement); users never see them.",
   ].join("\n");
 
   const user = [

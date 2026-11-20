@@ -23,6 +23,7 @@ vi.mock("./paths", async (importOriginal) => {
   rubric.criteria.push({
     id: "X1",
     title: "Example criterion added for this test only",
+    shortTitle: "Example criterion",
     tier: "leading",
     weight: 1,
     appliesWhen: "always",

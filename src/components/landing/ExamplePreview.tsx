@@ -4,7 +4,8 @@ import { cn } from "@/lib/utils";
 
 /**
  * Hero illustration of the report. Clearly labelled as an example; not a score for any document.
- * Numbers are consistent with the rubric: H1 = 2 (×3), H3 N/A, H5 = 1 (×1) → 7 / 8 = 88%, Leading.
+ * Numbers are consistent with the rubric: discrimination 2 (×3), Indigenous-specific hiring N/A,
+ * retention 1 (×1) → 7 / 8 = 88%, Leading. Criteria are named, never shown by id (H1...).
  */
 export function ExamplePreview({ className }: { className?: string }) {
   return (
@@ -23,15 +24,12 @@ export function ExamplePreview({ className }: { className?: string }) {
       </div>
       <ul className="mt-8 space-y-3">
         {[
-          { id: "H1", name: "Prohibits discrimination", status: "Addressed" as const },
-          { id: "H3", name: "Indigenous-specific hiring", status: "Not applicable" as const },
-          { id: "H5", name: "Retention and advancement", status: "Partly addressed" as const },
+          { name: "Prohibits discrimination", status: "Addressed" as const },
+          { name: "Indigenous-specific hiring", status: "Not applicable" as const },
+          { name: "Retention and advancement", status: "Partly addressed" as const },
         ].map((c) => (
-          <li key={c.id} className="flex items-center justify-between gap-3 rounded-xl bg-white px-3 py-2.5 text-ink">
-            <span className="min-w-0 truncate text-sm">
-              <span className="mr-2 font-semibold text-midnight">{c.id}</span>
-              {c.name}
-            </span>
+          <li key={c.name} className="flex items-center justify-between gap-3 rounded-xl bg-white px-3 py-2.5 text-ink">
+            <span className="min-w-0 truncate text-sm font-medium text-midnight">{c.name}</span>
             <StatusChip status={c.status} className="text-xs" />
           </li>
         ))}

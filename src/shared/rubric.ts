@@ -31,8 +31,9 @@ const ScoringSchema = z.discriminatedUnion("type", [
 
 const CriterionSchema = z
   .object({
-    id: z.string().min(1),
+    id: z.string().min(1), // internal key (H1, H3, ...); never shown in the UI
     title: z.string().min(1),
+    shortTitle: z.string().min(1), // UI label where the full title is too long (stepper, weights line)
     tier: z.enum(["baseline", "conditional", "leading"]),
     weight: z.number().positive(),
     appliesWhen: z.string().min(1), // "always" or the condition text

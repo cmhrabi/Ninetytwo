@@ -57,7 +57,7 @@ ASSESS (/assess), a client component:
 - ConsentBox: required checkbox "Your file is processed in memory and never stored. Emails and
   phone numbers are removed before AI analysis." Run stays disabled until a doc is chosen AND
   consent is ticked.
-- Stepper: Extract → Scan document → Judge H1 / H3 / H5 (three sub-cards that flip from
+- Stepper: Extract → Scan document → Check each criterion by shortTitle (never the H# id) (three sub-cards that flip from
   spinner to score chip as each returns) → Report ready. aria-live="polite" announcements.
 - When done, a "View report" button → /report (auto-navigate after 1 s is fine).
 - Errors: friendly messages per ErrorCode (too_large, unsupported_type, no_text "Upload a text

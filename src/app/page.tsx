@@ -12,9 +12,9 @@ import { cn } from "@/lib/utils";
 
 // TODO(tech-a): read labels, tiers and weights from /api/rubric once rubric.json exists.
 const criteria = [
-  { id: "H1", label: "Prohibits discrimination, incl. on grounds relevant to Indigenous identity", tier: "Baseline (law)", weight: 3 },
-  { id: "H3", label: "Indigenous-specific hiring follows Ontario Human Rights Commission guidance", tier: "Conditional", weight: 2 },
-  { id: "H5", label: "Retention and advancement supports exist", tier: "Leading practice", weight: 1 },
+  { label: "Prohibits discrimination, incl. on grounds relevant to Indigenous identity", tier: "Baseline (law)", weight: 3 },
+  { label: "Indigenous-specific hiring follows Ontario Human Rights Commission guidance", tier: "Conditional", weight: 2 },
+  { label: "Retention and advancement supports exist", tier: "Leading practice", weight: 1 },
 ];
 
 function Placeholder({ text, className }: { text: string; className?: string }) {
@@ -111,9 +111,8 @@ export default function Home() {
           <h3 className="text-2xl md:text-3xl">What it checks</h3>
           <ul className="mt-6 divide-y overflow-hidden rounded-2xl bg-card ring-1 ring-border">
             {criteria.map((c) => (
-              <li key={c.id} className="grid gap-2 p-5 sm:grid-cols-[4rem_1fr_auto] sm:items-center sm:gap-6">
-                <span className="font-heading text-3xl text-midnight">{c.id}</span>
-                <span>{c.label}</span>
+              <li key={c.label} className="grid gap-2 p-5 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-6">
+                <span className="font-heading text-xl text-midnight">{c.label}</span>
                 <span className="flex items-center gap-2 text-sm">
                   <span className="rounded-full bg-secondary px-2.5 py-1 text-midnight">{c.tier}</span>
                   <span className="rounded-full bg-midnight px-2.5 py-1 font-medium text-white">×{c.weight}</span>

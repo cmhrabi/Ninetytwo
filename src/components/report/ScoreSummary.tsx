@@ -1,7 +1,7 @@
 import { Loader2 } from "lucide-react";
 import { ScoreRing } from "@/components/brand/ScoreRing";
 import type { Overall, Rubric } from "@/shared";
-import { weightsLine } from "./format";
+import { criterionName, weightsLine } from "./format";
 
 /** Score ring and band, or what is still missing; always with "Not legal advice" and the weights. */
 export function ScoreSummary({
@@ -45,7 +45,7 @@ export function ScoreSummary({
         ) : running ? (
           <p className="mt-1 font-heading text-3xl text-midnight">Working on it</p>
         ) : (
-          <p className="mt-1 font-heading text-3xl text-midnight">Incomplete: retry {missing.join(", ")}</p>
+          <p className="mt-1 font-heading text-3xl text-midnight">Incomplete: retry {missing.map((id) => (rubric ? criterionName(rubric, id) : id)).join(", ")}</p>
         )}
         <p className="mt-2 text-sm font-semibold text-ink">Not legal advice.</p>
         {rubric && (

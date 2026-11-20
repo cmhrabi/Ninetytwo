@@ -28,9 +28,16 @@ export const verifiedRedFlags = (r: CriterionResult): RedFlag[] =>
     .map((f) => ({ ...f, evidence: verifiedEvidence(f.evidence) }))
     .filter((f) => f.evidence.length > 0);
 
-/** "H1 ×3 · H3 ×2 · H5 ×1" */
+// Criterion ids (H1, H3, H5) are internal keys. The UI always names a criterion by its title or
+// shortTitle, never by its id.
+
+/** Short UI name for a criterion id, e.g. "Prohibits discrimination". Falls back to the id only if unknown. */
+export const criterionName = (rubric: Pick<Rubric, "criteria">, id: string) =>
+  rubric.criteria.find((c) => c.id === id)?.shortTitle ?? id;
+
+/** "Prohibits discrimination ×3 · Indigenous-specific hiring ×2 · Retention and advancement ×1" */
 export const weightsLine = (rubric: Pick<Rubric, "criteria">) =>
-  rubric.criteria.map((c) => `${c.id} ×${c.weight}`).join(" · ");
+  rubric.criteria.map((c) => `${c.shortTitle} ×${c.weight}`).join(" · ");
 
 export const cardAnchor = (criterionId: string) => `criterion-${criterionId}`;
 
@@ -44,7 +51,7 @@ export function baselineWarnings(results: CriterionResult[], rubric: Pick<Rubric
       {
         id: c.id,
         anchor: cardAnchor(c.id),
-        text: `${c.id} baseline not met${flagged ? ": red flag found" : ""}`,
+        text: `${c.shortTitle}: baseline not met${flagged ? ", red flag found" : ""}`,
         title: c.title,
       },
     ];

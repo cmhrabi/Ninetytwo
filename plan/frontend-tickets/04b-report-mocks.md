@@ -19,11 +19,11 @@ reviewed on the 3 mock results.
 - Header row: document name, "Fictional sample" badge when sampleId is set, and a "Cached run"
   badge with a tooltip if ANY result has cached:true (hard rule 7).
 - WarningBanner (above the score): shown when overall.warnings is non-empty; lists each
-  baseline warning by criterion title, e.g. "H1 baseline not met", with an anchor to that card.
+  baseline warning by criterion shortTitle, e.g. "Prohibits discrimination: baseline not met", with an anchor to that card.
   Red, with an icon and role="alert". Shown whatever the percentage.
 - ScoreGauge (Recharts RadialBarChart): percent and band label (from rubric bands) with the
   band colour; "Not legal advice" directly underneath; a text alternative for screen readers.
-- Weights line: "H1 ×3 · H3 ×2 · H5 ×1; N/A criteria are left out of the total".
+- Weights line: "Prohibits discrimination ×3 · Indigenous-specific hiring ×2 · Retention and advancement ×1; N/A criteria are left out of the total". Never show H# ids in the UI.
 - CriterionCard ×3 (H1, H3, H5 in rubric order):
   - Title, tier badge (Baseline / Conditional / Leading practice), weight, score chip
     (0/1/2 or N/A) coloured by status, status text.

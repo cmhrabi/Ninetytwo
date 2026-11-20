@@ -5,7 +5,6 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const nav = [
-  { href: "/assess", label: "Assess" },
   { href: "/methodology", label: "Methodology & Sources" },
 ];
 

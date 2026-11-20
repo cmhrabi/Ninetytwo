@@ -172,7 +172,7 @@ export default function DesignPage() {
             <TriangleAlert className="mt-0.5 size-5 shrink-0" aria-hidden />
             <div>
               <p className="font-semibold">Baseline warning</p>
-              <p className="text-sm">Example: H1 scored 0. A legal baseline is not met.</p>
+              <p className="text-sm">Example: Prohibits discrimination scored 0. A legal baseline is not met.</p>
             </div>
           </div>
         </Block>
@@ -182,7 +182,7 @@ export default function DesignPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between gap-3">
-                  <span>H1 · Prohibits discrimination</span>
+                  <span>Prohibits discrimination</span>
                   <StatusChip status="Addressed" />
                 </CardTitle>
                 <CardDescription>Baseline (law) · weight ×3</CardDescription>

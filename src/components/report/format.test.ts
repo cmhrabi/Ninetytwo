@@ -50,7 +50,7 @@ describe("report format helpers", () => {
   });
 
   it("builds the weights line from the rubric", () => {
-    expect(weightsLine(rubric)).toBe("H1 ×3 · H3 ×2 · H5 ×1");
+    expect(weightsLine(rubric)).toBe("Prohibits discrimination ×3 · Indigenous-specific hiring ×2 · Retention and advancement ×1");
   });
 
   it("the partial sample raises exactly one baseline warning (H3)", () => {
