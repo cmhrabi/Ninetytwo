@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowRight, TriangleAlert } from "lucide-react";
-import { Monogram, Wordmark } from "@/components/brand/Wordmark";
+import { Logo, Monogram, Wordmark } from "@/components/brand/Wordmark";
 import { QuoteMark } from "@/components/brand/QuoteMark";
 import { ScoreRing } from "@/components/brand/ScoreRing";
 import { Eyebrow, Section } from "@/components/brand/Section";
@@ -99,13 +99,14 @@ export default function DesignPage() {
           </ul>
         </Block>
 
-        <Block title="Brand" note="Wordmark and 92 monogram.">
+        <Block title="Brand" note="92 mark (score ring) and wordmark. On light surfaces Two is gold edge, not gold.">
           <div className="flex flex-wrap items-center gap-6">
-            <Wordmark />
             <span className="rounded-xl bg-midnight p-3">
-              <Wordmark tone="dark" />
+              <Logo tone="dark" />
             </span>
-            <Monogram className="size-14 rounded-2xl text-3xl" />
+            <Logo />
+            <Wordmark />
+            <Monogram className="size-14" />
           </div>
         </Block>
 
