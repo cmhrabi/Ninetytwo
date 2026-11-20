@@ -1,0 +1,20 @@
+TODO(team): replace with the team's sample text
+
+Northwind Freight Inc. — Hiring Policy
+
+Northwind Freight is an equal opportunity employer. We hire the best person for
+each role.
+
+Hiring managers write the job description and post it on our careers page and on
+job boards.
+
+Candidates are screened by the hiring manager. Shortlisted candidates complete
+one interview with the manager and one team member.
+
+References are checked before an offer is made. Offers are approved by the
+department head.
+
+New staff complete a two-week onboarding program and a 90-day probation period.
+
+Questions about this policy can be sent to the People team at
+people@northwind.example or 416-555-0142.

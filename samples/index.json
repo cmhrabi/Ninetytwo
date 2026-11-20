@@ -1,0 +1,17 @@
+[
+  {
+    "id": "weak",
+    "title": "Northwind Freight hiring policy",
+    "summary": "TODO(team): A short policy that says the company is an equal opportunity employer and little else."
+  },
+  {
+    "id": "partial",
+    "title": "Cedar Lane Software hiring policy",
+    "summary": "TODO(team): Names Indigenous Peoples and prefers Indigenous candidates without a stated legal basis; some promotion criteria."
+  },
+  {
+    "id": "strong",
+    "title": "Lakeshore Health Partners hiring policy",
+    "summary": "TODO(team): A special program under the Ontario Human Rights Code with sponsorship, objective promotion criteria and a resourced employee network."
+  }
+]
