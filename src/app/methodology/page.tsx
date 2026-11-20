@@ -155,7 +155,7 @@ export default function MethodologyPage() {
 
       <Section id="data" className="scroll-mt-16 py-14 md:py-20" innerClassName="max-w-3xl">
         <Eyebrow>Your data</Eyebrow>
-        <Markdown>{dataNote || "TODO(team): Data and content note."}</Markdown>
+        {dataNote && <Markdown>{dataNote}</Markdown>}
       </Section>
 
       <Section id="sources" tone="surface" className="scroll-mt-16 py-14 md:py-20" innerClassName="max-w-3xl space-y-6">

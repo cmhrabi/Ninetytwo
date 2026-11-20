@@ -11,5 +11,3 @@
 - [TRC Call to Action 92](https://nctr.ca/records/reports/)
 
 ## All sources
-
-TODO(team): Full source list and attributions.
