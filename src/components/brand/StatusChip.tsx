@@ -2,16 +2,24 @@ import { CircleCheck, CircleDashed, CircleMinus, CircleX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Status } from "@/shared";
 
-const styles: Record<Status, { className: string; Icon: typeof CircleCheck }> = {
-  Addressed: { className: "bg-status-addressed-bg text-status-addressed", Icon: CircleCheck },
-  "Partly addressed": { className: "bg-status-partly-bg text-status-partly", Icon: CircleDashed },
-  "Not found": { className: "bg-status-notfound-bg text-status-notfound", Icon: CircleX },
-  "Not applicable": { className: "bg-status-na-bg text-status-na", Icon: CircleMinus },
+/**
+ * Brand palette only. Status reads from fill weight plus icon, never colour alone:
+ * Addressed = solid midnight, Partly = gold wash, Not found = outline, Not applicable = muted.
+ */
+const styles: Record<Status, { className: string; iconClassName: string; Icon: typeof CircleCheck }> = {
+  Addressed: { className: "bg-midnight text-white", iconClassName: "text-gold", Icon: CircleCheck },
+  "Partly addressed": {
+    className: "bg-gold-wash text-midnight ring-1 ring-gold-edge/40",
+    iconClassName: "text-gold-edge",
+    Icon: CircleDashed,
+  },
+  "Not found": { className: "bg-white text-midnight ring-1 ring-midnight/25", iconClassName: "text-indigo", Icon: CircleX },
+  "Not applicable": { className: "bg-surface text-indigo", iconClassName: "text-indigo/70", Icon: CircleMinus },
 };
 
 /** Criterion status chip. Icon + label, so status never relies on colour alone. */
 export function StatusChip({ status, className }: { status: Status; className?: string }) {
-  const { className: tone, Icon } = styles[status];
+  const { className: tone, iconClassName, Icon } = styles[status];
   return (
     <span
       className={cn(
@@ -20,7 +28,7 @@ export function StatusChip({ status, className }: { status: Status; className?: 
         className,
       )}
     >
-      <Icon className="size-3.5" aria-hidden />
+      <Icon className={cn("size-3.5", iconClassName)} aria-hidden />
       {status}
     </span>
   );

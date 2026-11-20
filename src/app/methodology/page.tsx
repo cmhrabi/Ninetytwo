@@ -60,8 +60,8 @@ export default function MethodologyPage() {
                   <tr key={r.key} className="align-top">
                     <th scope="row" className="px-4 py-3 font-medium text-midnight">{r.title}</th>
                     <td className="px-4 py-3">{r.tier}</td>
-                    <td className="px-4 py-3 font-mono">×{r.weight}</td>
-                    <td className="px-4 py-3 font-mono">{r.maxPoints}</td>
+                    <td className="px-4 py-3 tabular-nums">×{r.weight}</td>
+                    <td className="px-4 py-3 tabular-nums">{r.maxPoints}</td>
                     <td className="px-4 py-3">{r.whenItCounts}</td>
                   </tr>
                 ))}
@@ -87,22 +87,22 @@ export default function MethodologyPage() {
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
             <h2 className="text-3xl text-midnight sm:text-4xl">Overall score</h2>
-            <p className="mt-4 rounded-2xl bg-surface px-5 py-4 font-mono text-sm text-midnight">
+            <p className="mt-4 rounded-2xl bg-surface px-5 py-4 text-sm font-medium text-midnight tabular-nums">
               round(100 × Σ(score × weight) ÷ Σ(2 × weight))
             </p>
             <p className="mt-3 text-sm text-muted-foreground">Only criteria that apply are counted.</p>
-            <h3 className="mt-8 font-sans text-base font-semibold text-midnight">Worked example</h3>
+            <h3 className="mt-8 text-xl text-midnight">Worked example</h3>
             <ul className="mt-3 space-y-1 text-sm">
               {example.rows.map((r) => (
                 <li key={r.key} className="flex justify-between gap-4 border-b border-border py-1.5">
                   <span>{r.name}</span>
-                  <span className="font-mono">
+                  <span className="tabular-nums">
                     {r.score === null ? "N/A (left out)" : `${r.score} × ${r.weight} = ${r.score * r.weight}`}
                   </span>
                 </li>
               ))}
             </ul>
-            <p className="mt-3 font-mono text-sm text-midnight">
+            <p className="mt-3 text-sm font-medium text-midnight tabular-nums">
               round(100 × {example.earned} ÷ {example.possible}) = {example.percent} → {example.band}
             </p>
           </div>
@@ -112,7 +112,7 @@ export default function MethodologyPage() {
               <tbody className="divide-y divide-border">
                 {rubric.bands.map((b) => (
                   <tr key={b.label}>
-                    <td className="py-2 pr-4 font-mono">
+                    <td className="py-2 pr-4 tabular-nums">
                       {b.min}–{b.max}
                     </td>
                     <th scope="row" className="py-2 font-medium text-midnight">{b.label}</th>
@@ -131,7 +131,7 @@ export default function MethodologyPage() {
         </div>
         <div className="grid gap-6 sm:grid-cols-2">
           <div>
-            <h3 className="font-sans text-base font-semibold text-midnight">The AI does</h3>
+            <h3 className="text-xl text-midnight">The AI does</h3>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm marker:text-gold-edge">
               <li>Scan the whole document once to point out passages that may be relevant to each criterion.</li>
               <li>For each criterion, report which checks it found evidence for, with exact quotes from the document.</li>
@@ -139,7 +139,7 @@ export default function MethodologyPage() {
             </ul>
           </div>
           <div>
-            <h3 className="font-sans text-base font-semibold text-midnight">The AI never</h3>
+            <h3 className="text-xl text-midnight">The AI never</h3>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm marker:text-gold-edge">
               <li>Gives a score. Code checks every quote against the document and applies the rubric rules.</li>
               <li>Writes advice or recommends changes to a policy.</li>
@@ -168,7 +168,7 @@ export default function MethodologyPage() {
 
       <Section id="version" className="scroll-mt-16 py-10">
         <p className="text-sm text-muted-foreground">
-          Rubric version <span className="font-mono text-midnight">{rubric.version}</span>. Not legal advice.
+          Rubric version <span className="font-medium text-midnight tabular-nums">{rubric.version}</span>. Not legal advice.
         </p>
       </Section>
     </>
@@ -204,7 +204,7 @@ function CriterionMethod({ criterion, row }: { criterion: Criterion; row: Criter
                     <ul className="mt-1.5 space-y-1 border-l-2 border-border pl-3 text-xs text-muted-foreground">
                       {LEVELS.map((l) => (
                         <li key={l}>
-                          <span className="font-mono font-medium text-midnight">{l}</span> {k.levels![l]}
+                          <span className="font-semibold text-midnight tabular-nums">{l}</span> {k.levels![l]}
                         </li>
                       ))}
                     </ul>
@@ -233,7 +233,7 @@ function CriterionMethod({ criterion, row }: { criterion: Criterion; row: Criter
             {LEVELS.map((l) => (
               <div key={l}>
                 <dt className="flex items-center gap-2">
-                  <span className="font-mono text-sm font-medium text-midnight">{l}</span>
+                  <span className="text-sm font-semibold text-midnight tabular-nums">{l}</span>
                   <StatusChip status={levelName[l]} className="text-xs" />
                 </dt>
                 <dd className="mt-1.5">

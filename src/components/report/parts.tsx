@@ -58,7 +58,7 @@ export function Quote({ quote, paragraphId, tone = "default" }: { quote: string;
 
 /** Team-written copy from rubric.json. TODO(team) placeholders are shown as they are, but muted. */
 export function TeamCopy({ text, className }: { text: string; className?: string }) {
-  return <p className={cn("text-sm", isTodo(text) && "font-mono text-xs text-muted-foreground", className)}>{text}</p>;
+  return <p className={cn("text-sm", isTodo(text) && "text-xs italic text-muted-foreground", className)}>{text}</p>;
 }
 
 export function LinkList({ links, className }: { links: Link[]; className?: string }) {

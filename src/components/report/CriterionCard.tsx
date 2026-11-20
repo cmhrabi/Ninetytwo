@@ -11,10 +11,10 @@ import { cardAnchor, gapChecks, scoreText, tierLabel, verifiedEvidence, verified
 import { ColumnHeading, LinkList, Quote, TeamCopy } from "./parts";
 
 const scoreTone: Record<CriterionResult["status"], string> = {
-  Addressed: "bg-status-addressed text-white",
-  "Partly addressed": "bg-status-partly text-white",
-  "Not found": "bg-status-notfound text-white",
-  "Not applicable": "bg-status-na-bg text-status-na",
+  Addressed: "bg-midnight text-white",
+  "Partly addressed": "bg-gold text-midnight",
+  "Not found": "bg-white text-midnight ring-1 ring-midnight/25",
+  "Not applicable": "bg-surface text-indigo",
 };
 
 /** One criterion: header, reasoning, then Evidence found · Gaps · Where to learn. */
@@ -55,7 +55,7 @@ export function CriterionCard({
         {result && (
           <div className="flex shrink-0 items-center gap-2">
             <span
-              className={cn("rounded-full px-3 py-1 font-mono text-sm font-semibold", scoreTone[result.status])}
+              className={cn("rounded-full px-3 py-1 text-sm font-semibold tabular-nums", scoreTone[result.status])}
               aria-label={`Score ${scoreText(result)}`}
             >
               {scoreText(result)}
@@ -173,13 +173,13 @@ function CheckItem({ check, graded }: { check: CheckResult; graded: boolean }) {
     <li>
       <p className="flex items-start gap-2 text-sm">
         {met ? (
-          <CircleCheck className="mt-0.5 size-4 shrink-0 text-status-addressed" aria-label="Met" />
+          <CircleCheck className="mt-0.5 size-4 shrink-0 text-gold-edge" aria-label="Met" />
         ) : (
           <Circle className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-label="Not met" />
         )}
         <span className={cn(!met && "text-muted-foreground")}>
           {check.label}
-          {graded && <span className="ml-1 font-mono text-xs text-muted-foreground">level {check.level ?? 0}/2</span>}
+          {graded && <span className="ml-1 text-xs text-muted-foreground tabular-nums">level {check.level ?? 0}/2</span>}
         </span>
       </p>
       {quotes.length > 0 && (
