@@ -29,7 +29,7 @@ https://rcaanc-cirnac.gc.ca/eng/1524506030545/1557513309443
 
 ## Why it matters
 
-Employers want to align with UNDRIP and act on Call to Action 92, in their policies. Without a structured way to see whether hiring, procurement and onboarding policies reflect UNDRIP, the commitment to reconciliation stays surface level and lacks the depth and knowledge to ensure we are addressing Call to Action 92.
+Employers want to align with the UN Declaration on the Rights of Indigenous Peoples (UNDRIP) and act on Call to Action 92 in their policies. Without a structured way to see whether hiring, procurement, promotions, and onboarding policies reflect UNDRIP, the commitment to reconciliation stays surface level. NinetyTwo reveals how to go deeper.
 
 
 
