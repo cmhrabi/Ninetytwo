@@ -1,4 +1,4 @@
-import { ScoreRing } from "@/components/brand/ScoreRing";
+import { AnimatedScoreRing } from "@/components/brand/AnimatedScoreRing";
 import { StatusChip } from "@/components/brand/StatusChip";
 import { cn } from "@/lib/utils";
 
@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 export function ExamplePreview({ className }: { className?: string }) {
   return (
     <figure
+      data-ring-trigger
       className={cn(
         "relative w-full max-w-sm rounded-3xl bg-white/[0.06] p-6 ring-1 ring-white/15 backdrop-blur-sm sm:p-8",
         className,
@@ -20,7 +21,7 @@ export function ExamplePreview({ className }: { className?: string }) {
         <span className="rounded-full bg-white/10 px-2 py-0.5 tracking-normal normal-case">Illustration</span>
       </figcaption>
       <div className="flex justify-center">
-        <ScoreRing value={88} label="Leading" size={176} />
+        <AnimatedScoreRing value={88} label="Leading" size={176} />
       </div>
       <ul className="mt-8 space-y-3">
         {[
