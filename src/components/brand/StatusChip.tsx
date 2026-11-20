@@ -1,8 +1,6 @@
 import { CircleCheck, CircleDashed, CircleMinus, CircleX } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-// TODO(tech-a): replace with `import type { Status } from "@/shared"` once phase 01 adds the contract.
-type Status = "Addressed" | "Partly addressed" | "Not found" | "Not applicable";
+import type { Status } from "@/shared";
 
 const styles: Record<Status, { className: string; Icon: typeof CircleCheck }> = {
   Addressed: { className: "bg-status-addressed-bg text-status-addressed", Icon: CircleCheck },

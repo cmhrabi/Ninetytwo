@@ -1,0 +1,59 @@
+import { ExternalLink } from "lucide-react";
+import type { Link } from "@/shared";
+import { cn } from "@/lib/utils";
+import { isTodo } from "./format";
+
+/** Plain paragraph chip (p7). Ticket 07 makes it open the evidence viewer. */
+export function ParagraphChip({ id }: { id: string }) {
+  return (
+    <span className="inline-flex shrink-0 items-center rounded-md bg-surface px-1.5 py-0.5 font-mono text-xs text-indigo ring-1 ring-border">
+      {id}
+    </span>
+  );
+}
+
+/** A verified quote with its paragraph chip. */
+export function Quote({ quote, paragraphId, tone = "default" }: { quote: string; paragraphId: string; tone?: "default" | "flag" }) {
+  return (
+    <blockquote
+      className={cn(
+        "flex items-start gap-2 border-l-2 py-0.5 pl-3 text-sm",
+        tone === "flag" ? "border-status-notfound/60 text-status-notfound" : "border-gold-edge/60 text-ink",
+      )}
+    >
+      <span className="min-w-0 flex-1 italic">&ldquo;{quote}&rdquo;</span>
+      <ParagraphChip id={paragraphId} />
+    </blockquote>
+  );
+}
+
+/** Team-written copy from rubric.json. TODO(team) placeholders are shown as they are, but muted. */
+export function TeamCopy({ text, className }: { text: string; className?: string }) {
+  return <p className={cn("text-sm", isTodo(text) && "font-mono text-xs text-muted-foreground", className)}>{text}</p>;
+}
+
+export function LinkList({ links, className }: { links: Link[]; className?: string }) {
+  if (links.length === 0) return null;
+  return (
+    <ul className={cn("space-y-1.5", className)}>
+      {links.map((l) => (
+        <li key={l.url}>
+          <a
+            href={l.url}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-start gap-1.5 text-sm text-midnight underline decoration-gold-edge/50 underline-offset-4 hover:decoration-gold-edge"
+          >
+            <span>{l.title}</span>
+            <ExternalLink className="mt-1 size-3 shrink-0" aria-hidden />
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function ColumnHeading({ children }: { children: React.ReactNode }) {
+  return <h4 className="mb-3 text-xs font-semibold tracking-[0.12em] text-muted-foreground uppercase">{children}</h4>;
+}
