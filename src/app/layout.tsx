@@ -24,7 +24,7 @@ const fraunces = Fraunces({
 
 export const metadata: Metadata = {
   title: "NinetyTwo",
-  description: "Check your internal policies against Call to Action 92",
+  description: "Your workplace policies, measured against Call to Action 92.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -6,29 +6,34 @@
 
 ## Hero headline
 
-Check your internal policies against Call to Action 92.
-<!-- TODO(team): confirm or rewrite this product headline. -->
+Your workplace policies, measured against Call to Action 92.
 
 ## Hero subline
-
-TODO(team): One or two sentences on what the tool does for HR, People & Culture and recruitment leads.
+Highlighting the gaps in corporate internal policies, line by line. This app is for HR, People & Culture, and business leaders.
 
 ## Ask 1
 
-TODO(team): The first thing CTA 92 asks of corporate Canada, in your own words, with a citation.
+Commit to meaningful consultation, building respectful relationships, and obtaining the free, prior, and informed consent of Indigenous peoples before proceeding with economic development projects.
 
 ## Ask 2
 
-TODO(team): The second thing CTA 92 asks, with a citation.
+Ensure that Aboriginal peoples have equitable access to jobs, training, and education opportunities in the corporate sector, and that Aboriginal communities gain long-term sustainable benefits from economic development projects.
 
 ## Ask 3
 
-TODO(team): The third thing CTA 92 asks, with a citation.
+Provide education for management and staff on the history of Aboriginal peoples, including the history and legacy of residential schools, the United Nations Declaration on the Rights of Indigenous Peoples, Treaties and Aboriginal rights, Indigenous law, and Aboriginal-Crown relations. This will require skills based training in intercultural competency, conflict resolution, human rights, and anti-racism.
+
+## All Asks Source
+Truth and Reconciliation Commission Call to Action 92
+https://rcaanc-cirnac.gc.ca/eng/1524506030545/1557513309443
 
 ## Why it matters
 
-TODO(team): One short pull statement on why this matters for employers.
+Employers want to align with the UN Declaration on the Rights of Indigenous Peoples (UNDRIP) and act on Call to Action 92 in their policies. Without a structured way to see whether hiring, procurement, promotions, and onboarding policies reflect UNDRIP, the commitment to reconciliation stays surface level. NinetyTwo reveals how to go deeper.
+
+
 
 ## Why it matters source
 
-TODO(team): [Source name](https://example.org)
+[Truth and Reconciliation Commission Call to Action 92](https://rcaanc-cirnac.gc.ca/eng/1524506030545/1557513309443)
+

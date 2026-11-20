@@ -34,6 +34,19 @@ export function getLinks(file: ContentFile, heading: string): { label: string; h
   }));
 }
 
+/**
+ * A single source in a section, written either as a markdown link `[label](url)`
+ * or as a label line followed by a bare URL line. Missing or placeholder → null.
+ */
+export function getSource(file: ContentFile, heading: string): { label: string; href: string } | null {
+  const [link] = getLinks(file, heading);
+  if (link) return link;
+  const lines = getSection(file, heading).split("\n").map((l) => l.trim()).filter(Boolean);
+  const href = lines.find((l) => /^https?:\/\/\S+$/.test(l));
+  if (!href) return null;
+  return { label: lines.find((l) => l !== href) ?? href, href };
+}
+
 /** True when copy is still a team placeholder. */
 export const isTodo = (text: string) => !text || text.trimStart().startsWith("TODO(team)");
 
