@@ -122,6 +122,11 @@
     font-size: 1.0625rem; /* 17px body */
     line-height: 1.6;
   }
+  /* Tailwind 4 leaves buttons on the default cursor; show the hand so they read as clickable. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
   h1,
   h2,
   h3 {
@@ -186,5 +191,42 @@
 @media (prefers-reduced-motion: no-preference) {
   .evidence-pulse {
     animation: evidence-pulse 1.6s ease-out 2 forwards;
+  }
+}
+
+/* Print / Save PDF (Report). Hiding is done with print:hidden on the components; this sets the page. */
+@media print {
+  @page {
+    margin: 14mm 12mm;
+  }
+  html {
+    font-size: 12px;
+  }
+  body {
+    background: white;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  /* Show where each source lives on paper: the URL goes after the link text. */
+  a.print-url {
+    display: block;
+    text-decoration: none;
+  }
+  a.print-url::after {
+    content: attr(href);
+    display: block;
+    font-size: 0.8em;
+    line-height: 1.3;
+    color: var(--muted-foreground);
+    overflow-wrap: anywhere;
+  }
+  blockquote {
+    break-inside: avoid;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
   }
 }

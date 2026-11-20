@@ -8,7 +8,7 @@ export function WarningBanner({ warnings }: { warnings: BannerWarning[] }) {
   return (
     <div
       role="alert"
-      className="flex gap-3 rounded-2xl border border-gold-edge/40 bg-gold-wash text-midnight p-4 sm:p-5"
+      className="flex gap-3 rounded-2xl border border-gold-edge/40 bg-gold-wash text-midnight p-4 sm:p-5 print:break-inside-avoid"
     >
       <TriangleAlert className="mt-0.5 size-5 shrink-0 text-gold-edge" aria-hidden />
       <div>
