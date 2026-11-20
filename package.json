@@ -10,7 +10,8 @@
     "test": "vitest run --passWithNoTests",
     "typecheck": "next typegen && tsc --noEmit",
     "test:ai": "tsx --env-file=.env.local src/scripts/test-ai.ts",
-    "calibrate": "tsx --env-file=.env.local src/scripts/calibrate.ts"
+    "calibrate": "tsx --env-file=.env.local src/scripts/calibrate.ts",
+    "smoke": "tsx --env-file-if-exists=.env.local src/scripts/smoke.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.11.0",
