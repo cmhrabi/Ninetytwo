@@ -4,7 +4,7 @@ export type Config = {
   scanModel: string;
 };
 
-export const DEFAULT_JUDGE_MODEL = "anthropic/claude-sonnet-5.5";
+export const DEFAULT_JUDGE_MODEL = "anthropic/claude-haiku-5.5";
 export const DEFAULT_SCAN_MODEL = "anthropic/claude-haiku-5.5";
 
 /** Reads env at call time (not import time) so tests and restarts see changes. */

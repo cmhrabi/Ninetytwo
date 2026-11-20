@@ -147,7 +147,7 @@ variables for Production and Preview.
 | Variable | Required | Default | Use |
 | --- | --- | --- | --- |
 | `OPENROUTER_API_KEY` | for live scoring | none | OpenRouter key for every AI call |
-| `JUDGE_MODEL` | no | `anthropic/claude-sonnet-5.5` | OpenRouter model slug for the judge (one call per H#) |
+| `JUDGE_MODEL` | no | `anthropic/claude-haiku-5.5` | OpenRouter model slug for the judge (one call per H#) |
 | `SCAN_MODEL` | no | `anthropic/claude-haiku-5.5` | OpenRouter model slug for the fast whole-document scan |
 
 ## AI calls (OpenRouter)

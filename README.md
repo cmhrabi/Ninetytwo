@@ -32,7 +32,7 @@ npm run dev                  # http://localhost:3000
 | Variable | Required | Default | What it does |
 | --- | --- | --- | --- |
 | `OPENROUTER_API_KEY` | for live scoring | none | The key for every AI call. Server-side only. |
-| `JUDGE_MODEL` | no | `anthropic/claude-sonnet-5.5` | The model for the judge (one call per criterion) |
+| `JUDGE_MODEL` | no | `anthropic/claude-haiku-5.5` | The model for the judge (one call per criterion) |
 | `SCAN_MODEL` | no | `anthropic/claude-haiku-5.5` | The model for the fast whole-document scan |
 
 | Command | What it does | Network |
