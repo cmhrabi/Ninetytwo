@@ -12,6 +12,9 @@ import {
 } from "motion/react";
 import { cn } from "@/lib/utils";
 
+const VIEW_SECONDS = 1.6;
+const HOVER_SECONDS = 3.5;
+
 /**
  * Score ring that fills from 0 to `value` (and counts up) the first time it scrolls into view, then
  * replays whenever the pointer enters the closest `[data-ring-trigger]` ancestor (or the ring itself).
@@ -49,16 +52,18 @@ export function AnimatedScoreRing({
       progress.set(pct);
       return;
     }
-    const play = () => {
+    // First view: a quick fill. Hover: a slow, steady "loading" fill so the count-up is easy to follow.
+    const play = (duration: number, ease: [number, number, number, number]) => {
       controls.current?.stop();
       progress.set(0);
-      controls.current = animate(progress, pct, { duration: 1.2, ease: [0.22, 1, 0.36, 1] });
+      controls.current = animate(progress, pct, { duration, ease });
     };
-    if (inView) play();
+    const onEnter = () => play(HOVER_SECONDS, [0.45, 0.05, 0.25, 1]);
+    if (inView) play(VIEW_SECONDS, [0.22, 1, 0.36, 1]);
     const root = ref.current?.closest<HTMLElement>("[data-ring-trigger]") ?? ref.current;
     if (!inView || !root) return;
-    root.addEventListener("pointerenter", play);
-    return () => root.removeEventListener("pointerenter", play);
+    root.addEventListener("pointerenter", onEnter);
+    return () => root.removeEventListener("pointerenter", onEnter);
   }, [inView, reduce, pct, progress]);
 
   return (

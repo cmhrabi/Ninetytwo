@@ -13,11 +13,11 @@ export function LoadError({ className }: { className?: string }) {
     <div
       role="alert"
       className={cn(
-        "flex gap-3 rounded-2xl border border-status-notfound/25 bg-status-notfound-bg p-4 text-sm text-status-notfound",
+        "flex gap-3 rounded-2xl border border-gold-edge/40 bg-gold-wash text-midnight p-4 text-sm",
         className,
       )}
     >
-      <TriangleAlert className="mt-0.5 size-4 shrink-0" aria-hidden />
+      <TriangleAlert className="mt-0.5 size-4 shrink-0 text-gold-edge" aria-hidden />
       <p>{messageFor(state.error)}</p>
     </div>
   );

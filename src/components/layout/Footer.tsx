@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Markdown } from "@/components/Markdown";
-import { Wordmark } from "@/components/brand/Wordmark";
+import { Logo } from "@/components/brand/Wordmark";
 import { getContent } from "@/lib/content";
 
 export function Footer() {
@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="border-t border-white/10 bg-midnight-deep text-white/75">
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1fr_2fr]">
         <div className="space-y-4">
-          <Wordmark tone="dark" />
+          <Logo tone="dark" />
           <p className="text-sm">Not legal advice. Documents are processed in memory and never stored.</p>
         </div>
         <div className="space-y-6">

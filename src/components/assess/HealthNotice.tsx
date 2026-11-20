@@ -23,9 +23,9 @@ export function HealthNotice() {
   return (
     <div
       role="status"
-      className="mb-10 flex gap-3 rounded-2xl border border-status-partly/25 bg-status-partly-bg p-4 text-sm text-status-partly"
+      className="mb-10 flex gap-3 rounded-2xl border border-gold-edge/40 bg-gold-wash text-midnight p-4 text-sm"
     >
-      <Info className="mt-0.5 size-4 shrink-0" aria-hidden />
+      <Info className="mt-0.5 size-4 shrink-0 text-gold-edge" aria-hidden />
       <p>Live scoring isn&apos;t configured; sample policies will use cached runs.</p>
     </div>
   );

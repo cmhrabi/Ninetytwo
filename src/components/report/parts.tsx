@@ -36,7 +36,7 @@ export function Quote({ quote, paragraphId, tone = "default" }: { quote: string;
     <blockquote
       className={cn(
         "flex items-start gap-2 border-l-2 py-0.5 pl-3 text-sm",
-        tone === "flag" ? "border-status-notfound/60 text-status-notfound" : "border-gold-edge/60 text-ink",
+        tone === "flag" ? "border-midnight text-midnight" : "border-gold-edge/60 text-ink",
       )}
     >
       {evidence ? (
@@ -58,7 +58,7 @@ export function Quote({ quote, paragraphId, tone = "default" }: { quote: string;
 
 /** Team-written copy from rubric.json. TODO(team) placeholders are shown as they are, but muted. */
 export function TeamCopy({ text, className }: { text: string; className?: string }) {
-  return <p className={cn("text-sm", isTodo(text) && "font-mono text-xs text-muted-foreground", className)}>{text}</p>;
+  return <p className={cn("text-sm", isTodo(text) && "text-xs italic text-muted-foreground", className)}>{text}</p>;
 }
 
 export function LinkList({ links, className }: { links: Link[]; className?: string }) {

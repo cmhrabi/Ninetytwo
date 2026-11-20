@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowRight, TriangleAlert } from "lucide-react";
-import { Monogram, Wordmark } from "@/components/brand/Wordmark";
+import { Logo, Monogram, Wordmark } from "@/components/brand/Wordmark";
 import { QuoteMark } from "@/components/brand/QuoteMark";
 import { ScoreRing } from "@/components/brand/ScoreRing";
 import { Eyebrow, Section } from "@/components/brand/Section";
@@ -27,10 +27,10 @@ const colours = [
 ];
 
 const statuses = [
-  { status: "Addressed" as const, ratio: "5.7" },
-  { status: "Partly addressed" as const, ratio: "5.4 (burnt orange, never gold)" },
-  { status: "Not found" as const, ratio: "6.1" },
-  { status: "Not applicable" as const, ratio: "6.6" },
+  { status: "Addressed" as const, ratio: "Solid midnight · white 13.7" },
+  { status: "Partly addressed" as const, ratio: "Gold wash + edge · midnight 12.4" },
+  { status: "Not found" as const, ratio: "Outline · midnight 13.7" },
+  { status: "Not applicable" as const, ratio: "Muted surface · indigo 7.0" },
 ];
 
 const typeScale = [
@@ -99,13 +99,14 @@ export default function DesignPage() {
           </ul>
         </Block>
 
-        <Block title="Brand" note="Wordmark and 92 monogram.">
+        <Block title="Brand" note="92 mark (score ring) and wordmark. On light surfaces Two is gold edge, not gold.">
           <div className="flex flex-wrap items-center gap-6">
-            <Wordmark />
             <span className="rounded-xl bg-midnight p-3">
-              <Wordmark tone="dark" />
+              <Logo tone="dark" />
             </span>
-            <Monogram className="size-14 rounded-2xl text-3xl" />
+            <Logo />
+            <Wordmark />
+            <Monogram className="size-14" />
           </div>
         </Block>
 
@@ -133,7 +134,7 @@ export default function DesignPage() {
           </div>
         </Block>
 
-        <Block title="Status" note="Icon and label on a tint. Ratios are text on its tint.">
+        <Block title="Status" note="Brand palette only: fill weight plus icon tell statuses apart. Ratios are text on its chip.">
           <ul className="flex flex-wrap gap-4">
             {statuses.map((s) => (
               <li key={s.status} className="space-y-2">
@@ -167,9 +168,9 @@ export default function DesignPage() {
         <Block title="Warning" note="Baseline warning, shown above the score whatever the percentage.">
           <div
             role="alert"
-            className="flex max-w-2xl gap-3 rounded-2xl border border-status-notfound/25 bg-status-notfound-bg p-4 text-status-notfound"
+            className="flex max-w-2xl gap-3 rounded-2xl border border-gold-edge/40 bg-gold-wash text-midnight p-4"
           >
-            <TriangleAlert className="mt-0.5 size-5 shrink-0" aria-hidden />
+            <TriangleAlert className="mt-0.5 size-5 shrink-0 text-gold-edge" aria-hidden />
             <div>
               <p className="font-semibold">Baseline warning</p>
               <p className="text-sm">Example: Prohibits discrimination scored 0. A legal baseline is not met.</p>
