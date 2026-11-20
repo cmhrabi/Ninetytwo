@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { Check, TriangleAlert } from "lucide-react";
 import { Markdown } from "@/components/Markdown";
 import { Eyebrow, Section } from "@/components/brand/Section";
+import { StatusChip } from "@/components/brand/StatusChip";
 import { LinkList, TeamCopy } from "@/components/report/parts";
 import { getContent, getLinks, getRubric, getSection } from "@/lib/content";
-import { allSources, criteriaRows, workedExample } from "@/lib/methodology";
+import { allSources, criteriaRows, workedExample, type CriterionRow } from "@/lib/methodology";
 import type { Criterion } from "@/shared";
 
 export const metadata: Metadata = { title: "Methodology & Sources · NinetyTwo" };
@@ -75,9 +77,9 @@ export default function MethodologyPage() {
             the document. A verified red flag sets the criterion to 0. A score of 0 on a criterion marked baseline raises
             a warning above the score, whatever the percentage.
           </p>
-          <div className="mt-6 grid gap-6 lg:grid-cols-2">
-            {rubric.criteria.map((c) => (
-              <CriterionMethod key={c.id} criterion={c} />
+          <div className="mt-8 space-y-6">
+            {rubric.criteria.map((c, i) => (
+              <CriterionMethod key={c.id} criterion={c} row={rows[i]} />
             ))}
           </div>
         </div>
@@ -173,53 +175,75 @@ export default function MethodologyPage() {
   );
 }
 
-function CriterionMethod({ criterion }: { criterion: Criterion }) {
+function CriterionMethod({ criterion, row }: { criterion: Criterion; row: CriterionRow }) {
   return (
-    <article className="rounded-3xl bg-white p-6 ring-1 ring-border">
-      <h3 className="text-xl leading-snug text-midnight">{criterion.title}</h3>
-      <p className="mt-1 text-xs text-muted-foreground">
-        {criterion.scoring.type === "average" ? "Each check is graded 0–2; the score is their average." : "Score set by which checks are met."}
-      </p>
-      <h4 className="mt-5 text-xs font-semibold tracking-[0.12em] text-muted-foreground uppercase">Checks</h4>
-      <ul className="mt-2 space-y-2 text-sm">
-        {criterion.checks.map((k) => (
-          <li key={k.id}>
-            {k.label}
-            {k.graded && k.levels && (
-              <ul className="mt-1 ml-4 space-y-0.5 text-xs text-muted-foreground">
-                {LEVELS.map((l) => (
-                  <li key={l}>
-                    <span className="font-mono">{l}</span>: {k.levels![l]}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
-      {criterion.redFlags.length > 0 && (
-        <>
-          <h4 className="mt-5 text-xs font-semibold tracking-[0.12em] text-status-notfound uppercase">Red flags (score set to 0)</h4>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
-            {criterion.redFlags.map((f) => (
-              <li key={f.id}>{f.label}</li>
+    <article className="overflow-hidden rounded-3xl bg-white ring-1 ring-border">
+      <header className="border-b border-border bg-surface/60 px-6 py-5 sm:px-8">
+        <h3 className="text-2xl leading-snug text-midnight">{criterion.title}</h3>
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+          <span className="rounded-full bg-secondary px-2.5 py-1 text-midnight ring-1 ring-border">{row.tier}</span>
+          <span className="rounded-full bg-midnight px-2.5 py-1 font-medium text-white">×{row.weight}</span>
+          <span className="text-muted-foreground">Counts when: {row.whenItCounts}</span>
+        </div>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {criterion.scoring.type === "average"
+            ? "Each check is graded 0–2; the score is their average."
+            : "Score set by which checks are met."}
+        </p>
+      </header>
+      <div className="grid md:grid-cols-2 md:divide-x md:divide-border">
+        <section className="px-6 py-6 sm:px-8">
+          <h4 className="text-xs font-semibold tracking-[0.12em] text-muted-foreground uppercase">What it looks for</h4>
+          <ul className="mt-3 space-y-3 text-sm">
+            {criterion.checks.map((k) => (
+              <li key={k.id} className="flex gap-2.5">
+                <Check className="mt-0.5 size-4 shrink-0 text-gold-edge" aria-hidden />
+                <div className="min-w-0">
+                  <p className="text-ink">{k.label}</p>
+                  {k.graded && k.levels && (
+                    <ul className="mt-1.5 space-y-1 border-l-2 border-border pl-3 text-xs text-muted-foreground">
+                      {LEVELS.map((l) => (
+                        <li key={l}>
+                          <span className="font-mono font-medium text-midnight">{l}</span> {k.levels![l]}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </li>
             ))}
           </ul>
-        </>
-      )}
-      <h4 className="mt-5 text-xs font-semibold tracking-[0.12em] text-muted-foreground uppercase">Scores</h4>
-      <dl className="mt-2 space-y-1.5 text-sm">
-        {LEVELS.map((l) => (
-          <div key={l} className="grid grid-cols-[8.5rem_1fr] gap-2">
-            <dt className="font-medium text-midnight">
-              {l} · {levelName[l]}
-            </dt>
-            <dd>
-              <TeamCopy text={criterion.levels[l]} className="text-sm" />
-            </dd>
-          </div>
-        ))}
-      </dl>
+          {criterion.redFlags.length > 0 && (
+            <div className="mt-5 rounded-2xl bg-status-notfound-bg px-4 py-3">
+              <h4 className="flex items-center gap-1.5 text-xs font-semibold tracking-[0.12em] text-status-notfound uppercase">
+                <TriangleAlert className="size-3.5" aria-hidden />
+                Red flags: score set to 0
+              </h4>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-ink marker:text-status-notfound">
+                {criterion.redFlags.map((f) => (
+                  <li key={f.id}>{f.label}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
+        <section className="border-t border-border px-6 py-6 sm:px-8 md:border-t-0">
+          <h4 className="text-xs font-semibold tracking-[0.12em] text-muted-foreground uppercase">How it scores</h4>
+          <dl className="mt-3 space-y-4">
+            {LEVELS.map((l) => (
+              <div key={l}>
+                <dt className="flex items-center gap-2">
+                  <span className="font-mono text-sm font-medium text-midnight">{l}</span>
+                  <StatusChip status={levelName[l]} className="text-xs" />
+                </dt>
+                <dd className="mt-1.5">
+                  <TeamCopy text={criterion.levels[l]} className="text-sm text-ink" />
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      </div>
     </article>
   );
 }
