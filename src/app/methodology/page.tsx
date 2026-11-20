@@ -25,6 +25,7 @@ export default function MethodologyPage() {
   const sources = allSources(rubric, contentLinks);
   const allSourcesCopy = getSection("sources", "All sources");
   const dataNote = getContent("data-note");
+  const acknowledgement = getContent("acknowledgement");
 
   return (
     <>
@@ -162,6 +163,14 @@ export default function MethodologyPage() {
           <Eyebrow>Sources and attributions</Eyebrow>
           <h2 className="text-3xl text-midnight sm:text-4xl">Sources</h2>
         </div>
+        {acknowledgement && (
+          <aside
+            aria-label="Acknowledgement"
+            className="rounded-2xl border-l-4 border-gold bg-card p-6 text-ink ring-1 ring-border [&_p:last-child]:text-sm [&_p:last-child]:text-muted-foreground"
+          >
+            <Markdown>{acknowledgement}</Markdown>
+          </aside>
+        )}
         {allSourcesCopy && <Markdown>{allSourcesCopy}</Markdown>}
         <LinkList links={sources} />
       </Section>

@@ -13,7 +13,17 @@ export function Footer() {
           <p className="text-sm">Not legal advice. Documents are processed in memory and never stored.</p>
         </div>
         <div className="space-y-6">
-          {acknowledgement && <Markdown className="text-sm">{acknowledgement}</Markdown>}
+          {acknowledgement && (
+            <div className="space-y-3">
+              <Markdown className="text-sm">{acknowledgement}</Markdown>
+              <Link
+                href="/methodology#sources"
+                className="inline-block text-sm font-medium text-white underline decoration-gold underline-offset-4 hover:decoration-white"
+              >
+                Sources and attributions →
+              </Link>
+            </div>
+          )}
           <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <Link href="/assess" className="hover:text-white">Assess a policy</Link>
             <Link href="/methodology" className="hover:text-white">Methodology & Sources</Link>
