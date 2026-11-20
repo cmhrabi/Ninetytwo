@@ -34,11 +34,12 @@
       },
       "phrases": ["discriminat", "equal opportunity", "Human Rights Code", "harass", "ancestry", "place of origin", "ethnic origin", "colour", "creed", "Indigenous", "First Nations", "Inuit", "Métis", "Aboriginal"],
       "redFlags": [],
-      "addressedLooksLike": "TODO(team): one or two sentences describing a score of 2",
-      "whyItMatters": "TODO(team): in your own words, citing the sources below",
+      "addressedLooksLike": "The policy explicitly prohibits discrimination in hiring, recruitment, and employment under the Ontario Human Rights Code AND (explicitly names Indigenous Peoples (Indigenous, First Nations, Inuit, Métis) OR lists at least two of: ancestry, place of origin, ethnic origin, colour, creed)",
+      "whyItMatters": "Banning discrimination in employment is a legal duty under the Ontario Human Rights Code. It also answers the Truth and Reconciliation Commission’s Call to Action 92, which asks Canadian companies to adopt UNDRIP as a framework( eg. Article 2 affirms Indigenous Peoples’ right to be free from discrimination) and to ensure equitable access to jobs. While Call to Action 92 isn’t legally mandated at this time,  aligning with it now and actioning on UNDRIP's framework puts a company ahead of the expectation.",
       "sources": [
-        { "title": "Ontario Human Rights Code", "url": "https://www.ohrc.on.ca/en/ontario-human-rights-code" },
-        { "title": "UNDRIP, Article 2", "url": "https://www.un.org/development/desa/indigenouspeoples/declaration-on-the-rights-of-indigenous-peoples.html" }
+        { "title": "CIRNAC, Business and reconciliation", "url": "https://www.rcaanc-cirnac.gc.ca/eng/1524506030545/1557513309443" },
+        { "title": "UNDRIP Act, S.C. 2021, c. 14", "url": "https://laws.justice.gc.ca/eng/acts/U-2.2/page-1.html" },
+        { "title": "Osler", "url": "https://www.osler.com/en/resources/regulations/2021/federal-undrip-bill-becomes-law" }
       ],
       "resources": [
         { "title": "Indigenous Employment: Recruitment & Retention, ICT Inc.", "url": "https://www.ictinc.ca" },
@@ -71,19 +72,20 @@
         "1": "Some of the legal basis or purpose is stated, but the program is incomplete",
         "0": "Indigenous-specific hiring with no legal basis or purpose"
       },
-      "phrases": ["Indigenous candidates", "preference", "preferred", "designated", "special program", "section 14", "s. 14", "self-identif", "status card", "proof of", "First Nations", "Inuit", "Métis"],
+      "phrases": ["Indigenous candidates", "preference", "preferred", "designated", "special program", "section 14", "s. 14", "section 24", "s. 24","self-identif", "status card", "proof of", "First Nations", "Inuit", "Métis"],
       "redFlags": [
         { "id": "identityOnGeneralForms", "label": "Asks about Indigenous identity on general application forms", "phrases": ["all applicants", "application form", "general application", "self-identify on the application"] },
         { "id": "employerAloneConfirms", "label": "The employer alone confirms identity with a single document", "phrases": ["status card", "proof of status", "one piece of", "single document", "provide documentation"] }
       ],
-      "addressedLooksLike": "TODO(team): one or two sentences describing a score of 2",
-      "whyItMatters": "TODO(team): in your own words, citing the sources below",
+      "addressedLooksLike": "The document Legal basis: names section 14 of the Ontario Human Rights Code, or section 24 with a reason.\n- Purpose: says who the program helps and why.\n- Eligibility: says who can apply, in a way that matches the purpose.\n- Time and review: gives an end date or review schedule.\n- Identity confirmation: a process that involves Indigenous people or organizations and offers more than one way to confirm.\n- Data safeguards: limits on access, use only for the program, and a destruction timeline.",
+      "whyItMatters": "The Ontario Human Rights Code allows Indigenous-specific hiring, but only with a proper legal basis, usually a section 14 special program, which protects the program from discrimination claims. Confirming identity carefully guards roles that genuinely rely on Indigenous identity or lived experience against inaccurate or false claims. Done well, it puts Call to Action 92’s call for equitable access to jobs into practice. The OHRC issued this guidance because many employers asked how to hire for these roles while meeting their obligations under the Code.",
       "sources": [
-        { "title": "Ontario Human Rights Code, section 14 (special programs)", "url": "https://www.ontario.ca/laws/statute/90h19" },
-        { "title": "Ontario Human Rights Commission", "url": "https://www.ohrc.on.ca" }
+        { "title": "OHRC Policy Statement on Indigenous-specific hiring", "url": "https://www.ohrc.on.ca/en/policy-statement-indigenous-specific-hiring" },
+        { "title": "Ontario Human Rights Code, s. 14 and s. 24", "url": "https://www.ontario.ca/laws/statute/90h19" },
+        { "title": "TRC Call to Action 92", "url": "https://nctr.ca/records/reports/" }
       ],
       "resources": [
-        { "title": "PAIR best practices, employment", "url": "https://www.ccib.ca/pair-page-best-practices/" }
+        { "title": "Policy statement on Indigenous-specific hiring", "url": "https://www.ohrc.on.ca/en/policy-statement-indigenous-specific-hiring" }
       ]
     },
     {
@@ -126,16 +128,16 @@
         "1": "Some supports exist, informally or without Indigenous-specific resources",
         "0": "No retention or advancement supports"
       },
-      "phrases": ["mentor", "sponsor", "promotion", "advancement", "career development", "leadership development", "pay equity", "salary band", "transparen", "employee network", "resource group", "retention"],
+      "phrases": ["mentor", "sponsor", "promotion", "advancement", "career development", "leadership development", "pay equity", "salary band", "salary range","transparen", "employee network", "resource group", "retention"],
       "redFlags": [],
-      "addressedLooksLike": "TODO(team): one or two sentences describing a score of 2",
-      "whyItMatters": "TODO(team): in your own words, citing the sources below",
+      "addressedLooksLike": "The policy describes a formal mentorship program sponsored by leadership, and supports Indigenous employees’ participation in leadership and career development, such as through sponsorship or a resourced Indigenous employee network.\n\nPromotions are decided on objective, skills-based criteria, and the process and criteria for promotions and pay increases are documented and transparent.",
+      "whyItMatters": "These policies introduce structured support, advocacy, and transparent advancement  opportunities. Leadership-sponsored mentorship and a resourced Indigenous employee network can help reduce workplace isolation and connect Indigenous employees with advocates who can open doors to leadership roles. Basing promotions and pay increases on documented, objective, skills-based criteria removes subjective gatekeeping and builds trust that career growth is fair and achievable.",
       "sources": [
-        { "title": "Privy Council Office, Call to Action on Anti-Racism, Equity and Inclusion", "url": "https://www.canada.ca/en/privy-council/corporate/clerk/call-to-action-anti-racism-equity-inclusion-federal-public-service.html" },
-        { "title": "ESDC employment equity guidance", "url": "https://www.canada.ca/en/employment-social-development/corporate/portfolio/labour/programs/employment-equity/reports/employers-improve-workplace.html#h3.13" }
+        { "title": "How to improve workplace equity (Government of Canada)", "url": "https://www.canada.ca/en/employment-social-development/corporate/portfolio/labour/programs/employment-equity/reports/employers-improve-workplace.html" },
+        { "title": "A Way Forward report series (Ontario Chamber of Commerce)", "url": "https://occ.ca/economic-reconciliation-initiative/a-way-forward-part-1/" }
       ],
       "resources": [
-        { "title": "Indigenous Employment: Recruitment & Retention, ICT Inc.", "url": "https://www.ictinc.ca" }
+        { "title": "How to improve workplace equity (Government of Canada)", "url": "https://www.canada.ca/en/employment-social-development/corporate/portfolio/labour/programs/employment-equity/reports/employers-improve-workplace.html#h3.14" }
       ]
     }
   ],
