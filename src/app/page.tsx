@@ -7,15 +7,10 @@ import { ExamplePreview } from "@/components/landing/ExamplePreview";
 import { FloatingDocument } from "@/components/landing/FloatingDocument";
 import { ScrollStory } from "@/components/landing/ScrollStory";
 import { buttonVariants } from "@/components/ui/button";
-import { getContentWithout, getLinks, getSection, getSource, isTodo } from "@/lib/content";
+import { tierLabel } from "@/components/report/format";
+import { getContentWithout, getLinks, getRubric, getSection, getSource, isTodo } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
-// TODO(tech-a): read labels, tiers and weights from /api/rubric once rubric.json exists.
-const criteria = [
-  { label: "Prohibits discrimination, incl. on grounds relevant to Indigenous identity", tier: "Baseline (law)", weight: 3 },
-  { label: "Indigenous-specific hiring follows Ontario Human Rights Commission guidance", tier: "Conditional", weight: 2 },
-  { label: "Retention and advancement supports exist", tier: "Leading practice", weight: 1 },
-];
 
 function Placeholder({ text, className }: { text: string; className?: string }) {
   return isTodo(text) ? <Markdown className={className}>{text || "TODO(team): copy"}</Markdown> : null;
@@ -29,6 +24,7 @@ export default function Home() {
   const why = getSection("landing", "Why it matters");
   const whySource = getSource("landing", "Why it matters source");
   const builtOn = getLinks("sources", "Built on");
+  const criteria = getRubric().criteria.map((c) => ({ label: c.title, tier: tierLabel[c.tier], weight: c.weight }));
   // Everything except "### Sources" is the main copy; the sources render as a smaller list below it.
   const learned = getContentWithout("what-we-learned", "Sources", 3);
   const learnedSources = getSection("what-we-learned", "Sources", 3);

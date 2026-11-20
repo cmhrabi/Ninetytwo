@@ -4,11 +4,11 @@ import type { Rubric } from "@/shared";
 // Product roadmap, not learning copy.
 const EXTRAS = ["checking several documents at once", "a gold-standard policy set reviewed by an Indigenous organization"];
 
-/** Groups the rubric's comingNext entries by the area before ":" in their title, keeping rubric order. */
+/** Groups the rubric's comingNext entries by area (the title, or the part before ":"), keeping rubric order. */
 function areasOf(rubric: Rubric): { area: string; count: number }[] {
   const counts = new Map<string, number>();
   for (const c of rubric.comingNext) {
-    const area = c.title.includes(":") ? c.title.split(":")[0].trim() : "More";
+    const area = c.title.split(":")[0].trim() || "More";
     counts.set(area, (counts.get(area) ?? 0) + 1);
   }
   return [...counts].map(([area, count]) => ({ area, count }));

@@ -1,6 +1,6 @@
 {
   "sample": "partial",
-  "hash": "c68b940110077e70c78cd5dccae0bd212f3a67f44b4583a8c897c27c1d057b81",
+  "hash": "057ccdc0711ad26635a474e4f6b0d4815464ea96c2a2f678166dc8b70eec4555",
   "result": {
     "criterion": "H5",
     "applicable": true,
@@ -15,7 +15,7 @@
         "evidence": [
           {
             "quote": "New hires may ask their manager to suggest an informal mentor from another team.",
-            "paragraphId": "p7",
+            "paragraphId": "p6",
             "verified": true
           }
         ]
@@ -28,7 +28,7 @@
         "evidence": [
           {
             "quote": "Managers look at performance reviews and time in role when recommending someone for promotion.",
-            "paragraphId": "p8",
+            "paragraphId": "p7",
             "verified": true
           }
         ]
@@ -41,7 +41,7 @@
         "evidence": [
           {
             "quote": "Promotions are considered once a year. Managers look at performance reviews and time in role when recommending someone for promotion.",
-            "paragraphId": "p8",
+            "paragraphId": "p7",
             "verified": true
           }
         ]

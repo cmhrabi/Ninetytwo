@@ -1,5 +1,3 @@
-TODO(team): replace with the team's sample text
-
 Northwind Freight Inc. — Hiring Policy
 
 Northwind Freight is an equal opportunity employer. We hire the best person for

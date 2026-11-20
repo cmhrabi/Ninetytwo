@@ -11,7 +11,7 @@
       "evidence": [
         {
           "quote": "Cedar Lane Software does not discriminate in hiring on the basis of race, ancestry, place of origin, colour, ethnic origin, creed, sex, sexual orientation, gender identity, age or disability.",
-          "paragraphId": "p3"
+          "paragraphId": "p2"
         }
       ]
     },
@@ -28,11 +28,11 @@
       "evidence": [
         {
           "quote": "This includes First Nations, Inuit and Métis applicants.",
-          "paragraphId": "p3"
+          "paragraphId": "p2"
         },
         {
           "quote": "race, ancestry, place of origin, colour, ethnic origin, creed",
-          "paragraphId": "p3"
+          "paragraphId": "p2"
         }
       ]
     }

@@ -1,6 +1,6 @@
 {
   "sample": "weak",
-  "hash": "721b719e87e1273bdf4625c9935259cff90f78392561634314c50b6baa3d1878",
+  "hash": "8c97bbddef21fa7d3d4c8609161a687e91970d5824a8567a297238c2167fdaae",
   "result": {
     "criterion": "H1",
     "applicable": true,
@@ -20,7 +20,7 @@
         "evidence": [
           {
             "quote": "Northwind Freight is an equal opportunity employer.",
-            "paragraphId": "p3",
+            "paragraphId": "p2",
             "verified": true
           }
         ]

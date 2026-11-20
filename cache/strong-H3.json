@@ -1,6 +1,6 @@
 {
   "sample": "strong",
-  "hash": "30f90e505c51b4e3bf3ec29673518f1ab24ae4c8b9a84f86b7eb7577d1e09b07",
+  "hash": "46a0dcc29895526d8210cd8713d6c611f5a9b3fe4ba2edd445486b4003ea5e93",
   "result": {
     "criterion": "H3",
     "applicable": true,
@@ -14,7 +14,7 @@
         "evidence": [
           {
             "quote": "We run a special program under section 14 of the Ontario Human Rights Code.",
-            "paragraphId": "p4",
+            "paragraphId": "p3",
             "verified": true
           }
         ]
@@ -26,7 +26,7 @@
         "evidence": [
           {
             "quote": "Its purpose is to address the under-representation of Indigenous employees in clinical leadership roles at Lakeshore.",
-            "paragraphId": "p4",
+            "paragraphId": "p3",
             "verified": true
           }
         ]
@@ -38,12 +38,12 @@
         "evidence": [
           {
             "quote": "Self-identification for the program is voluntary.",
-            "paragraphId": "p5",
+            "paragraphId": "p4",
             "verified": true
           },
           {
             "quote": "This information is kept separately from the hiring file and used only for the program.",
-            "paragraphId": "p5",
+            "paragraphId": "p4",
             "verified": true
           }
         ]
@@ -55,7 +55,7 @@
         "evidence": [
           {
             "quote": "Applicants may confirm their identity through a letter from their community or an Indigenous organization of their choice.",
-            "paragraphId": "p5",
+            "paragraphId": "p4",
             "verified": true
           }
         ]

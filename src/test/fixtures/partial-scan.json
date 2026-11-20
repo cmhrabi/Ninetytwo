@@ -4,11 +4,11 @@
       "criterion": "H1",
       "hits": [
         {
-          "paragraphId": "p3",
+          "paragraphId": "p2",
           "label": "Non-discrimination ban covering listed grounds and First Nations, Inuit, Métis"
         },
         {
-          "paragraphId": "p4",
+          "paragraphId": "p3",
           "label": "Workforce reflects communities including Indigenous Peoples"
         }
       ],
@@ -18,11 +18,11 @@
       "criterion": "H3",
       "hits": [
         {
-          "paragraphId": "p4",
+          "paragraphId": "p3",
           "label": "Workforce reflection goal including Indigenous Peoples"
         },
         {
-          "paragraphId": "p5",
+          "paragraphId": "p4",
           "label": "Indigenous candidates preferred for client-facing roles"
         }
       ],
@@ -32,11 +32,11 @@
       "criterion": "H5",
       "hits": [
         {
-          "paragraphId": "p7",
+          "paragraphId": "p6",
           "label": "New hires may request informal mentor from another team"
         },
         {
-          "paragraphId": "p8",
+          "paragraphId": "p7",
           "label": "Promotion considered yearly using reviews and time in role"
         }
       ],

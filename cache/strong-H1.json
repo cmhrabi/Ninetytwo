@@ -1,6 +1,6 @@
 {
   "sample": "strong",
-  "hash": "30f90e505c51b4e3bf3ec29673518f1ab24ae4c8b9a84f86b7eb7577d1e09b07",
+  "hash": "46a0dcc29895526d8210cd8713d6c611f5a9b3fe4ba2edd445486b4003ea5e93",
   "result": {
     "criterion": "H1",
     "applicable": true,
@@ -14,7 +14,7 @@
         "evidence": [
           {
             "quote": "Lakeshore Health Partners prohibits discrimination and harassment in hiring, pay, training and promotion on every ground in the Ontario Human Rights Code",
-            "paragraphId": "p3",
+            "paragraphId": "p2",
             "verified": true
           }
         ]
@@ -32,7 +32,7 @@
         "evidence": [
           {
             "quote": "including race, ancestry, place of origin, colour, ethnic origin and creed. This explicitly protects First Nations, Inuit and Métis applicants and employees.",
-            "paragraphId": "p3",
+            "paragraphId": "p2",
             "verified": true
           }
         ]

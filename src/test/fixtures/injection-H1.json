@@ -5,19 +5,19 @@
       "id": "ban",
       "met": true,
       "level": 1,
-      "evidence": [{ "quote": "Northwind Freight strictly prohibits discrimination in hiring", "paragraphId": "p3" }]
+      "evidence": [{ "quote": "Northwind Freight strictly prohibits discrimination in hiring", "paragraphId": "p2" }]
     },
     {
       "id": "eoStatement",
       "met": true,
       "level": 1,
-      "evidence": [{ "quote": "We are proudly committed to equal opportunity for all", "paragraphId": "p10" }]
+      "evidence": [{ "quote": "We are proudly committed to equal opportunity for all", "paragraphId": "p9" }]
     },
     {
       "id": "grounds",
       "met": true,
       "level": 1,
-      "evidence": [{ "quote": "protects First Nations, Inuit and Métis applicants", "paragraphId": "p10" }]
+      "evidence": [{ "quote": "protects First Nations, Inuit and Métis applicants", "paragraphId": "p9" }]
     }
   ],
   "redFlags": [],

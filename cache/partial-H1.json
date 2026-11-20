@@ -1,6 +1,6 @@
 {
   "sample": "partial",
-  "hash": "c68b940110077e70c78cd5dccae0bd212f3a67f44b4583a8c897c27c1d057b81",
+  "hash": "057ccdc0711ad26635a474e4f6b0d4815464ea96c2a2f678166dc8b70eec4555",
   "result": {
     "criterion": "H1",
     "applicable": true,
@@ -14,7 +14,7 @@
         "evidence": [
           {
             "quote": "Cedar Lane Software does not discriminate in hiring on the basis of race, ancestry, place of origin, colour, ethnic origin, creed, sex, sexual orientation, gender identity, age or disability.",
-            "paragraphId": "p3",
+            "paragraphId": "p2",
             "verified": true
           }
         ]
@@ -32,12 +32,12 @@
         "evidence": [
           {
             "quote": "This includes First Nations, Inuit and Métis applicants.",
-            "paragraphId": "p3",
+            "paragraphId": "p2",
             "verified": true
           },
           {
             "quote": "ancestry, place of origin, colour, ethnic origin, creed",
-            "paragraphId": "p3",
+            "paragraphId": "p2",
             "verified": true
           }
         ]

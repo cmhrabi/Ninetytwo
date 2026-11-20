@@ -1,7 +1,6 @@
 <!--
   Source list. Written by the team.
   "Built on" feeds the strip on the landing page: one markdown link per line.
-  TODO(team): check each link points to the exact page you cite.
 -->
 
 ## Built on

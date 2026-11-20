@@ -4,7 +4,7 @@
       "criterion": "H1: The policy prohibits discrimination, including on grounds relevant to Indigenous identity",
       "hits": [
         {
-          "paragraphId": "p3",
+          "paragraphId": "p2",
           "label": "Bans discrimination on Code grounds, names First Nations, Inuit, Métis"
         }
       ],
@@ -14,11 +14,11 @@
       "criterion": "H3: Indigenous-specific hiring follows Ontario Human Rights Commission guidance",
       "hits": [
         {
-          "paragraphId": "p4",
+          "paragraphId": "p3",
           "label": "Section 14 special program, purpose is clinical leadership under-representation"
         },
         {
-          "paragraphId": "p5",
+          "paragraphId": "p4",
           "label": "Voluntary self-identification, community letter confirmation, kept separate"
         }
       ],
@@ -28,15 +28,15 @@
       "criterion": "H5: Retention and advancement supports exist",
       "hits": [
         {
-          "paragraphId": "p6",
+          "paragraphId": "p5",
           "label": "Senior leadership sponsor for new Indigenous hires"
         },
         {
-          "paragraphId": "p7",
+          "paragraphId": "p6",
           "label": "Published objective promotion criteria, recorded reasons, annual review"
         },
         {
-          "paragraphId": "p8",
+          "paragraphId": "p7",
           "label": "Indigenous Employee Circle with budget and executive sponsor"
         }
       ],

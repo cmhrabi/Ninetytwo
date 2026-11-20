@@ -1,6 +1,6 @@
 {
   "sample": "strong",
-  "hash": "30f90e505c51b4e3bf3ec29673518f1ab24ae4c8b9a84f86b7eb7577d1e09b07",
+  "hash": "46a0dcc29895526d8210cd8713d6c611f5a9b3fe4ba2edd445486b4003ea5e93",
   "result": {
     "criterion": "H5",
     "applicable": true,
@@ -15,7 +15,7 @@
         "evidence": [
           {
             "quote": "Every new Indigenous hire is offered a formal sponsor from senior leadership for their first two years. Sponsors meet with them monthly and advocate for stretch assignments.",
-            "paragraphId": "p6",
+            "paragraphId": "p5",
             "verified": true
           }
         ]
@@ -28,7 +28,7 @@
         "evidence": [
           {
             "quote": "Promotion decisions use published, objective criteria for each level.",
-            "paragraphId": "p7",
+            "paragraphId": "p6",
             "verified": true
           }
         ]
@@ -41,7 +41,7 @@
         "evidence": [
           {
             "quote": "Panels score candidates against those criteria and record the reasons for each decision. Records are kept for three years and reviewed each year for disparities.",
-            "paragraphId": "p7",
+            "paragraphId": "p6",
             "verified": true
           }
         ]
@@ -54,7 +54,7 @@
         "evidence": [
           {
             "quote": "The Indigenous Employee Circle has an annual budget, paid meeting time for members and an executive sponsor.",
-            "paragraphId": "p8",
+            "paragraphId": "p7",
             "verified": true
           }
         ]

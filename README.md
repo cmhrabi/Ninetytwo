@@ -5,10 +5,6 @@ Call to Action #92 (CTA 92). You upload a policy. An AI looks for evidence on th
 (H1, H3, H5). Code checks every quote and works out the score. The report shows what was found,
 with sources and places to learn more. The tool never writes or recommends policy changes.
 
-> **TODO(team):** Non-tech D's sections go here: what CTA 92 asks and why it matters, the other
-> judging criteria, the data and OCAP® note, and business and sustainability. The sections below
-> are the technical ones (Tech B).
-
 ## Contents
 
 - [Run it](#run-it)
