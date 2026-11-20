@@ -18,12 +18,29 @@ export function getContent(file: ContentFile): string {
   }
 }
 
-/** Body under `## <heading>` up to the next `## ` heading (case-insensitive). Missing → "". */
-export function getSection(file: ContentFile, heading: string): string {
+/**
+ * Body under `## <heading>` up to the next heading of the same level (case-insensitive).
+ * Pass `level: 3` for `### ` sections. Missing → "".
+ */
+export function getSection(file: ContentFile, heading: string, level: 2 | 3 = 2): string {
   const md = getContent(file);
-  const parts = md.split(/^##\s+/m).slice(1);
+  const parts = md.split(new RegExp(`^#{${level}}\\s+`, "m")).slice(1);
   const hit = parts.find((p) => p.split("\n")[0].trim().toLowerCase() === heading.toLowerCase());
   return hit ? hit.slice(hit.indexOf("\n") + 1).trim() : "";
+}
+
+/**
+ * Whole file minus one section (its heading and body, up to the next heading of the same level).
+ * Lets a page lay out e.g. a `### Sources` list separately from the rest of the copy.
+ */
+export function getContentWithout(file: ContentFile, heading: string, level: 2 | 3 = 2): string {
+  const md = getContent(file);
+  const hashes = "#".repeat(level);
+  const start = new RegExp(`^${hashes}\\s+${heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*$`, "im").exec(md);
+  if (!start) return md;
+  const rest = md.slice(start.index + start[0].length);
+  const next = new RegExp(`^${hashes}\\s`, "m").exec(rest);
+  return (md.slice(0, start.index) + (next ? rest.slice(next.index) : "")).trim();
 }
 
 /** Markdown links `[label](url)` in a section, in order. */

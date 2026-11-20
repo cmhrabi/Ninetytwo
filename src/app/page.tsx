@@ -7,7 +7,7 @@ import { ExamplePreview } from "@/components/landing/ExamplePreview";
 import { FloatingDocument } from "@/components/landing/FloatingDocument";
 import { ScrollStory } from "@/components/landing/ScrollStory";
 import { buttonVariants } from "@/components/ui/button";
-import { getContent, getLinks, getSection, getSource, isTodo } from "@/lib/content";
+import { getContentWithout, getLinks, getSection, getSource, isTodo } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 // TODO(tech-a): read labels, tiers and weights from /api/rubric once rubric.json exists.
@@ -29,7 +29,9 @@ export default function Home() {
   const why = getSection("landing", "Why it matters");
   const whySource = getSource("landing", "Why it matters source");
   const builtOn = getLinks("sources", "Built on");
-  const learned = getContent("what-we-learned");
+  // Everything except "### Sources" is the main copy; the sources render as a smaller list below it.
+  const learned = getContentWithout("what-we-learned", "Sources", 3);
+  const learnedSources = getSection("what-we-learned", "Sources", 3);
 
   return (
     <>
@@ -189,9 +191,15 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl">What we learned</h2>
           </Reveal>
           <Reveal>
-            <Markdown className="text-lg [&_h3]:border-t [&_h3]:pt-8 [&_h3:first-child]:border-0 [&_h3:first-child]:pt-0">
+            <Markdown className="text-lg [&_ol]:space-y-6 [&_ol]:marker:font-heading [&_h3]:border-t [&_h3]:pt-8 [&_h3:first-child]:border-0 [&_h3:first-child]:pt-0">
               {learned || "TODO(team): What we learned, with citations."}
             </Markdown>
+            {learnedSources && (
+              <div className="mt-12 border-t pt-8">
+                <h3 className="text-sm font-medium tracking-[0.14em] text-muted-foreground uppercase">Sources</h3>
+                <Markdown className="mt-4 text-sm text-muted-foreground [&_a]:text-midnight">{learnedSources}</Markdown>
+              </div>
+            )}
           </Reveal>
         </div>
       </Section>
