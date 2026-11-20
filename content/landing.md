@@ -6,12 +6,10 @@
 
 ## Hero headline
 
-Check your internal policies against Call to Action 92.
-<!-- TODO(team): confirm or rewrite this product headline. -->
+Your workplace policies, measured against Call to Action 92.
 
 ## Hero subline
-
-TODO(team): One or two sentences on what the tool does for HR, People & Culture and recruitment leads.
+Highlighting the gaps in corporate internal policies, line by line. This app is for HR, People & Culture, and business leaders.
 
 ## Ask 1
 
