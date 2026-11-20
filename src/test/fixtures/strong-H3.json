@@ -1,0 +1,63 @@
+{
+  "applicable": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "The program designates up to four Patient Navigator roles each year for Indigenous applicants.",
+        "paragraphId": "p4"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "id": "legalBasis",
+      "met": true,
+      "level": 1,
+      "evidence": [
+        {
+          "quote": "We run a special program under section 14 of the Ontario Human Rights Code.",
+          "paragraphId": "p4"
+        }
+      ]
+    },
+    {
+      "id": "purpose",
+      "met": true,
+      "level": 1,
+      "evidence": [
+        {
+          "quote": "Its purpose is to address the under-representation of Indigenous employees in clinical leadership roles at Lakeshore.",
+          "paragraphId": "p4"
+        }
+      ]
+    },
+    {
+      "id": "voluntarySelfId",
+      "met": true,
+      "level": 1,
+      "evidence": [
+        {
+          "quote": "Self-identification for the program is voluntary.",
+          "paragraphId": "p5"
+        },
+        {
+          "quote": "This information is kept separately from the hiring file and used only for the program.",
+          "paragraphId": "p5"
+        }
+      ]
+    },
+    {
+      "id": "communityConfirmation",
+      "met": true,
+      "level": 1,
+      "evidence": [
+        {
+          "quote": "Applicants may confirm their identity through a letter from their community or an Indigenous organization of their choice.",
+          "paragraphId": "p5"
+        }
+      ]
+    }
+  ],
+  "redFlags": [],
+  "reasoning": "The policy describes a section 14 special program that designates Patient Navigator roles for Indigenous applicants to address under-representation in clinical leadership. Self-identification for the program is voluntary, and identity is confirmed through a letter from the applicant's community or an Indigenous organization."
+}

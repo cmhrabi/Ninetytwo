@@ -4,7 +4,6 @@ import { applyRubric } from "../core/applyRubric";
 import { JudgeSchema } from "../core/judgeSchema";
 import { phraseScan } from "../core/phraseScan";
 import { buildJudgePrompt } from "../core/prompt";
-import { HttpError } from "../http/errors";
 import { completeJson } from "./openrouter";
 import { getCriterion } from "./rubricStore";
 
@@ -15,10 +14,6 @@ export async function judgeCriterion(
   scan?: ScanResult,
 ): Promise<CriterionResult> {
   const criterion = await getCriterion(id);
-  // TODO(05): remove once applicability and "average" scoring exist in applyRubric.
-  if (criterion.appliesWhen !== "always" || criterion.scoring.type !== "rules") {
-    throw new HttpError(501, "internal", `${criterion.id} scoring arrives in phase 05`);
-  }
   const criterionScan = scan
     ? scan.criteria.find((c) => c.criterion === criterion.id)
     : phraseScan(paragraphs, { criteria: [criterion] })[0];

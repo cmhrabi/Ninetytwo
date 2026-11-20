@@ -1,0 +1,34 @@
+{
+  "applicable": {
+    "value": true,
+    "evidence": []
+  },
+  "checks": [
+    {
+      "id": "a",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    },
+    {
+      "id": "b",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    },
+    {
+      "id": "c",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    },
+    {
+      "id": "d",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    }
+  ],
+  "redFlags": [],
+  "reasoning": "The policy covers job posting, screening, interviews, references, offer approval, onboarding and probation. It does not mention mentorship, sponsorship, promotion criteria, promotion or pay transparency, or Indigenous-specific supports."
+}

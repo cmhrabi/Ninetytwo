@@ -48,6 +48,24 @@ describe("POST /api/judge/[criterion]", () => {
     expect(body.checks).toHaveLength(3);
   });
 
+  it("returns a CriterionResult for H3 with a verified preference and a baseline warning", async () => {
+    const h3Paragraphs = [{ id: "p1", text: "Indigenous candidates preferred for all client-facing roles." }];
+    mocked.mockResolvedValueOnce({
+      data: {
+        applicable: { value: true, evidence: [{ quote: "Indigenous candidates preferred for all client-facing roles", paragraphId: "p1" }] },
+        checks: [],
+        redFlags: [],
+        reasoning: "A preference with no stated legal basis or purpose.",
+      },
+      model: "m",
+      usage: undefined,
+    });
+    const res = await post("H3", { paragraphs: h3Paragraphs });
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as CriterionResult;
+    expect(body).toMatchObject({ criterion: "H3", applicable: true, score: 0, status: "Not found", warning: "baseline" });
+  });
+
   it("maps a 429 from the AI to 429 rate_limited", async () => {
     mocked.mockRejectedValueOnce(new HttpError(429, "rate_limited", "busy"));
     const res = await post("H1", { paragraphs });

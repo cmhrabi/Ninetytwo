@@ -55,10 +55,13 @@ export function applyRubric(
     if (def) addFlag(def.id, def.label, flag.evidence.map((e) => verifyEvidence(e, paragraphs)));
   }
 
-  // 5. Applicability. TODO(05): conditional criteria (appliesWhen !== "always").
-  const applicable = true;
+  // 5. Applicability: conditional criteria apply only when the model says so AND quotes it.
+  if (criterion.appliesWhen !== "always") {
+    const shown = judged.applicable.evidence.some((e) => verifyEvidence(e, paragraphs).verified);
+    if (!judged.applicable.value || !shown) return notApplicable(criterion, judged);
+  }
 
-  // 6. Scoring. TODO(05): the "average" type for graded checks.
+  // 6. Scoring.
   let score: Score = 0;
   if (criterion.scoring.type === "rules") {
     const met = new Set(checks.filter((c) => c.met).map((c) => c.id));
@@ -66,6 +69,10 @@ export function applyRubric(
       (r) => (r.allOf?.length && r.allOf.every((id) => met.has(id))) || r.anyOf?.some((id) => met.has(id)),
     );
     score = rule?.score ?? 0;
+  } else {
+    score = averageLevel(checks);
+    const cap = criterion.scoring.capAt1Unless;
+    if (cap && (checks.find((c) => c.id === cap)?.level ?? 0) < 1) score = Math.min(score, 1) as Score;
   }
   if (redFlags.length) score = 0;
 
@@ -73,12 +80,40 @@ export function applyRubric(
   const warning = redFlags.length || (criterion.warnOnZero && score === 0) ? "baseline" : null;
   return {
     criterion: criterion.id,
-    applicable,
+    applicable: true,
     score,
     status: STATUS[score],
     checks,
     redFlags,
     warning,
+    reasoning: judged.reasoning.trim(),
+    cached: false,
+  };
+}
+
+/** Mean of the graded levels, rounded half up (1.5 → 2, 0.5 → 1, 0.25 → 0). Integer math. */
+function averageLevel(checks: CheckResult[]): Score {
+  if (!checks.length) return 0;
+  const sum = checks.reduce((total, c) => total + (c.level ?? 0), 0);
+  return Math.min(2, Math.floor((2 * sum + checks.length) / (2 * checks.length))) as Score;
+}
+
+/** A conditional criterion that doesn't apply: no score, no evidence, no red flags, no warning. */
+function notApplicable(criterion: Criterion, judged: JudgeReply): CriterionResult {
+  return {
+    criterion: criterion.id,
+    applicable: false,
+    score: null,
+    status: "Not applicable",
+    checks: criterion.checks.map((k) => ({
+      id: k.id,
+      label: k.label,
+      met: false,
+      ...(k.graded ? { level: 0 as const } : {}),
+      evidence: [],
+    })),
+    redFlags: [],
+    warning: null,
     reasoning: judged.reasoning.trim(),
     cached: false,
   };

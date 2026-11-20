@@ -1,0 +1,49 @@
+{
+  "applicable": {
+    "value": true,
+    "evidence": []
+  },
+  "checks": [
+    {
+      "id": "a",
+      "met": true,
+      "level": 1,
+      "evidence": [
+        {
+          "quote": "New hires may ask their manager to suggest an informal mentor from another team.",
+          "paragraphId": "p7"
+        }
+      ]
+    },
+    {
+      "id": "b",
+      "met": true,
+      "level": 1,
+      "evidence": [
+        {
+          "quote": "Managers look at performance reviews and time in role when recommending someone for promotion.",
+          "paragraphId": "p8"
+        }
+      ]
+    },
+    {
+      "id": "c",
+      "met": true,
+      "level": 1,
+      "evidence": [
+        {
+          "quote": "Promotions are considered once a year. Managers look at performance reviews and time in role when recommending someone for promotion.",
+          "paragraphId": "p8"
+        }
+      ]
+    },
+    {
+      "id": "d",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    }
+  ],
+  "redFlags": [],
+  "reasoning": "The policy mentions that new hires may ask for an informal mentor, and says that annual promotions are recommended by managers based on performance reviews and time in role. The Indigenous references concern hiring only, and no Indigenous-specific retention or advancement support is described."
+}

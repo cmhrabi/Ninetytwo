@@ -24,10 +24,22 @@ describe("buildJudgePrompt", () => {
     });
   }
 
-  it("shows graded level text", () => {
+  it("shows graded level text and asks for a level", () => {
     const h5 = rubric.criteria.find((c) => c.scoring.type === "average")!;
     const { system } = buildJudgePrompt(h5, paragraphs);
     expect(system).toContain(`level 2: ${h5.checks[0].levels!["2"]}`);
+    expect(system).toContain("For graded checks, set level to 0, 1 or 2");
+    expect(system).toContain("always applies");
+  });
+
+  it("asks a conditional criterion for an applicability quote", () => {
+    const h3 = rubric.criteria.find((c) => c.appliesWhen !== "always")!;
+    const { system } = buildJudgePrompt(h3, paragraphs);
+    expect(system).toContain(`Applies when: ${h3.appliesWhen}`);
+    expect(system).toContain("at least one exact quote of the passage that shows it in applicable.evidence");
+    expect(system).toContain("'Encouraged to apply' alone does not count");
+    expect(system).not.toContain("always applies");
+    expect(system).not.toContain("For graded checks");
   });
 
   it("lists the scan candidates as likely passages", () => {

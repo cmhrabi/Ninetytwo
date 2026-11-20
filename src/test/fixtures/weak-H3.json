@@ -1,0 +1,34 @@
+{
+  "applicable": {
+    "value": false,
+    "evidence": []
+  },
+  "checks": [
+    {
+      "id": "legalBasis",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    },
+    {
+      "id": "purpose",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    },
+    {
+      "id": "voluntarySelfId",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    },
+    {
+      "id": "communityConfirmation",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    }
+  ],
+  "redFlags": [],
+  "reasoning": "The policy describes a general hiring process (job posting, manager screening, interviews, reference checks, onboarding). It contains no provision that restricts, designates, or prefers roles for Indigenous candidates."
+}

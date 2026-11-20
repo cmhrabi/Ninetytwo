@@ -11,6 +11,7 @@ export function buildJudgePrompt(
   scan?: CriterionScan,
 ): { system: string; user: string } {
   const always = criterion.appliesWhen === "always";
+  const graded = criterion.checks.some((k) => k.graded);
 
   const checks = criterion.checks
     .map((k) => {
@@ -52,9 +53,17 @@ export function buildJudgePrompt(
     "- If nothing in the policy supports a check, it is not met (met: false, level: 0, no evidence).",
     "- Do not infer intent from tone, aspirations or values statements. Only what the policy actually says counts.",
     "- For checks that are not graded, set level to 1 when met and 0 when not met.",
-    always
-      ? "- This criterion always applies: return applicable.value = true with an empty evidence list."
-      : "- Set applicable.value = true only if the policy meets the 'Applies when' condition, and quote the passage that shows it. Otherwise false with no evidence.",
+    ...(graded
+      ? [
+          "- For graded checks, set level to 0, 1 or 2 by matching the policy to the level text above, and quote the passage that supports a level above 0. met is true when level is 1 or 2.",
+        ]
+      : []),
+    ...(always
+      ? ["- This criterion always applies: return applicable.value = true with an empty evidence list."]
+      : [
+          "- Set applicable.value = true only if the policy meets the 'Applies when' condition, and put at least one exact quote of the passage that shows it in applicable.evidence. Otherwise false with no evidence.",
+          "- 'Encouraged to apply' alone does not count: a policy that only encourages a group to apply does not meet the condition.",
+        ]),
     "- Return one entry in checks for every check id listed above, and only those ids. Use only the red-flag ids listed above.",
     "- reasoning: one or two sentences describing what the policy contains for this criterion. Never give advice or recommendations.",
   ].join("\n");
