@@ -26,7 +26,7 @@ const steps = [
   {
     Icon: Upload,
     title: "Upload a policy",
-    body: "Drop a PDF, DOCX or TXT hiring policy, or pick a sample. It is read in memory and never stored.",
+    body: "Drop a PDF, DOCX or TXT policy, or pick a sample. It is read in memory and never stored.",
   },
   {
     Icon: FileSearch,

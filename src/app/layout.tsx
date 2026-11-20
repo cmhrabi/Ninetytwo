@@ -24,7 +24,7 @@ const instrumentSerif = Instrument_Serif({
 
 export const metadata: Metadata = {
   title: "NinetyTwo",
-  description: "Check a hiring policy against TRC Call to Action #92",
+  description: "Check your internal policies against Call to Action 92",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

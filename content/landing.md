@@ -6,7 +6,7 @@
 
 ## Hero headline
 
-Check your hiring policy against Call to Action 92.
+Check your internal policies against Call to Action 92.
 <!-- TODO(team): confirm or rewrite this product headline. -->
 
 ## Hero subline

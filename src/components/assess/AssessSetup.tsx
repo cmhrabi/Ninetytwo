@@ -16,7 +16,7 @@ export function AssessSetup() {
     <>
       <Section tone="midnight" className="py-14 md:py-20">
         <Eyebrow className="text-gold">Assess</Eyebrow>
-        <h1 className="text-display max-w-[18ch]">Assess a hiring policy</h1>
+        <h1 className="text-display max-w-[18ch]">Assess an internal policy</h1>
         <p className="mt-4 max-w-2xl text-white/80">
           Upload your policy or try a fictional sample. NinetyTwo marks the passages that matter, checks every quote
           against your document, and scores it against Call to Action 92.
