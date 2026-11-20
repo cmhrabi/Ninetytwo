@@ -29,6 +29,37 @@ describe("judgeCriterion", () => {
     expect(user).toContain("- p1: equal opportunity");
   });
 
+  it("scores a conditional criterion (no 501): not applicable without an applicability quote", async () => {
+    mocked.mockResolvedValueOnce({
+      data: {
+        applicable: { value: false, evidence: [] },
+        checks: [],
+        redFlags: [],
+        reasoning: "The policy has no Indigenous-specific hiring.",
+      },
+      model: "m",
+      usage: undefined,
+    });
+    const result = await judgeCriterion("H3", paragraphs);
+    expect(result).toMatchObject({ criterion: "H3", applicable: false, score: null, status: "Not applicable", warning: null });
+  });
+
+  it("scores a graded criterion with the average rule (no 501)", async () => {
+    mocked.mockResolvedValueOnce({
+      data: {
+        applicable: { value: true, evidence: [] },
+        checks: [],
+        redFlags: [],
+        reasoning: "No retention or advancement supports are described.",
+      },
+      model: "m",
+      usage: undefined,
+    });
+    const result = await judgeCriterion("H5", paragraphs);
+    expect(result).toMatchObject({ criterion: "H5", applicable: true, score: 0, status: "Not found", warning: null });
+    expect(result.checks.every((c) => c.level === 0)).toBe(true);
+  });
+
   it("passes a 429 through", async () => {
     mocked.mockRejectedValueOnce(new HttpError(429, "rate_limited", "busy"));
     await expect(judgeCriterion("H1", paragraphs)).rejects.toMatchObject({ status: 429, code: "rate_limited" });

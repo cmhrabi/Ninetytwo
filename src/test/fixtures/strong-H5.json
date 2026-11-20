@@ -1,0 +1,54 @@
+{
+  "applicable": {
+    "value": true,
+    "evidence": []
+  },
+  "checks": [
+    {
+      "id": "a",
+      "met": true,
+      "level": 2,
+      "evidence": [
+        {
+          "quote": "Every new Indigenous hire is offered a formal sponsor from senior leadership for their first two years. Sponsors meet with them monthly and advocate for stretch assignments.",
+          "paragraphId": "p6"
+        }
+      ]
+    },
+    {
+      "id": "b",
+      "met": true,
+      "level": 2,
+      "evidence": [
+        {
+          "quote": "Promotion decisions use published, objective criteria for each level.",
+          "paragraphId": "p7"
+        }
+      ]
+    },
+    {
+      "id": "c",
+      "met": true,
+      "level": 2,
+      "evidence": [
+        {
+          "quote": "Panels score candidates against those criteria and record the reasons for each decision. Records are kept for three years and reviewed each year for disparities.",
+          "paragraphId": "p7"
+        }
+      ]
+    },
+    {
+      "id": "d",
+      "met": true,
+      "level": 2,
+      "evidence": [
+        {
+          "quote": "The Indigenous Employee Circle has an annual budget, paid meeting time for members and an executive sponsor.",
+          "paragraphId": "p8"
+        }
+      ]
+    }
+  ],
+  "redFlags": [],
+  "reasoning": "The policy describes a formal senior-leadership sponsorship for new Indigenous hires, promotion decisions based on published objective criteria with recorded reasons and annual disparity reviews, and a budgeted Indigenous Employee Circle with an executive sponsor. Pay transparency itself is not specifically described beyond the promotion documentation."
+}

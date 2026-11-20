@@ -1,0 +1,39 @@
+{
+  "applicable": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Indigenous candidates preferred for all client-facing roles.",
+        "paragraphId": "p5"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "id": "legalBasis",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    },
+    {
+      "id": "purpose",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    },
+    {
+      "id": "voluntarySelfId",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    },
+    {
+      "id": "communityConfirmation",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    }
+  ],
+  "redFlags": [],
+  "reasoning": "The policy states a preference for Indigenous candidates in all client-facing roles and a general goal of workforce reflection. It cites no legal basis, states no specific disadvantage or under-representation being addressed, and says nothing about self-identification or identity confirmation."
+}

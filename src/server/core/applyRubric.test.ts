@@ -90,34 +90,209 @@ describe("applyRubric (H1, rules)", () => {
   });
 });
 
-describe("applyRubric red flags", () => {
-  const h3 = rubric.criteria.find((c) => c.redFlags.length > 0)!;
-  const ps = [{ id: "p1", text: "All applicants must self-identify on the application form." }];
-  const allMet = h3.checks.map((k) => check(k.id));
+// H3: the conditional criterion (applies only to Indigenous-specific hiring).
+const h3 = rubric.criteria.find((c) => c.appliesWhen !== "always")!;
+const h3Paragraphs = [
+  { id: "p1", text: "Indigenous candidates are preferred for all Patient Navigator roles." },
+  { id: "p2", text: "This is a special program under section 14 of the Ontario Human Rights Code." },
+  { id: "p3", text: "Its purpose is to address the under-representation of Indigenous employees in leadership." },
+  { id: "p4", text: "Self-identification is voluntary and asked only for the designated roles." },
+  { id: "p5", text: "Applicants may confirm their identity through a letter from their community." },
+  { id: "p6", text: "All applicants must self-identify on the general application form." },
+];
+const APPLIES: JudgeReply["applicable"] = {
+  value: true,
+  evidence: [{ quote: "Indigenous candidates are preferred for all Patient Navigator roles", paragraphId: "p1" }],
+};
+const H3_QUOTES: Record<string, [string, string]> = {
+  legalBasis: ["special program under section 14 of the Ontario Human Rights Code", "p2"],
+  purpose: ["address the under-representation of Indigenous employees", "p3"],
+  voluntarySelfId: ["Self-identification is voluntary and asked only for the designated roles", "p4"],
+  communityConfirmation: ["confirm their identity through a letter from their community", "p5"],
+};
+const h3Check = (id: string) => check(id, ...H3_QUOTES[id]);
+const allH3 = Object.keys(H3_QUOTES).map(h3Check);
+const generalFormsFlag = (quote: string): JudgeReply["redFlags"] => [
+  { id: "identityOnGeneralForms", evidence: [{ quote, paragraphId: "p6" }] },
+];
+const REAL_FLAG = "must self-identify on the general application form";
 
-  it("a verified red flag forces 0 and a baseline warning", () => {
-    const result = applyRubric(
-      h3,
-      { ...reply(allMet), redFlags: [{ id: h3.redFlags[0].id, evidence: [{ quote: "must self-identify on the application form", paragraphId: "p1" }] }] },
-      ps,
-    );
-    expect(result.redFlags).toHaveLength(1);
+describe("applyRubric (H3, conditional)", () => {
+  const cases: {
+    name: string;
+    applicable: JudgeReply["applicable"];
+    checks: CheckReply[];
+    redFlags?: JudgeReply["redFlags"];
+    score: 0 | 1 | 2 | null;
+    warning: "baseline" | null;
+    flags?: number;
+  }[] = [
+    { name: "not applicable (no preference language) → N/A", applicable: { value: false, evidence: [] }, checks: [], score: null, warning: null },
+    {
+      name: "model says applicable but the quote is fake → N/A",
+      applicable: { value: true, evidence: [{ quote: "We hire only Indigenous candidates for every role", paragraphId: "p1" }] },
+      checks: allH3,
+      score: null,
+      warning: null,
+    },
+    {
+      name: "model says applicable with no quote → N/A",
+      applicable: { value: true, evidence: [] },
+      checks: allH3,
+      score: null,
+      warning: null,
+    },
+    { name: "applicable with only legalBasis → 1", applicable: APPLIES, checks: [h3Check("legalBasis")], score: 1, warning: null },
+    { name: "applicable with only purpose → 1", applicable: APPLIES, checks: [h3Check("purpose")], score: 1, warning: null },
+    { name: "all four checks → 2", applicable: APPLIES, checks: allH3, score: 2, warning: null },
+    { name: "applicable with nothing → 0 + warning", applicable: APPLIES, checks: [], score: 0, warning: "baseline" },
+    {
+      name: "voluntarySelfId and communityConfirmation alone → 0 + warning",
+      applicable: APPLIES,
+      checks: [h3Check("voluntarySelfId"), h3Check("communityConfirmation")],
+      score: 0,
+      warning: "baseline",
+    },
+    {
+      name: "verified identityOnGeneralForms red flag with all checks met → 0 + warning",
+      applicable: APPLIES,
+      checks: allH3,
+      redFlags: generalFormsFlag(REAL_FLAG),
+      score: 0,
+      warning: "baseline",
+      flags: 1,
+    },
+    {
+      name: "red flag with a fake quote → ignored",
+      applicable: APPLIES,
+      checks: allH3,
+      redFlags: generalFormsFlag("asks every applicant for a status card"),
+      score: 2,
+      warning: null,
+      flags: 0,
+    },
+    {
+      name: "N/A drops a verified red flag and never warns",
+      applicable: { value: false, evidence: [] },
+      checks: [],
+      redFlags: generalFormsFlag(REAL_FLAG),
+      score: null,
+      warning: null,
+      flags: 0,
+    },
+  ];
+
+  for (const c of cases) {
+    it(c.name, () => {
+      const result = applyRubric(
+        h3,
+        { ...reply(c.checks), applicable: c.applicable, redFlags: c.redFlags ?? [] },
+        h3Paragraphs,
+      );
+      expect(result.score).toBe(c.score);
+      expect(result.warning).toBe(c.warning);
+      expect(result.applicable).toBe(c.score !== null);
+      expect(result.status).toBe(
+        c.score === null ? "Not applicable" : { 0: "Not found", 1: "Partly addressed", 2: "Addressed" }[c.score],
+      );
+      if (c.flags !== undefined) expect(result.redFlags).toHaveLength(c.flags);
+      if (c.score === null) {
+        expect(result.redFlags).toEqual([]);
+        expect(result.checks.map((k) => k.id)).toEqual(h3.checks.map((k) => k.id));
+        expect(result.checks.every((k) => !k.met && k.evidence.length === 0)).toBe(true);
+      }
+    });
+  }
+});
+
+describe("applyRubric red flags", () => {
+  it("adds the scan's verified red flags", () => {
+    const evidence = [{ quote: REAL_FLAG, paragraphId: "p6", verified: true }];
+    const result = applyRubric(h3, { ...reply(allH3), applicable: APPLIES }, h3Paragraphs, {
+      criterion: h3.id,
+      candidates: [],
+      redFlags: [{ id: "identityOnGeneralForms", label: h3.redFlags[0].label, evidence }],
+    });
+    expect(result.redFlags).toEqual([{ id: "identityOnGeneralForms", label: h3.redFlags[0].label, evidence }]);
     expect(result.score).toBe(0);
     expect(result.warning).toBe("baseline");
   });
 
-  it("a red flag with a fake quote is dropped", () => {
-    const result = applyRubric(h3, { ...reply([]), redFlags: [{ id: h3.redFlags[0].id, evidence: [{ quote: "asks everyone for a status card", paragraphId: "p1" }] }] }, ps);
-    expect(result.redFlags).toEqual([]);
+  it("merges a flag found by both the judge and the scan without duplicating quotes", () => {
+    const evidence = [{ quote: REAL_FLAG, paragraphId: "p6", verified: true }];
+    const result = applyRubric(
+      h3,
+      { ...reply([]), applicable: APPLIES, redFlags: generalFormsFlag(REAL_FLAG) },
+      h3Paragraphs,
+      { criterion: h3.id, candidates: [], redFlags: [{ id: "identityOnGeneralForms", label: h3.redFlags[0].label, evidence }] },
+    );
+    expect(result.redFlags).toHaveLength(1);
+    expect(result.redFlags[0].evidence).toHaveLength(1);
   });
+});
 
-  it("adds the scan's verified red flags", () => {
-    const evidence = [{ quote: "must self-identify on the application form", paragraphId: "p1", verified: true }];
-    const result = applyRubric(h3, reply([]), ps, {
-      criterion: h3.id,
-      candidates: [],
-      redFlags: [{ id: h3.redFlags[0].id, label: h3.redFlags[0].label, evidence }],
+// H5: graded checks with the "average" rule.
+const h5 = rubric.criteria.find((c) => c.scoring.type === "average")!;
+const h5Paragraphs = [
+  { id: "p1", text: "New hires join a formal mentorship program with a senior sponsor." },
+  { id: "p2", text: "Promotion decisions use published, objective criteria for each level." },
+  { id: "p3", text: "Panels record the reasons for each promotion and pay decision." },
+  { id: "p4", text: "The employee network has an annual budget and an executive sponsor." },
+];
+const H5_QUOTES: Record<string, [string, string]> = {
+  a: ["formal mentorship program with a senior sponsor", "p1"],
+  b: ["published, objective criteria for each level", "p2"],
+  c: ["record the reasons for each promotion and pay decision", "p3"],
+  d: ["has an annual budget and an executive sponsor", "p4"],
+};
+const graded = (id: string, level: 0 | 1 | 2, quote: string | null = H5_QUOTES[id][0]): CheckReply => ({
+  id,
+  met: level >= 1,
+  level,
+  evidence: level > 0 && quote ? [{ quote, paragraphId: H5_QUOTES[id][1] }] : [],
+});
+const levels = (a: 0 | 1 | 2, b: 0 | 1 | 2, c: 0 | 1 | 2, d: 0 | 1 | 2) =>
+  [graded("a", a), graded("b", b), graded("c", c), graded("d", d)];
+
+describe("applyRubric (H5, average)", () => {
+  const cases: { name: string; checks: CheckReply[]; score: 0 | 1 | 2 }[] = [
+    { name: "(2, 2, 2, 2) → 2", checks: levels(2, 2, 2, 2), score: 2 },
+    { name: "(2, 2, 2, 0) → capped at 1 by d", checks: levels(2, 2, 2, 0), score: 1 },
+    { name: "(1, 1, 0, 0) → 0.5 rounds up to 1", checks: levels(1, 1, 0, 0), score: 1 },
+    { name: "(1, 0, 0, 0) → 0.25 rounds to 0", checks: levels(1, 0, 0, 0), score: 0 },
+    { name: "(2, 1, 1, 2) → 1.5 rounds up to 2", checks: levels(2, 1, 1, 2), score: 2 },
+    { name: "(0, 0, 0, 1) → 0.25 rounds to 0", checks: levels(0, 0, 0, 1), score: 0 },
+    { name: "nothing → 0, no warning", checks: [], score: 0 },
+    {
+      name: "level 2 claimed without a verified quote counts as 0",
+      checks: [graded("a", 2, null), graded("b", 2), graded("c", 1), graded("d", 2)],
+      score: 1,
+    },
+    {
+      name: "level 2 with a fake quote counts as 0 (and d at 0 caps)",
+      checks: [graded("a", 2), graded("b", 2), graded("c", 2), graded("d", 2, "a fully funded Indigenous network")],
+      score: 1,
+    },
+  ];
+
+  for (const c of cases) {
+    it(c.name, () => {
+      const result = applyRubric(h5, reply(c.checks), h5Paragraphs);
+      expect(result.score).toBe(c.score);
+      expect(result.applicable).toBe(true);
+      expect(result.warning).toBeNull(); // H5 doesn't warn on zero
+      expect(result.status).toBe({ 0: "Not found", 1: "Partly addressed", 2: "Addressed" }[c.score]);
+      for (const k of result.checks) expect(k.met).toBe((k.level ?? 0) >= 1);
     });
-    expect(result.redFlags).toEqual([{ id: h3.redFlags[0].id, label: h3.redFlags[0].label, evidence }]);
+  }
+
+  it("an unverified level is reported as 0 and not met", () => {
+    const result = applyRubric(h5, reply([graded("a", 2, null), graded("b", 1)]), h5Paragraphs);
+    expect(result.checks.map((k) => [k.id, k.level, k.met])).toEqual([
+      ["a", 0, false],
+      ["b", 1, true],
+      ["c", 0, false],
+      ["d", 0, false],
+    ]);
   });
 });

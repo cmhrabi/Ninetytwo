@@ -7,7 +7,7 @@ const BASE_URL = process.env.BASE_URL ?? "http://localhost:3000";
 const SAMPLE = process.env.SAMPLE ?? "weak";
 const timings: [string, number][] = [];
 
-async function call<T>(label: string, path: string, body?: unknown, allow501 = false): Promise<T> {
+async function call<T>(label: string, path: string, body?: unknown): Promise<T> {
   const started = Date.now();
   const res = await fetch(`${BASE_URL}${path}`, body === undefined ? undefined : {
     method: "POST",
@@ -16,7 +16,6 @@ async function call<T>(label: string, path: string, body?: unknown, allow501 = f
   });
   timings.push([label, Date.now() - started]);
   const json = await res.json().catch(() => null);
-  if (res.status === 501 && allow501) return null as T; // TODO(05): drop once every criterion scores
   if (!res.ok) {
     console.error(`✗ ${label}: HTTP ${res.status} ${JSON.stringify(json)}`);
     process.exit(1);
@@ -43,14 +42,11 @@ async function main() {
     console.log(`  ${c.criterion}: ${hits}${c.redFlags.length ? `  red flags: ${c.redFlags.map((r) => r.id).join(", ")}` : ""}`);
   }
 
-  const judged = await Promise.all(
+  const results = await Promise.all(
     rubric.criteria.map((c) =>
-      call<CriterionResult | null>(`judge ${c.id}`, `/api/judge/${c.id}`, { paragraphs: doc.paragraphs, scan }, true),
+      call<CriterionResult>(`judge ${c.id}`, `/api/judge/${c.id}`, { paragraphs: doc.paragraphs, scan }),
     ),
   );
-  const pending = rubric.criteria.filter((_, i) => !judged[i]).map((c) => c.id);
-  if (pending.length) console.log(`\nnot scored yet (501, phase 05): ${pending.join(", ")}`);
-  const results = judged.filter((r): r is CriterionResult => r !== null);
 
   console.log("\ncriterion  score  status            warning   verified quotes");
   for (const r of results) {
