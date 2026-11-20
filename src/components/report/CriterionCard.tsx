@@ -36,12 +36,12 @@ export function CriterionCard({
       aria-labelledby={`${cardAnchor(criterion.id)}-title`}
       aria-busy={card.kind === "pending" || card.kind === "retrying"}
       className={cn(
-        "@container scroll-mt-24 rounded-3xl bg-white p-5 ring-1 ring-border sm:p-8",
+        "@container scroll-mt-24 rounded-3xl bg-white p-5 ring-1 ring-border sm:p-8 print:break-before-page print:rounded-xl print:border print:border-border print:p-5 print:ring-0",
         na && "bg-surface",
         result?.warning === "baseline" && "ring-2 ring-gold-edge/60",
       )}
     >
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between print:break-inside-avoid">
         <div className="min-w-0">
           <div className="mb-2 flex flex-wrap items-center gap-2 text-xs font-medium text-muted-foreground">
             <span className="rounded-full bg-surface px-2 py-0.5 ring-1 ring-border">{tierLabel[criterion.tier]}</span>
@@ -98,7 +98,7 @@ function Body({ criterion, result }: { criterion: Criterion; result: CriterionRe
   return (
     <>
       {result.reasoning && <p className="max-w-3xl text-ink/85">{result.reasoning}</p>}
-      <div className="mt-6 grid gap-8 border-t border-border pt-6 @3xl:grid-cols-3 @3xl:gap-10">
+      <div className="mt-6 grid gap-8 border-t border-border pt-6 @3xl:grid-cols-3 @3xl:gap-10 print:mt-4 print:grid-cols-[1fr_1.4fr_1fr] print:gap-6 print:pt-4">
         <section>
           <ColumnHeading>Evidence found</ColumnHeading>
           <ul className="space-y-4">
@@ -143,7 +143,7 @@ function Body({ criterion, result }: { criterion: Criterion; result: CriterionRe
                   ))}
                 </ul>
               )}
-              <div className="space-y-4 rounded-xl bg-surface p-4">
+              <div className="space-y-4 rounded-xl bg-surface p-4 print:p-3">
                 <div>
                   <p className="mb-1 text-xs font-semibold text-midnight">What Addressed looks like</p>
                   <TeamCopy text={criterion.addressedLooksLike} />
@@ -231,7 +231,7 @@ function CardStatus({ card, onRetry }: { card: Exclude<CardState, { kind: "done"
         )}
         {card.network ? "You're offline, or the request timed out." : messageFor(card.code)}
       </p>
-      <Button variant="outline" onClick={onRetry}>
+      <Button variant="outline" className="print:hidden" onClick={onRetry}>
         <RotateCw data-icon="inline-start" aria-hidden /> Retry
       </Button>
     </div>

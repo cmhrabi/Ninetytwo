@@ -71,10 +71,10 @@ export function LinkList({ links, className }: { links: Link[]; className?: stri
             href={l.url}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-start gap-1.5 text-sm text-midnight underline decoration-gold-edge/50 underline-offset-4 hover:decoration-gold-edge"
+            className="print-url inline-flex items-start gap-1.5 text-sm text-midnight underline decoration-gold-edge/50 underline-offset-4 hover:decoration-gold-edge"
           >
             <span>{l.title}</span>
-            <ExternalLink className="mt-1 size-3 shrink-0" aria-hidden />
+            <ExternalLink className="mt-1 size-3 shrink-0 print:hidden" aria-hidden />
             <span className="sr-only">(opens in a new tab)</span>
           </a>
         </li>
