@@ -18,7 +18,7 @@ describe("GET /api/health", () => {
     expect(text).not.toContain("sk-or-very-secret");
     expect(JSON.parse(text)).toEqual({
       ok: true,
-      judgeModel: "anthropic/claude-sonnet-5.5",
+      judgeModel: "anthropic/claude-haiku-5.5",
       scanModel: "anthropic/claude-haiku-5.5",
       keyLoaded: true,
     });
