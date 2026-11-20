@@ -1,0 +1,69 @@
+{
+  "sample": "strong",
+  "hash": "30f90e505c51b4e3bf3ec29673518f1ab24ae4c8b9a84f86b7eb7577d1e09b07",
+  "result": {
+    "criterion": "H3",
+    "applicable": true,
+    "score": 2,
+    "status": "Addressed",
+    "checks": [
+      {
+        "id": "legalBasis",
+        "label": "Cites a legal basis: a special program under section 14 of the Ontario Human Rights Code, or OHRC guidance",
+        "met": true,
+        "evidence": [
+          {
+            "quote": "We run a special program under section 14 of the Ontario Human Rights Code.",
+            "paragraphId": "p4",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "purpose",
+        "label": "States the purpose: the disadvantage or under-representation the program addresses",
+        "met": true,
+        "evidence": [
+          {
+            "quote": "Its purpose is to address the under-representation of Indigenous employees in clinical leadership roles at Lakeshore.",
+            "paragraphId": "p4",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "voluntarySelfId",
+        "label": "Self-identification is voluntary and asked only for the designated roles",
+        "met": true,
+        "evidence": [
+          {
+            "quote": "Self-identification for the program is voluntary.",
+            "paragraphId": "p5",
+            "verified": true
+          },
+          {
+            "quote": "This information is kept separately from the hiring file and used only for the program.",
+            "paragraphId": "p5",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "communityConfirmation",
+        "label": "Identity is not confirmed by the employer alone with a single document (e.g. confirmation with or through Indigenous communities or organizations)",
+        "met": true,
+        "evidence": [
+          {
+            "quote": "Applicants may confirm their identity through a letter from their community or an Indigenous organization of their choice.",
+            "paragraphId": "p5",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "redFlags": [],
+    "warning": null,
+    "reasoning": "The policy describes a section 14 special program designating Patient Navigator roles for Indigenous applicants to address under-representation in clinical leadership. Self-identification is voluntary and limited to the program, and identity is confirmed through a letter from the applicant's community or an Indigenous organization.",
+    "cached": true
+  }
+}

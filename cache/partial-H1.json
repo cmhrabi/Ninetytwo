@@ -1,0 +1,51 @@
+{
+  "sample": "partial",
+  "hash": "c68b940110077e70c78cd5dccae0bd212f3a67f44b4583a8c897c27c1d057b81",
+  "result": {
+    "criterion": "H1",
+    "applicable": true,
+    "score": 2,
+    "status": "Addressed",
+    "checks": [
+      {
+        "id": "ban",
+        "label": "A clear ban on discrimination in hiring or employment",
+        "met": true,
+        "evidence": [
+          {
+            "quote": "Cedar Lane Software does not discriminate in hiring on the basis of race, ancestry, place of origin, colour, ethnic origin, creed, sex, sexual orientation, gender identity, age or disability.",
+            "paragraphId": "p3",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "eoStatement",
+        "label": "A general equal-opportunity statement, e.g. 'equal opportunity employer'",
+        "met": false,
+        "evidence": []
+      },
+      {
+        "id": "grounds",
+        "label": "Names Indigenous Peoples (Indigenous, First Nations, Inuit, Métis), or at least two of: ancestry, place of origin, ethnic origin, colour, creed",
+        "met": true,
+        "evidence": [
+          {
+            "quote": "This includes First Nations, Inuit and Métis applicants.",
+            "paragraphId": "p3",
+            "verified": true
+          },
+          {
+            "quote": "ancestry, place of origin, colour, ethnic origin, creed",
+            "paragraphId": "p3",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "redFlags": [],
+    "warning": null,
+    "reasoning": "Paragraph p3 bans discrimination in hiring on listed grounds including ancestry, place of origin, colour, ethnic origin and creed, and explicitly names First Nations, Inuit and Métis applicants. The policy contains no general 'equal opportunity employer' statement.",
+    "cached": true
+  }
+}

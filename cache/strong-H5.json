@@ -1,0 +1,68 @@
+{
+  "sample": "strong",
+  "hash": "30f90e505c51b4e3bf3ec29673518f1ab24ae4c8b9a84f86b7eb7577d1e09b07",
+  "result": {
+    "criterion": "H5",
+    "applicable": true,
+    "score": 2,
+    "status": "Addressed",
+    "checks": [
+      {
+        "id": "a",
+        "label": "Mentorship and sponsorship",
+        "met": true,
+        "level": 2,
+        "evidence": [
+          {
+            "quote": "Every new Indigenous hire is offered a formal sponsor from senior leadership for their first two years. Sponsors meet with them monthly and advocate for stretch assignments.",
+            "paragraphId": "p6",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "b",
+        "label": "Promotion criteria",
+        "met": true,
+        "level": 2,
+        "evidence": [
+          {
+            "quote": "Promotion decisions use published, objective criteria for each level.",
+            "paragraphId": "p7",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "c",
+        "label": "Promotion and pay transparency",
+        "met": true,
+        "level": 2,
+        "evidence": [
+          {
+            "quote": "Panels score candidates against those criteria and record the reasons for each decision. Records are kept for three years and reviewed each year for disparities.",
+            "paragraphId": "p7",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "d",
+        "label": "Indigenous-specific support",
+        "met": true,
+        "level": 2,
+        "evidence": [
+          {
+            "quote": "The Indigenous Employee Circle has an annual budget, paid meeting time for members and an executive sponsor.",
+            "paragraphId": "p8",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "redFlags": [],
+    "warning": null,
+    "reasoning": "The policy offers new Indigenous hires a formal two-year senior leadership sponsor and bases promotion on published, objective criteria, with panel scoring, recorded reasons and annual disparity reviews. It also describes an Indigenous Employee Circle with a budget, paid meeting time and an executive sponsor; pay transparency is not separately addressed.",
+    "cached": true
+  }
+}

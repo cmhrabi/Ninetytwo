@@ -1,0 +1,46 @@
+{
+  "sample": "strong",
+  "hash": "30f90e505c51b4e3bf3ec29673518f1ab24ae4c8b9a84f86b7eb7577d1e09b07",
+  "result": {
+    "criterion": "H1",
+    "applicable": true,
+    "score": 2,
+    "status": "Addressed",
+    "checks": [
+      {
+        "id": "ban",
+        "label": "A clear ban on discrimination in hiring or employment",
+        "met": true,
+        "evidence": [
+          {
+            "quote": "Lakeshore Health Partners prohibits discrimination and harassment in hiring, pay, training and promotion on every ground in the Ontario Human Rights Code",
+            "paragraphId": "p3",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "eoStatement",
+        "label": "A general equal-opportunity statement, e.g. 'equal opportunity employer'",
+        "met": false,
+        "evidence": []
+      },
+      {
+        "id": "grounds",
+        "label": "Names Indigenous Peoples (Indigenous, First Nations, Inuit, Métis), or at least two of: ancestry, place of origin, ethnic origin, colour, creed",
+        "met": true,
+        "evidence": [
+          {
+            "quote": "including race, ancestry, place of origin, colour, ethnic origin and creed. This explicitly protects First Nations, Inuit and Métis applicants and employees.",
+            "paragraphId": "p3",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "redFlags": [],
+    "warning": null,
+    "reasoning": "The policy prohibits discrimination and harassment in hiring, pay, training and promotion on all Ontario Human Rights Code grounds. It lists ancestry, place of origin, colour, ethnic origin and creed, and explicitly names First Nations, Inuit and Métis applicants and employees; no general 'equal opportunity employer' statement appears.",
+    "cached": true
+  }
+}

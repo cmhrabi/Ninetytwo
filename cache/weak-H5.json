@@ -1,0 +1,44 @@
+{
+  "sample": "weak",
+  "hash": "721b719e87e1273bdf4625c9935259cff90f78392561634314c50b6baa3d1878",
+  "result": {
+    "criterion": "H5",
+    "applicable": true,
+    "score": 0,
+    "status": "Not found",
+    "checks": [
+      {
+        "id": "a",
+        "label": "Mentorship and sponsorship",
+        "met": false,
+        "level": 0,
+        "evidence": []
+      },
+      {
+        "id": "b",
+        "label": "Promotion criteria",
+        "met": false,
+        "level": 0,
+        "evidence": []
+      },
+      {
+        "id": "c",
+        "label": "Promotion and pay transparency",
+        "met": false,
+        "level": 0,
+        "evidence": []
+      },
+      {
+        "id": "d",
+        "label": "Indigenous-specific support",
+        "met": false,
+        "level": 0,
+        "evidence": []
+      }
+    ],
+    "redFlags": [],
+    "warning": null,
+    "reasoning": "The policy covers job posting, screening, interviews, references, offer approval, onboarding and probation. It does not mention mentorship, sponsorship, promotion criteria, promotion or pay transparency, or any Indigenous-specific employee support.",
+    "cached": true
+  }
+}

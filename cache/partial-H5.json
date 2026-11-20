@@ -1,0 +1,62 @@
+{
+  "sample": "partial",
+  "hash": "c68b940110077e70c78cd5dccae0bd212f3a67f44b4583a8c897c27c1d057b81",
+  "result": {
+    "criterion": "H5",
+    "applicable": true,
+    "score": 1,
+    "status": "Partly addressed",
+    "checks": [
+      {
+        "id": "a",
+        "label": "Mentorship and sponsorship",
+        "met": true,
+        "level": 1,
+        "evidence": [
+          {
+            "quote": "New hires may ask their manager to suggest an informal mentor from another team.",
+            "paragraphId": "p7",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "b",
+        "label": "Promotion criteria",
+        "met": true,
+        "level": 1,
+        "evidence": [
+          {
+            "quote": "Managers look at performance reviews and time in role when recommending someone for promotion.",
+            "paragraphId": "p8",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "c",
+        "label": "Promotion and pay transparency",
+        "met": true,
+        "level": 1,
+        "evidence": [
+          {
+            "quote": "Promotions are considered once a year. Managers look at performance reviews and time in role when recommending someone for promotion.",
+            "paragraphId": "p8",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "d",
+        "label": "Indigenous-specific support",
+        "met": false,
+        "level": 0,
+        "evidence": []
+      }
+    ],
+    "redFlags": [],
+    "warning": null,
+    "reasoning": "The policy lets new hires request an informal mentor and describes an annual promotion consideration in which managers weigh performance reviews and time in role. It does not address pay transparency or Indigenous-specific retention or advancement supports; the Indigenous references concern hiring only.",
+    "cached": true
+  }
+}
