@@ -1,0 +1,40 @@
+{
+  "sample": "weak",
+  "hash": "721b719e87e1273bdf4625c9935259cff90f78392561634314c50b6baa3d1878",
+  "result": {
+    "criterion": "H3",
+    "applicable": false,
+    "score": null,
+    "status": "Not applicable",
+    "checks": [
+      {
+        "id": "legalBasis",
+        "label": "Cites a legal basis: a special program under section 14 of the Ontario Human Rights Code, or OHRC guidance",
+        "met": false,
+        "evidence": []
+      },
+      {
+        "id": "purpose",
+        "label": "States the purpose: the disadvantage or under-representation the program addresses",
+        "met": false,
+        "evidence": []
+      },
+      {
+        "id": "voluntarySelfId",
+        "label": "Self-identification is voluntary and asked only for the designated roles",
+        "met": false,
+        "evidence": []
+      },
+      {
+        "id": "communityConfirmation",
+        "label": "Identity is not confirmed by the employer alone with a single document (e.g. confirmation with or through Indigenous communities or organizations)",
+        "met": false,
+        "evidence": []
+      }
+    ],
+    "redFlags": [],
+    "warning": null,
+    "reasoning": "The policy describes a general hiring process: job posting, manager screening, interviews, reference checks and onboarding. It contains no Indigenous-specific hiring, designated roles, preferences or self-identification provisions.",
+    "cached": true
+  }
+}

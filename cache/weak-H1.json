@@ -1,0 +1,40 @@
+{
+  "sample": "weak",
+  "hash": "721b719e87e1273bdf4625c9935259cff90f78392561634314c50b6baa3d1878",
+  "result": {
+    "criterion": "H1",
+    "applicable": true,
+    "score": 1,
+    "status": "Partly addressed",
+    "checks": [
+      {
+        "id": "ban",
+        "label": "A clear ban on discrimination in hiring or employment",
+        "met": false,
+        "evidence": []
+      },
+      {
+        "id": "eoStatement",
+        "label": "A general equal-opportunity statement, e.g. 'equal opportunity employer'",
+        "met": true,
+        "evidence": [
+          {
+            "quote": "Northwind Freight is an equal opportunity employer.",
+            "paragraphId": "p3",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "grounds",
+        "label": "Names Indigenous Peoples (Indigenous, First Nations, Inuit, Métis), or at least two of: ancestry, place of origin, ethnic origin, colour, creed",
+        "met": false,
+        "evidence": []
+      }
+    ],
+    "redFlags": [],
+    "warning": null,
+    "reasoning": "The policy contains a general equal-opportunity statement (p3). It contains no explicit ban on discrimination and names no grounds relevant to Indigenous identity.",
+    "cached": true
+  }
+}

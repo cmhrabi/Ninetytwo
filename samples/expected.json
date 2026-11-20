@@ -1,0 +1,5 @@
+{
+  "weak": { "H1": 1, "H3": null, "H5": 0, "percent": 38, "band": "Emerging" },
+  "partial": { "H1": 2, "H3": 0, "H5": 1, "percent": 58, "band": "Developing" },
+  "strong": { "H1": 2, "H3": 2, "H5": 2, "percent": 100, "band": "Leading" }
+}
