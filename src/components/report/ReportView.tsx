@@ -63,7 +63,7 @@ export function ReportView() {
       <Section tone="surface" className="py-10 md:py-14" innerClassName="space-y-6">
         {run.phase === "failed" && run.error ? (
           <div role="alert" className="rounded-3xl bg-white p-6 ring-1 ring-border">
-            <p className="text-status-notfound">
+            <p className="font-medium text-midnight">
               {run.error.network
                 ? "You're offline, or the request timed out. The document couldn't be scanned."
                 : messageFor(run.error.code)}

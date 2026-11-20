@@ -36,7 +36,7 @@ export function Quote({ quote, paragraphId, tone = "default" }: { quote: string;
     <blockquote
       className={cn(
         "flex items-start gap-2 border-l-2 py-0.5 pl-3 text-sm",
-        tone === "flag" ? "border-status-notfound/60 text-status-notfound" : "border-gold-edge/60 text-ink",
+        tone === "flag" ? "border-midnight text-midnight" : "border-gold-edge/60 text-ink",
       )}
     >
       {evidence ? (

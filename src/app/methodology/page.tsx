@@ -214,12 +214,12 @@ function CriterionMethod({ criterion, row }: { criterion: Criterion; row: Criter
             ))}
           </ul>
           {criterion.redFlags.length > 0 && (
-            <div className="mt-5 rounded-2xl bg-status-notfound-bg px-4 py-3">
-              <h4 className="flex items-center gap-1.5 text-xs font-semibold tracking-[0.12em] text-status-notfound uppercase">
-                <TriangleAlert className="size-3.5" aria-hidden />
+            <div className="mt-5 rounded-2xl border border-gold-edge/40 bg-gold-wash px-4 py-3">
+              <h4 className="flex items-center gap-1.5 text-xs font-semibold tracking-[0.12em] text-midnight uppercase">
+                <TriangleAlert className="size-3.5 text-gold-edge" aria-hidden />
                 Red flags: score set to 0
               </h4>
-              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-ink marker:text-status-notfound">
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-ink marker:text-gold-edge">
                 {criterion.redFlags.map((f) => (
                   <li key={f.id}>{f.label}</li>
                 ))}

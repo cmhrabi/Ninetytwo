@@ -7,8 +7,10 @@
  * Rules (see /design):
  *  - Text on gold is always midnight, never white.
  *  - Gold on a white/light surface gets a --gold-edge border. Gold on midnight needs none.
- *  - Status chips use the brand palette, told apart by fill weight + icon (see StatusChip).
- *    The status-* tokens remain for alerts: errors, warnings, red flags, verified marks.
+ *  - Brand palette only: no red, green or orange anywhere in the UI.
+ *    Status chips are told apart by fill weight + icon (see StatusChip).
+ *    Alerts (warnings, red flags, errors, notices) are a gold-wash panel with a gold-edge border
+ *    and icon, midnight text. Success marks are gold-edge or midnight.
  * Light theme only: midnight panels supply the contrast.
  */
 
@@ -48,15 +50,6 @@
   --color-ink: var(--ink);
   --color-surface: var(--surface);
 
-  /* status tokens: text colour + tinted background */
-  --color-status-addressed: var(--status-addressed);
-  --color-status-addressed-bg: var(--status-addressed-bg);
-  --color-status-partly: var(--status-partly);
-  --color-status-partly-bg: var(--status-partly-bg);
-  --color-status-notfound: var(--status-notfound);
-  --color-status-notfound-bg: var(--status-notfound-bg);
-  --color-status-na: var(--status-na);
-  --color-status-na-bg: var(--status-na-bg);
 
   /* type */
   --font-sans: var(--font-geist-sans);
@@ -88,15 +81,6 @@
   --ink: #16152f;
   --surface: #f6f5fa;
 
-  /* status */
-  --status-addressed: #1a6b3c;
-  --status-addressed-bg: #e4f3ea;
-  --status-partly: #9a4a00;
-  --status-partly-bg: #fcebdc;
-  --status-notfound: #a8231a;
-  --status-notfound-bg: #fde8e6;
-  --status-na: #4f4e7e;
-  --status-na-bg: #ececf3;
 
   /* shadcn semantic mapping */
   --background: #ffffff;
@@ -113,7 +97,7 @@
   --muted-foreground: var(--indigo);
   --accent: #ececf3;
   --accent-foreground: var(--midnight);
-  --destructive: var(--status-notfound);
+  --destructive: var(--gold-edge);
   --border: #e3e2ec;
   --input: #d6d5e2;
   --ring: var(--gold-edge);
