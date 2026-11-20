@@ -1,16 +1,19 @@
 "use client";
 
-import { ArrowLeft, FileText, Printer, RotateCw } from "lucide-react";
+import { ArrowLeft, BookOpenText, FileText, Printer, RotateCw } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { messageFor } from "@/components/assess/errorMessages";
 import { Eyebrow, Section } from "@/components/brand/Section";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import type { CriterionResult, Overall, Paragraph, Rubric } from "@/shared";
 import { useAssessment } from "@/state/assessment";
-import { anyCached, incompleteCriteria, overallFor, resultsOf } from "@/state/runReducer";
+import { anyCached, incompleteCriteria, overallFor, resultsOf, type RunState } from "@/state/runReducer";
 import { ComingNext } from "./ComingNext";
 import { CachedBadge, CriterionCard } from "./CriterionCard";
+import { EvidenceProvider, useEvidence } from "./EvidenceContext";
+import { EvidenceViewer } from "./EvidenceViewer";
 import { baselineWarnings } from "./format";
 import { RunStepper } from "./RunStepper";
 import { ScoreSummary } from "./ScoreSummary";
@@ -35,7 +38,7 @@ export function ReportView() {
   };
 
   return (
-    <>
+    <EvidenceProvider>
       <Section tone="midnight" className="py-10 md:py-14">
         <Eyebrow className="text-gold">Report</Eyebrow>
         <h1 className="flex items-start gap-3 text-3xl break-words sm:text-4xl">
@@ -70,17 +73,16 @@ export function ReportView() {
             </Button>
           </div>
         ) : (
-          <>
-            <WarningBanner warnings={warnings} />
-            <ScoreSummary overall={overall} rubric={rubric} missing={incompleteCriteria(run)} running={running} />
-            {rubric &&
-              run.order.map((id) => {
-                const criterion = rubric.criteria.find((c) => c.id === id);
-                const card = run.cards[id];
-                if (!criterion || !card) return null;
-                return <CriterionCard key={id} criterion={criterion} card={card} onRetry={() => retryCard(id)} />;
-              })}
-          </>
+          <ReportBody
+            run={run}
+            rubric={rubric}
+            results={results}
+            overall={overall}
+            warnings={warnings}
+            running={running}
+            paragraphs={state.document.paragraphs}
+            onRetry={retryCard}
+          />
         )}
       </Section>
 
@@ -110,7 +112,60 @@ export function ReportView() {
           Not legal advice. Your document was processed in memory and never stored.
         </p>
       </Section>
-    </>
+    </EvidenceProvider>
+  );
+}
+
+/** Score, warnings and cards, with the evidence viewer beside them (desktop) or over them (mobile). */
+function ReportBody({
+  run,
+  rubric,
+  results,
+  overall,
+  warnings,
+  running,
+  paragraphs,
+  onRetry,
+}: {
+  run: RunState;
+  rubric: Rubric | null;
+  results: CriterionResult[];
+  overall: Overall | null;
+  warnings: ReturnType<typeof baselineWarnings>;
+  running: boolean;
+  paragraphs: Paragraph[];
+  onRetry: (criterion: string) => void;
+}) {
+  const evidence = useEvidence();
+  const open = evidence?.open ?? false;
+  return (
+    <div className={cn("grid gap-6", open && "lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-8")}>
+      <div className="min-w-0 space-y-6">
+        {evidence && paragraphs.length > 0 && (
+          <div className="flex justify-end print:hidden">
+            <Button
+              variant="outline"
+              onClick={(e) => evidence.toggle(e.currentTarget)}
+              aria-expanded={open}
+              aria-controls={open ? "evidence-viewer" : undefined}
+            >
+              <BookOpenText data-icon="inline-start" aria-hidden />
+              {open ? "Hide document" : "View document"}
+            </Button>
+          </div>
+        )}
+        <WarningBanner warnings={warnings} />
+        <ScoreSummary overall={overall} rubric={rubric} missing={incompleteCriteria(run)} running={running} />
+        {rubric &&
+          run.order.map((id) => {
+            const criterion = rubric.criteria.find((c) => c.id === id);
+            const card = run.cards[id];
+            if (!criterion || !card) return null;
+            return <CriterionCard key={id} criterion={criterion} card={card} onRetry={() => onRetry(id)} />;
+          })}
+      </div>
+      <EvidenceViewer paragraphs={paragraphs} results={results} rubric={rubric} />
+    </div>
   );
 }
 

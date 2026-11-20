@@ -2,6 +2,8 @@
 // Reads are synchronous so pages prerender statically under cacheComponents.
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import { RubricSchema, type Rubric } from "@/shared";
+import rubricJson from "../../rubric/rubric.json";
 
 export type ContentFile = "landing" | "what-we-learned" | "data-note" | "sources" | "acknowledgement";
 
@@ -34,3 +36,9 @@ export function getLinks(file: ContentFile, heading: string): { label: string; h
 
 /** True when copy is still a team placeholder. */
 export const isTodo = (text: string) => !text || text.trimStart().startsWith("TODO(team)");
+
+
+/** rubric/rubric.json, validated. Bundled at build time, so pages that use it prerender statically. */
+export function getRubric(): Rubric {
+  return RubricSchema.parse(rubricJson);
+}
