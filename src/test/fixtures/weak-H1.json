@@ -1,0 +1,33 @@
+{
+  "applicable": {
+    "value": true,
+    "evidence": []
+  },
+  "checks": [
+    {
+      "id": "ban",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    },
+    {
+      "id": "eoStatement",
+      "met": true,
+      "level": 1,
+      "evidence": [
+        {
+          "quote": "Northwind Freight is an equal opportunity employer.",
+          "paragraphId": "p3"
+        }
+      ]
+    },
+    {
+      "id": "grounds",
+      "met": false,
+      "level": 0,
+      "evidence": []
+    }
+  ],
+  "redFlags": [],
+  "reasoning": "The policy contains a general statement that Northwind Freight is an equal opportunity employer (p3). It has no explicit ban on discrimination and names no grounds relevant to Indigenous identity."
+}
