@@ -180,3 +180,26 @@
     animation: none !important;
   }
 }
+
+/* Evidence viewer: the paragraph a quote points to pulses once (see components/report/EvidenceViewer.tsx). */
+@keyframes evidence-pulse {
+  0% {
+    background-color: var(--gold-wash);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--gold) 70%, transparent);
+  }
+  60% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--gold) 0%, transparent);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+.evidence-pulse {
+  background-color: var(--gold-wash);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .evidence-pulse {
+    animation: evidence-pulse 1.6s ease-out 2 forwards;
+  }
+}

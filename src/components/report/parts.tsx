@@ -1,19 +1,37 @@
+"use client";
+
 import { ExternalLink } from "lucide-react";
 import type { Link } from "@/shared";
 import { cn } from "@/lib/utils";
+import { useEvidence } from "./EvidenceContext";
 import { isTodo } from "./format";
 
-/** Plain paragraph chip (p7). Ticket 07 makes it open the evidence viewer. */
+const chipClass =
+  "inline-flex shrink-0 items-center rounded-md bg-surface px-1.5 py-0.5 font-mono text-xs text-indigo ring-1 ring-border";
+
+/** Paragraph chip (p7). Inside a report it opens the evidence viewer at that paragraph. */
 export function ParagraphChip({ id }: { id: string }) {
+  const evidence = useEvidence();
+  if (!evidence) return <span className={chipClass}>{id}</span>;
   return (
-    <span className="inline-flex shrink-0 items-center rounded-md bg-surface px-1.5 py-0.5 font-mono text-xs text-indigo ring-1 ring-border">
+    <button
+      type="button"
+      onClick={(e) => evidence.openAt(id, e.currentTarget)}
+      aria-label={`Show paragraph ${id.replace(/^p/, "")} in the document`}
+      className={cn(
+        chipClass,
+        "cursor-pointer transition-colors hover:bg-gold-wash hover:ring-gold-edge/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+      )}
+    >
       {id}
-    </span>
+    </button>
   );
 }
 
-/** A verified quote with its paragraph chip. */
+/** A verified quote with its paragraph chip. Inside a report, clicking the quote shows it in the document. */
 export function Quote({ quote, paragraphId, tone = "default" }: { quote: string; paragraphId: string; tone?: "default" | "flag" }) {
+  const evidence = useEvidence();
+  const text = <>&ldquo;{quote}&rdquo;</>;
   return (
     <blockquote
       className={cn(
@@ -21,7 +39,18 @@ export function Quote({ quote, paragraphId, tone = "default" }: { quote: string;
         tone === "flag" ? "border-status-notfound/60 text-status-notfound" : "border-gold-edge/60 text-ink",
       )}
     >
-      <span className="min-w-0 flex-1 italic">&ldquo;{quote}&rdquo;</span>
+      {evidence ? (
+        <button
+          type="button"
+          onClick={(e) => evidence.openAt(paragraphId, e.currentTarget)}
+          className="min-w-0 flex-1 cursor-pointer rounded-sm text-left italic underline decoration-current/0 underline-offset-4 transition-colors hover:decoration-current/40 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        >
+          {text}
+          <span className="sr-only"> (show in the document)</span>
+        </button>
+      ) : (
+        <span className="min-w-0 flex-1 italic">{text}</span>
+      )}
       <ParagraphChip id={paragraphId} />
     </blockquote>
   );

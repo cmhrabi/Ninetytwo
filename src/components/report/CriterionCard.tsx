@@ -36,7 +36,7 @@ export function CriterionCard({
       aria-labelledby={`${cardAnchor(criterion.id)}-title`}
       aria-busy={card.kind === "pending" || card.kind === "retrying"}
       className={cn(
-        "scroll-mt-24 rounded-3xl bg-white p-5 ring-1 ring-border sm:p-8",
+        "@container scroll-mt-24 rounded-3xl bg-white p-5 ring-1 ring-border sm:p-8",
         na && "bg-surface",
         result?.warning === "baseline" && "ring-2 ring-status-notfound/40",
       )}
@@ -98,7 +98,7 @@ function Body({ criterion, result }: { criterion: Criterion; result: CriterionRe
   return (
     <>
       {result.reasoning && <p className="max-w-3xl text-ink/85">{result.reasoning}</p>}
-      <div className="mt-6 grid gap-8 border-t border-border pt-6 lg:grid-cols-3 lg:gap-10">
+      <div className="mt-6 grid gap-8 border-t border-border pt-6 @3xl:grid-cols-3 @3xl:gap-10">
         <section>
           <ColumnHeading>Evidence found</ColumnHeading>
           <ul className="space-y-4">
