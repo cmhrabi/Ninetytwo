@@ -1,6 +1,6 @@
 "use client";
 
-import { Circle, CircleCheck, CloudOff, Database, Loader2, RotateCw, TriangleAlert } from "lucide-react";
+import { CircleCheck, CircleX, CloudOff, Database, Loader2, RotateCw, TriangleAlert } from "lucide-react";
 import { messageFor } from "@/components/assess/errorMessages";
 import { StatusChip } from "@/components/brand/StatusChip";
 import { Button } from "@/components/ui/button";
@@ -175,7 +175,7 @@ function CheckItem({ check, graded }: { check: CheckResult; graded: boolean }) {
         {met ? (
           <CircleCheck className="mt-0.5 size-4 shrink-0 text-gold-edge" aria-label="Met" />
         ) : (
-          <Circle className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-label="Not met" />
+          <CircleX className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-label="Not found" />
         )}
         <span className={cn(!met && "text-muted-foreground")}>
           {check.label}
