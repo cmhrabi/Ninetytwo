@@ -4,6 +4,7 @@ import { Eyebrow, Section } from "@/components/brand/Section";
 import { useAssessment } from "@/state/assessment";
 import { ConsentBox } from "./ConsentBox";
 import { DocTypeSelect } from "./DocTypeSelect";
+import { HealthNotice } from "./HealthNotice";
 import { Dropzone } from "./Dropzone";
 import { LoadError } from "./LoadError";
 import { RunButton } from "./RunButton";
@@ -30,6 +31,7 @@ function StepsLayout() {
   const { state } = useAssessment();
   return (
     <Section className="py-12 md:py-16" innerClassName="max-w-3xl">
+      <HealthNotice />
       <ol className="space-y-12">
         <Step n={1} title="Document type">
           <DocTypeSelect value={state.docType} />

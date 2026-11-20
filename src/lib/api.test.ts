@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { ApiClientError, realApi } from "./api";
+import { ApiClientError, isAbort, realApi } from "./api";
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
@@ -30,5 +30,46 @@ describe("api client", () => {
   it("maps a network failure to internal", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => Promise.reject(new TypeError("offline"))));
     await expect(realApi.getSample("weak")).rejects.toMatchObject({ status: 0, code: "internal" });
+  });
+
+  it("marks a network failure as network", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => Promise.reject(new TypeError("offline"))));
+    await expect(realApi.scan([])).rejects.toMatchObject({ code: "internal", network: true });
+  });
+
+  it("passes a signal to judge and posts the body", async () => {
+    const fetchMock = vi.fn(async (_path: string, _init?: RequestInit) => json({ criterion: "H1" }));
+    vi.stubGlobal("fetch", fetchMock);
+    await realApi.judge("H1", { paragraphs: [] }, new AbortController().signal);
+    const [path, init] = fetchMock.mock.calls[0];
+    expect(path).toBe("/api/judge/H1");
+    expect(init?.signal).toBeInstanceOf(AbortSignal);
+    expect(JSON.parse(String(init?.body))).toEqual({ paragraphs: [] });
+  });
+
+  it("rethrows a deliberate abort so callers can ignore it", async () => {
+    const controller = new AbortController();
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        (_path: string, init?: RequestInit) =>
+          new Promise((_resolve, reject) =>
+            init?.signal?.addEventListener("abort", () => reject(new DOMException("Aborted", "AbortError"))),
+          ),
+      ),
+    );
+    const pending = realApi.judge("H1", { paragraphs: [] }, controller.signal).catch((e: unknown) => e);
+    controller.abort();
+    const err = await pending;
+    expect(isAbort(err)).toBe(true);
+    expect(err).not.toBeInstanceOf(ApiClientError);
+  });
+
+  it("maps a timeout to a network error", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => Promise.reject(new DOMException("Timed out", "TimeoutError"))));
+    await expect(realApi.judge("H1", { paragraphs: [] })).rejects.toMatchObject({
+      network: true,
+      message: "Request timed out",
+    });
   });
 });

@@ -17,6 +17,8 @@ export class ApiClientError extends Error {
     readonly status: number,
     readonly code: ErrorCode,
     message: string,
+    /** True when the request never got a response (offline, DNS, timeout). */
+    readonly network = false,
   ) {
     super(message);
     this.name = "ApiClientError";
@@ -25,12 +27,12 @@ export class ApiClientError extends Error {
 
 export interface Api {
   getHealth(): Promise<Health>;
-  getRubric(): Promise<Rubric>;
+  getRubric(signal?: AbortSignal): Promise<Rubric>;
   listSamples(): Promise<Sample[]>;
   getSample(id: SampleId): Promise<DocumentText>;
   extract(file: File): Promise<DocumentText>;
-  scan(paragraphs: Paragraph[]): Promise<ScanResult>;
-  judge(criterion: string, body: JudgeRequest): Promise<CriterionResult>;
+  scan(paragraphs: Paragraph[], signal?: AbortSignal): Promise<ScanResult>;
+  judge(criterion: string, body: JudgeRequest, signal?: AbortSignal): Promise<CriterionResult>;
 }
 
 const ERROR_CODES: readonly ErrorCode[] = [
@@ -62,27 +64,45 @@ export async function toApiClientError(res: Response): Promise<ApiClientError> {
   return new ApiClientError(res.status, "internal", `Request failed (${res.status})`);
 }
 
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
+/** Client-side cap per judge call: the server's maxDuration is 60 s. */
+export const JUDGE_TIMEOUT_MS = 65_000;
+
+/** True when the caller aborted on purpose (New assessment, reset). Callers ignore these. */
+export const isAbort = (err: unknown) => err instanceof DOMException && err.name === "AbortError";
+
+/** The caller's signal plus a timeout, so either one ends the request. */
+const withTimeout = (ms: number, signal?: AbortSignal) =>
+  signal ? AbortSignal.any([signal, AbortSignal.timeout(ms)]) : AbortSignal.timeout(ms);
+
+async function request<T>(path: string, init?: RequestInit, callerSignal?: AbortSignal): Promise<T> {
   let res: Response;
   try {
     res = await fetch(path, init);
-  } catch {
-    throw new ApiClientError(0, "internal", "Network error");
+  } catch (err) {
+    // A deliberate abort is rethrown as is; a timeout or no connection is a network error.
+    if (callerSignal?.aborted) throw callerSignal.reason ?? err;
+    const timedOut = err instanceof DOMException && err.name === "TimeoutError";
+    throw new ApiClientError(0, "internal", timedOut ? "Request timed out" : "Network error", true);
   }
   if (!res.ok) throw await toApiClientError(res);
   return (await res.json()) as T;
 }
 
-const postJson = <T>(path: string, body: unknown) =>
-  request<T>(path, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+const postJson = <T>(path: string, body: unknown, signal?: AbortSignal, timeoutMs?: number) =>
+  request<T>(
+    path,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      ...(timeoutMs ? { signal: withTimeout(timeoutMs, signal) } : signal ? { signal } : {}),
+    },
+    signal,
+  );
 
 export const realApi: Api = {
   getHealth: () => request<Health>("/api/health"),
-  getRubric: () => request<Rubric>("/api/rubric"),
+  getRubric: (signal) => request<Rubric>("/api/rubric", signal ? { signal } : undefined, signal),
   listSamples: () => request<Sample[]>("/api/samples"),
   getSample: (id) => request<DocumentText>(`/api/samples/${encodeURIComponent(id)}`),
   extract: (file) => {
@@ -90,9 +110,9 @@ export const realApi: Api = {
     form.append("file", file);
     return request<DocumentText>("/api/extract", { method: "POST", body: form });
   },
-  scan: (paragraphs) => postJson<ScanResult>("/api/scan", { paragraphs }),
-  judge: (criterion, body) =>
-    postJson<CriterionResult>(`/api/judge/${encodeURIComponent(criterion)}`, body),
+  scan: (paragraphs, signal) => postJson<ScanResult>("/api/scan", { paragraphs }, signal, JUDGE_TIMEOUT_MS),
+  judge: (criterion, body, signal) =>
+    postJson<CriterionResult>(`/api/judge/${encodeURIComponent(criterion)}`, body, signal, JUDGE_TIMEOUT_MS),
 };
 
 export const api: Api = realApi;
