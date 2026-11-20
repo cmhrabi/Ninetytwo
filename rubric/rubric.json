@@ -1,0 +1,159 @@
+{
+  "version": "2026-11-20",
+  "bands": [
+    { "min": 0, "max": 39, "label": "Emerging" },
+    { "min": 40, "max": 59, "label": "Developing" },
+    { "min": 60, "max": 79, "label": "Established" },
+    { "min": 80, "max": 100, "label": "Leading" }
+  ],
+  "criteria": [
+    {
+      "id": "H1",
+      "title": "The policy prohibits discrimination, including on grounds relevant to Indigenous identity",
+      "tier": "baseline",
+      "weight": 3,
+      "appliesWhen": "always",
+      "warnOnZero": true,
+      "checks": [
+        { "id": "ban", "label": "A clear ban on discrimination in hiring or employment", "graded": false },
+        { "id": "eoStatement", "label": "A general equal-opportunity statement, e.g. 'equal opportunity employer'", "graded": false },
+        { "id": "grounds", "label": "Names Indigenous Peoples (Indigenous, First Nations, Inuit, Métis), or at least two of: ancestry, place of origin, ethnic origin, colour, creed", "graded": false }
+      ],
+      "scoring": {
+        "type": "rules",
+        "rules": [
+          { "score": 2, "allOf": ["ban", "grounds"] },
+          { "score": 1, "anyOf": ["ban", "eoStatement"] }
+        ]
+      },
+      "levels": {
+        "2": "A clear ban on discrimination that names grounds relevant to Indigenous identity",
+        "1": "A ban in general terms only, e.g. 'equal opportunity employer'",
+        "0": "No ban; welcoming or diversity language alone"
+      },
+      "phrases": ["discriminat", "equal opportunity", "Human Rights Code", "harass", "ancestry", "place of origin", "ethnic origin", "colour", "creed", "Indigenous", "First Nations", "Inuit", "Métis", "Aboriginal"],
+      "redFlags": [],
+      "addressedLooksLike": "TODO(team): one or two sentences describing a score of 2",
+      "whyItMatters": "TODO(team): in your own words, citing the sources below",
+      "sources": [
+        { "title": "Ontario Human Rights Code", "url": "https://www.ohrc.on.ca/en/ontario-human-rights-code" },
+        { "title": "UNDRIP, Article 2", "url": "https://www.un.org/development/desa/indigenouspeoples/declaration-on-the-rights-of-indigenous-peoples.html" }
+      ],
+      "resources": [
+        { "title": "Indigenous Employment: Recruitment & Retention, ICT Inc.", "url": "https://www.ictinc.ca" },
+        { "title": "PAIR best practices, employment", "url": "https://www.ccib.ca/pair-page-best-practices/" }
+      ]
+    },
+    {
+      "id": "H3",
+      "title": "Indigenous-specific hiring follows Ontario Human Rights Commission guidance",
+      "tier": "conditional",
+      "weight": 2,
+      "appliesWhen": "The policy restricts hiring to, designates roles for, or prefers Indigenous candidates. 'Encouraged to apply' alone does not count.",
+      "warnOnZero": true,
+      "checks": [
+        { "id": "legalBasis", "label": "Cites a legal basis: a special program under section 14 of the Ontario Human Rights Code, or OHRC guidance", "graded": false },
+        { "id": "purpose", "label": "States the purpose: the disadvantage or under-representation the program addresses", "graded": false },
+        { "id": "voluntarySelfId", "label": "Self-identification is voluntary and asked only for the designated roles", "graded": false },
+        { "id": "communityConfirmation", "label": "Identity is not confirmed by the employer alone with a single document (e.g. confirmation with or through Indigenous communities or organizations)", "graded": false }
+      ],
+      "scoring": {
+        "type": "rules",
+        "rules": [
+          { "score": 2, "allOf": ["legalBasis", "purpose", "voluntarySelfId", "communityConfirmation"] },
+          { "score": 1, "anyOf": ["legalBasis", "purpose"] }
+        ]
+      },
+      "levels": {
+        "2": "A special program with a stated legal basis and purpose, voluntary self-identification and identity confirmation not left to the employer alone",
+        "1": "Some of the legal basis or purpose is stated, but the program is incomplete",
+        "0": "Indigenous-specific hiring with no legal basis or purpose"
+      },
+      "phrases": ["Indigenous candidates", "preference", "preferred", "designated", "special program", "section 14", "s. 14", "self-identif", "status card", "proof of", "First Nations", "Inuit", "Métis"],
+      "redFlags": [
+        { "id": "identityOnGeneralForms", "label": "Asks about Indigenous identity on general application forms", "phrases": ["all applicants", "application form", "general application", "self-identify on the application"] },
+        { "id": "employerAloneConfirms", "label": "The employer alone confirms identity with a single document", "phrases": ["status card", "proof of status", "one piece of", "single document", "provide documentation"] }
+      ],
+      "addressedLooksLike": "TODO(team): one or two sentences describing a score of 2",
+      "whyItMatters": "TODO(team): in your own words, citing the sources below",
+      "sources": [
+        { "title": "Ontario Human Rights Code, section 14 (special programs)", "url": "https://www.ontario.ca/laws/statute/90h19" },
+        { "title": "Ontario Human Rights Commission", "url": "https://www.ohrc.on.ca" }
+      ],
+      "resources": [
+        { "title": "PAIR best practices, employment", "url": "https://www.ccib.ca/pair-page-best-practices/" }
+      ]
+    },
+    {
+      "id": "H5",
+      "title": "Retention and advancement supports exist",
+      "tier": "leading",
+      "weight": 1,
+      "appliesWhen": "always",
+      "warnOnZero": false,
+      "checks": [
+        {
+          "id": "a",
+          "label": "Mentorship and sponsorship",
+          "graded": true,
+          "levels": { "0": "No mention", "1": "Mentioned, but not a formal program sponsored by leadership", "2": "Formal mentorship program described" }
+        },
+        {
+          "id": "b",
+          "label": "Promotion criteria",
+          "graded": true,
+          "levels": { "0": "None, or entirely subjective", "1": "Exist but partly subjective", "2": "Objective and skills-based" }
+        },
+        {
+          "id": "c",
+          "label": "Promotion and pay transparency",
+          "graded": true,
+          "levels": { "0": "No transparency", "1": "Some decision criteria mentioned", "2": "Decision making fully documented" }
+        },
+        {
+          "id": "d",
+          "label": "Indigenous-specific support",
+          "graded": true,
+          "levels": { "0": "None", "1": "Mentioned, with no resources behind it", "2": "A resourced Indigenous employee network, or sponsorship and leadership development for Indigenous employees" }
+        }
+      ],
+      "scoring": { "type": "average", "capAt1Unless": "d" },
+      "levels": {
+        "2": "Formal, resourced supports including Indigenous-specific support",
+        "1": "Some supports exist, informally or without Indigenous-specific resources",
+        "0": "No retention or advancement supports"
+      },
+      "phrases": ["mentor", "sponsor", "promotion", "advancement", "career development", "leadership development", "pay equity", "salary band", "transparen", "employee network", "resource group", "retention"],
+      "redFlags": [],
+      "addressedLooksLike": "TODO(team): one or two sentences describing a score of 2",
+      "whyItMatters": "TODO(team): in your own words, citing the sources below",
+      "sources": [
+        { "title": "Privy Council Office, Call to Action on Anti-Racism, Equity and Inclusion", "url": "https://www.canada.ca/en/privy-council/corporate/clerk/call-to-action-anti-racism-equity-inclusion-federal-public-service.html" },
+        { "title": "ESDC employment equity guidance", "url": "https://www.canada.ca/en/employment-social-development/corporate/portfolio/labour/programs/employment-equity/reports/employers-improve-workplace.html#h3.13" }
+      ],
+      "resources": [
+        { "title": "Indigenous Employment: Recruitment & Retention, ICT Inc.", "url": "https://www.ictinc.ca" }
+      ]
+    }
+  ],
+  "comingNext": [
+    { "id": "L1", "title": "Leadership: TODO(team) title" },
+    { "id": "L2", "title": "Leadership: TODO(team) title" },
+    { "id": "L3", "title": "Leadership: TODO(team) title" },
+    { "id": "C1", "title": "Consultation: TODO(team) title" },
+    { "id": "C2", "title": "Consultation: TODO(team) title" },
+    { "id": "C3", "title": "Consultation: TODO(team) title" },
+    { "id": "C4", "title": "Consultation: TODO(team) title" },
+    { "id": "H2", "title": "Hiring: TODO(team) title" },
+    { "id": "H4", "title": "Hiring: TODO(team) title" },
+    { "id": "H6", "title": "Hiring: TODO(team) title" },
+    { "id": "H7", "title": "Hiring: TODO(team) title" },
+    { "id": "P1", "title": "Procurement: TODO(team) title" },
+    { "id": "P2", "title": "Procurement: TODO(team) title" },
+    { "id": "P3", "title": "Procurement: TODO(team) title" },
+    { "id": "E1", "title": "Education: TODO(team) title" },
+    { "id": "E2", "title": "Education: TODO(team) title" },
+    { "id": "E3", "title": "Education: TODO(team) title" },
+    { "id": "E4", "title": "Education: TODO(team) title" }
+  ]
+}

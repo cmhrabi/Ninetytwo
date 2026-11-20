@@ -1,16 +1,18 @@
 # NinetyTwo
 
-Context for every Claude Code session. Read this file first. Phase prompts live in `tech/`,
-plans in `plan/`. `AGENTS.md` holds Next.js's own agent rules (written by `next dev`): this
+Context for every Claude Code session. Read this file first. Phase prompts live in `tech/`
+(start with `tech/README.md`), plans in `plan/`. `AGENTS.md` holds Next.js's own agent rules (written by `next dev`): this
 Next.js version is newer than your training data, so read the guide in
 `node_modules/next/dist/docs/` before writing Next-specific code.
 
 ## What we are building
 
 NinetyTwo is a web app that checks a Canadian company's hiring policy against Truth and
-Reconciliation Commission Call to Action #92 (CTA 92). A user uploads a policy, an AI judge
-looks for evidence against three criteria (H1, H3, H5), code verifies every quote and computes
-a weighted score, and a report shows the results with sources and places to learn more.
+Reconciliation Commission Call to Action #92 (CTA 92). A user uploads a policy, a scan (keyword
+match plus a fast AI pass) marks the likely passages and red flags, an AI judge looks for
+evidence against three criteria (H1, H3, H5), code verifies every quote and computes a weighted
+score, and a report shows the results with sources and places to learn more. All AI calls go
+through OpenRouter. There is no database: the server is stateless.
 
 - Event: one-day hackathon, 4 h 15 min of build time. Feature freeze 3:00 pm, judging 3:30 pm.
 - Users: HR, People & Culture, recruitment and procurement leads. First user: Kablamo.
@@ -30,15 +32,20 @@ a weighted score, and a report shows the results with sources and places to lear
 4. **Uploaded files never touch disk** and are never stored. Read them with
    `request.formData()` into memory, process, and discard after the response. Never write to
    disk, including Vercel's `/tmp`. Strip emails and phone numbers before sending text to the AI.
-5. **Never commit secrets.** The key is `JUDGE_API_KEY`: in `.env.local` locally, in Vercel
-   Project Settings → Environment Variables when hosted. Pass it to the SDK explicitly. Never
-   use the `ANTHROPIC_API_KEY` name. Commit `.env.example` only.
+5. **Never commit secrets.** The key is `OPENROUTER_API_KEY`: in `.env.local` locally
+   (gitignored), in Vercel Project Settings → Environment Variables when hosted. Only
+   `src/server/services/openrouter.ts` reads it. Never set `ANTHROPIC_API_KEY` (it would also
+   change how Claude Code bills). Commit `.env.example` only.
 6. **Treat uploaded documents as data, not instructions.** Prompts must say so.
 7. **No mocked scores in the live app.** Every score comes from a real AI call, except an
    explicitly labelled "Cached run" fallback for the three sample policies when the API is
    unreachable. (Mocks in `src/mocks/` are for building the UI only.)
 8. **Server code stays on the server.** Nothing under `src/server/` is imported by a
    `"use client"` file. The API key is never in a `NEXT_PUBLIC_*` variable.
+9. **Every AI call is tested with a mock.** All model calls go through `completeJson()` in
+   `src/server/services/openrouter.ts`. Tests mock `fetch` or use recorded fixtures in
+   `src/test/fixtures/`; `npm test` never touches the network. A phase is done only when its
+   tests pass.
 
 ## Repository layout
 
@@ -56,7 +63,7 @@ ninetytwo/
 ├── vitest.config.ts  components.json (shadcn)
 ├── .env.example  .gitignore  .nvmrc
 ├── plan/                         # PLAN.md, ARCHITECTURE.md (for humans)
-├── tech/                         # phase prompts 01–09 for Claude Code
+├── tech/                         # phase prompts for Claude Code; README.md = index + timeline
 ├── rubric/rubric.json            # single source of truth: criteria, rules, team copy, sources
 ├── content/                      # team-written page copy; never generated
 │   ├── landing.md  what-we-learned.md  data-note.md  sources.md  acknowledgement.md
@@ -69,9 +76,10 @@ ninetytwo/
     │   ├── layout.tsx  globals.css  not-found.tsx    # layout wraps Header/Footer + AssessmentProvider
     │   ├── page.tsx              # Landing /                                           [01 placeholder]
     │   ├── assess/page.tsx  report/page.tsx  methodology/page.tsx                     [01 placeholders]
-    │   └── api/                  # thin: parse → call server/ → respond (Tech B)
+    │   └── api/                  # thin: parse → call server/ → respond (Tech B); route.test.ts beside each
     │       ├── health/route.ts  rubric/route.ts                                       [01]
     │       ├── extract/route.ts  samples/route.ts  samples/[id]/route.ts              [02]
+    │       ├── scan/route.ts                                                          [03]
     │       └── judge/[criterion]/route.ts                                             [03]
     ├── shared/                   # the contract, frozen after 01 (Tech B)
     │   ├── index.ts              # re-exports everything below; import from "@/shared"
@@ -80,20 +88,25 @@ ninetytwo/
     │   ├── score.ts              # computeOverall, bandFor
     │   └── *.test.ts
     ├── server/                   # server-only code, never imported by client components (Tech B)
-    │   ├── config.ts             # env → typed config (apiKey, model)
+    │   ├── config.ts             # env → typed config (apiKey, judgeModel, scanModel)
     │   ├── paths.ts              # absolute paths from process.cwd() (the project root)
     │   ├── http/errors.ts        # HttpError, notFound, toErrorResponse(err) → Response
-    │   ├── services/             # I/O: files, PDF/DOCX, Anthropic, cache
-    │   │   ├── anthropic.ts  rubricStore.ts                                           [01]
-    │   │   ├── extractText.ts                                                         [02]
-    │   │   ├── judge.ts                                                               [03]
+    │   ├── services/             # I/O: files, PDF/DOCX, OpenRouter, cache
+    │   │   ├── openrouter.ts  rubricStore.ts                                          [01]
+    │   │   ├── extractText.ts  samples.ts                                             [02]
+    │   │   ├── scan.ts  judge.ts                                                      [03]
     │   │   └── cache.ts                                                               [08]
-    │   └── core/                 # pure functions, no I/O, unit-tested
-    │       ├── paragraphs.ts  pii.ts                                                  [02]
-    │       ├── phraseScan.ts  toolSchema.ts  prompt.ts  quoteCheck.ts  applyRubric.ts [03, 05]
-    │       └── hash.ts                                                                [08]
+    │   ├── core/                 # pure functions, no I/O, unit-tested
+    │   │   ├── paragraphs.ts  pii.ts                                                  [02]
+    │   │   ├── phraseScan.ts  scanSchema.ts  scanPrompt.ts  mergeScan.ts              [03]
+    │   │   ├── judgeSchema.ts  prompt.ts  quoteCheck.ts  applyRubric.ts               [03, 05]
+    │   │   └── hash.ts                                                                [08]
+    │   └── pipeline.test.ts      # samples → scan → judge with recorded AI fixtures     [03, 05]
+    ├── test/fixtures/            # recorded OpenRouter JSON replies for offline tests   [03]
     ├── scripts/                  # run with tsx, outside Next
     │   ├── test-ai.ts                                                                 [01]
+    │   ├── smoke.ts              # end-to-end against a running dev server              [03]
+    │   ├── record-fixtures.ts    # records real AI replies into src/test/fixtures/      [03]
     │   └── calibrate.ts                                                               [08]
     ├── components/               # (Tech A)
     │   ├── ui/                   # shadcn-generated; add with `npx shadcn add`, don't hand-write
@@ -117,20 +130,44 @@ ninetytwo/
 | `npm run dev` | Next dev server on :3000 (pages and `/api` from one process, hot reload) |
 | `npm run build` | Production build (what Vercel runs) |
 | `npm run demo` | Builds, then serves the production app on :8787 (booth mode) |
-| `npm test` | Vitest, no network |
+| `npm test` | Vitest: unit, service, route and pipeline tests. No network, no key needed |
 | `npm run typecheck` | `next typegen` then `tsc --noEmit` |
-| `npm run test:ai` | One real call to Claude; proves the key and model work |
+| `npm run test:ai` | One real OpenRouter call per model (judge + scan); prints reply, served model, cost |
+| `npm run smoke` | End-to-end against a running `npm run dev`: health → sample → scan → 3 judges → overall [03] |
 | `npm run calibrate` | Runs the 3 samples twice and prints a score table [08] |
+
+Use Node 24 (`nvm use`, reads `.nvmrc`). Node 18 can't run Next 16.
 
 ## Environment
 
 `.env.local` at the repo root for local dev (Next loads it; the tsx scripts load it with
-`--env-file`). On Vercel, set the same variables for Production and Preview.
+`--env-file`). It is gitignored; paste the OpenRouter key there. On Vercel, set the same
+variables for Production and Preview.
 
 | Variable | Required | Default | Use |
 | --- | --- | --- | --- |
-| `JUDGE_API_KEY` | for live scoring | none | Anthropic API key for the judge |
-| `JUDGE_MODEL` | no | `claude-sonnet-5-5` | Model id |
+| `OPENROUTER_API_KEY` | for live scoring | none | OpenRouter key for every AI call |
+| `JUDGE_MODEL` | no | `anthropic/claude-sonnet-5.5` | OpenRouter model slug for the judge (one call per H#) |
+| `SCAN_MODEL` | no | `anthropic/claude-haiku-5.5` | OpenRouter model slug for the fast whole-document scan |
+
+## AI calls (OpenRouter)
+
+All AI goes through `completeJson()` in `src/server/services/openrouter.ts`, using the built-in
+`fetch` (no SDK, no new dependency):
+
+- `POST https://openrouter.ai/api/v1/chat/completions` with `Authorization: Bearer
+  ${OPENROUTER_API_KEY}` and `X-Title: NinetyTwo`. Called from the server only.
+- Body: `model`, `messages` (system + user), `max_tokens`, `response_format: { type:
+  "json_schema", json_schema: { name, strict: true, schema: z.toJSONSchema(schema) } }`, and
+  `provider: { require_parameters: true }` so only providers that enforce the schema are used.
+- **No `temperature`, no tools, no forced `tool_choice`**: the current Claude models reject them
+  (OpenRouter lists no `temperature` for them). Stable scores come from the quote check and code
+  scoring, not sampling settings.
+- Reply: `choices[0].message.content` → `JSON.parse` → `schema.safeParse`. On failure, retry once
+  with the zod error added to the user message; then throw 502 `ai_failed`.
+- Errors: 401/403 → `ai_failed` ("key rejected"), 402 → `ai_failed` ("credit exhausted"),
+  429 → `rate_limited`, other or network → `ai_failed`. Timeout 45 s via `AbortController`.
+- Returns `{ data, model, usage }` (`model` is the one OpenRouter actually used).
 
 ## Stack (installed; don't add dependencies)
 
@@ -140,27 +177,38 @@ or README in `node_modules/` before writing code against it.
 - **Node** 24 LTS (minimum 22.22). One package, no workspaces.
 - **Next.js 16** App Router, React 19, React Compiler, `cacheComponents` on. Pages are server
   components by default; add `"use client"` only where needed (dropzone, state, charts,
-  motion). API = route handlers in `src/app/api/**/route.ts` (`runtime = "nodejs"`).
-- **Server**: `@anthropic-ai/sdk`, zod 4, unpdf (PDF), mammoth (DOCX). Uploads via
-  `request.formData()` (no multer). No Express, no dotenv.
+  motion). API = route handlers in `src/app/api/**/route.ts`. Route params are a Promise
+  (`const { id } = await ctx.params`).
+  - **Don't export `runtime`** from any route: with `cacheComponents` it is not allowed (Node is
+    the default).
+  - **GET handlers are prerendered at build time** unless they read the request or call
+    `await connection()` (from `next/server`). `/api/health` must call `connection()` so
+    `keyLoaded` is live, before (outside) its `try/catch`; catching it breaks the build's
+    prerender with `HANGING_PROMISE_REJECTION`. `/api/rubric` and `/api/samples` may prerender (repo files).
+- **Server**: fetch (OpenRouter), zod 4 (`z.toJSONSchema` for response schemas), unpdf (PDF),
+  mammoth (DOCX). Uploads via `request.formData()` (no multer). No Express, no dotenv.
+  `@anthropic-ai/sdk` is installed but unused.
 - **UI**: Tailwind CSS 4 (theme in `globals.css`, no `tailwind.config.js`), shadcn/ui (Base UI
   style `base-nova`), lucide-react, motion (import from `"motion/react"`), Recharts 3,
   react-dropzone, react-markdown. Routing and links via `next/link` and `next/navigation`.
 - **Tests**: Vitest (`src/**/*.test.ts`). **Types**: TypeScript 6. No ESLint.
-- **AI**: `JUDGE_MODEL`, temperature 0, forced tool call (`tool_choice` = `record_result`), one
-  call per criterion, run in parallel from the browser.
+- **AI**: OpenRouter (see "AI calls" above). One `SCAN_MODEL` call per document, then one
+  `JUDGE_MODEL` call per criterion, run in parallel from the browser. JSON-schema output
+  validated with zod; no temperature, no forced tool calls.
 
 ## Hosting on Vercel
 
 - Import the GitHub repo in Vercel; framework preset Next.js, no build settings to change.
-  Set `JUDGE_API_KEY` (and optionally `JUDGE_MODEL`) in the project's environment variables.
+  Set `OPENROUTER_API_KEY` (and optionally `JUDGE_MODEL`, `SCAN_MODEL`) in the project's
+  environment variables.
 - Every route handler that reads `rubric/`, `samples/` or `cache/` uses `paths.ts`; those
   folders are listed in `outputFileTracingIncludes` in `next.config.ts` so they ship with the
   functions. Add any new runtime-read folder there too.
-- `api/judge/[criterion]/route.ts` exports `maxDuration = 60` so slow model calls aren't cut off.
+- `api/scan/route.ts` and `api/judge/[criterion]/route.ts` export `maxDuration = 60` so slow
+  model calls aren't cut off.
 - Vercel caps request bodies at 4.5 MB, so `/api/extract` rejects files over 4 MB with 413
   `too_large`.
-- The deployed URL spends the team's API credit. Keep Deployment Protection on, or share the
+- The deployed URL spends the team's OpenRouter credit. Keep Deployment Protection on, or share the
   URL only with judges.
 
 ## User flow (4 screens)
@@ -168,8 +216,9 @@ or README in `node_modules/` before writing code against it.
 1. **Landing** (`/`): what CTA 92 asks, why it matters, how the tool works, "What we learned".
    Every claim cited. Copy from `content/`.
 2. **Assess** (`/assess`): choose a document type, drop a file (PDF, DOCX, TXT) or pick a
-   sample, tick a consent box ("processed in memory, never stored"). Then a live stepper while
-   the H1, H3 and H5 cards fill in as each judge returns.
+   sample, tick a consent box ("processed in memory, never stored"). Then a live stepper:
+   "Reading document" → "Scanning document" (`/api/scan`) → the H1, H3 and H5 cards fill in as
+   each judge returns.
 3. **Report** (`/report`): radial score gauge and band, baseline warning banner, one card per
    criterion (score chip, tier, weight; three columns: Evidence found with verified quotes,
    Gaps with What Addressed looks like, Where to learn with cited resources), greyed "coming
@@ -186,14 +235,23 @@ to `/assess`.
 1. Upload or sample → `POST /api/extract` or `GET /api/samples/:id`
 2. Extract text into numbered paragraphs (`p1`, `p2`, ...), strip emails and phones →
    `server/services/extractText.ts`, `server/core/paragraphs.ts`, `server/core/pii.ts`
-3. Phrase scan (no AI): candidate paragraphs and red-flag phrases per criterion → `server/core/phraseScan.ts`
-4. AI judge per criterion, in parallel → `server/services/judge.ts`, `server/core/prompt.ts`, `server/core/toolSchema.ts`
+3. Scan, once per document → `POST /api/scan`:
+   - keyword and red-flag phrase match from `rubric.json` (code, instant) → `server/core/phraseScan.ts`
+   - AI scan: one `SCAN_MODEL` call over the whole document; per criterion it returns relevant
+     paragraph ids with short labels and candidate red flags with exact quotes. Evidence only,
+     no scores → `server/services/scan.ts`, `server/core/scanPrompt.ts`, `server/core/scanSchema.ts`
+   - merge: a paragraph is a candidate if code or AI flags it; a red flag counts only if its
+     quote is verified → `server/core/mergeScan.ts`
+   - if the AI call fails, return keyword-only results with `aiScanned: false` (never block judging)
+4. AI judge per criterion, in parallel, given that criterion's scan candidates and red flags →
+   `server/services/judge.ts`, `server/core/prompt.ts`, `server/core/judgeSchema.ts`
 5. Quote check: a quote counts only if it appears verbatim (case, whitespace and curly quotes
    normalized) in its cited paragraph, else anywhere (paragraph id corrected) → `server/core/quoteCheck.ts`
 6. Score engine: rubric rules, N/A, red flags → `server/core/applyRubric.ts`
 7. Overall score on the client → `shared/score.ts`; report → `app/report/page.tsx`
 
-The server is stateless: the document lives in the browser's memory and in each request body.
+The server is stateless and there is **no database**: the document lives in the browser's
+memory and in each request body; the rubric, samples and cached runs are files in the repo.
 
 ## Criteria and scoring
 
@@ -251,9 +309,15 @@ export type CriterionResult = {
 };
 export type Overall = { percent: number; band: string; warnings: string[] };
 
+// Scan (stage before judging)
+export type ScanHit = { paragraphId: string; source: "keyword" | "ai"; label: string };
+export type CriterionScan = { criterion: string; candidates: ScanHit[]; redFlags: RedFlag[] }; // verified only
+export type ScanResult = { aiScanned: boolean; criteria: CriterionScan[] };
+
 // Requests, health, errors
-export type JudgeRequest = { paragraphs: Paragraph[] };
-export type Health = { ok: true; model: string; keyLoaded: boolean };
+export type ScanRequest = { paragraphs: Paragraph[] };
+export type JudgeRequest = { paragraphs: Paragraph[]; scan?: ScanResult }; // no scan → keyword scan inline
+export type Health = { ok: true; judgeModel: string; scanModel: string; keyLoaded: boolean };
 export type ErrorCode =
   | "bad_request" | "not_found" | "unsupported_type" | "too_large" | "no_text"
   | "rate_limited" | "ai_failed" | "internal";
@@ -271,14 +335,33 @@ export type ApiError = { error: { code: ErrorCode; message: string } };  // ever
 | `POST /api/extract` | multipart `file` (≤ 4 MB) | `DocumentText` | 415 `unsupported_type`, 413 `too_large`, 422 `no_text` |
 | `GET /api/samples` | | `Sample[]` | |
 | `GET /api/samples/:id` | | `DocumentText` | 404 `not_found` |
+| `POST /api/scan` | `ScanRequest` | `ScanResult` | 400 `bad_request` (AI failure → keyword-only, still 200) |
 | `POST /api/judge/:criterion` | `JudgeRequest` | `CriterionResult` | 400, 404, 429 `rate_limited`, 502 `ai_failed` |
 
 Every route handler wraps its body in `try/catch` and returns `toErrorResponse(err)` so every
 non-2xx body is an `ApiError`. Overall score: `computeOverall(results, rubric)` from
 `@/shared`, run on the client.
 
+## Testing
+
+All on Vitest (`src/**/*.test.ts`, beside the file under test). Only the live layer costs money.
+
+| Layer | What | Where | Network |
+| --- | --- | --- | --- |
+| Unit | pure `core/` functions: paragraphs, pii, phraseScan, mergeScan, quoteCheck, applyRubric, score, hash | `*.test.ts` beside each file | none |
+| Service + route | `openrouter.ts` with `fetch` mocked (success, retry on bad JSON, 401/402/429/5xx mapping, timeout); each route handler called directly with a `Request` (status codes, `ApiError` bodies, 4 MB limit, unknown criterion → 404) | `services/*.test.ts`, `app/api/**/route.test.ts` | none |
+| Pipeline | the 3 samples → scan → judge with recorded AI replies from `src/test/fixtures/`; asserts Weak 38 / Partial 58 / Strong 100 and that a prompt-injection paragraph can't raise a score without a verified quote | `src/server/pipeline.test.ts` | none |
+| Live | `npm run test:ai`, `npm run smoke`, `npm run calibrate` | `src/scripts/` | real OpenRouter |
+
+Mock the network with `vi.stubGlobal("fetch", vi.fn(...))`; mock the AI at the
+`completeJson` boundary with `vi.mock("@/server/services/openrouter")`. Every phase's "Done
+when" starts with `npm test` and `npm run typecheck` passing.
+
 ## Working agreements
 
+- **Branches:** one per phase, `feat(backend)/0X-name` for Tech B and `feat(frontend)/0X-name`
+  for Tech A (git forbids `:` in branch names, so the scope is followed by `/`). Open a PR to
+  `main` when the phase's "Done when" list passes.
 - **Ownership:** Tech A owns pages (`src/app/**/page.tsx`, `layout.tsx`), `src/components/`,
   `src/state/`, `src/lib/`, `src/mocks/`. Tech B owns `src/app/api/`, `src/server/`,
   `src/shared/`, `src/scripts/`, `next.config.ts`, `rubric/` structure,
