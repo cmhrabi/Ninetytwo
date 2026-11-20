@@ -54,7 +54,7 @@ async function main() {
     console.log(
       `${r.criterion.padEnd(10)} ${String(r.score ?? "N/A").padEnd(6)} ${r.status.padEnd(17)} ${String(r.warning ?? "-").padEnd(9)} ${quotes.join(", ") || "none"}`,
     );
-    console.log(`           ${r.reasoning}`);
+    console.log(`           ${r.cached ? "[cached run] " : ""}${r.reasoning}`);
   }
   const overall = computeOverall(results, rubric);
   console.log(`\noverall: ${overall.percent}% ${overall.band}${overall.warnings.length ? `  warnings: ${overall.warnings.join(" | ")}` : ""}`);
