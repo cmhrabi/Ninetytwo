@@ -9,13 +9,13 @@ import type { CriterionResult, Paragraph, Rubric } from "@/shared";
 import { useEvidence } from "./EvidenceContext";
 import { cardAnchor, criterionName } from "./format";
 
-/** Highlight colours by criterion position in the rubric. Red flags always use the red style. */
+/** Highlight colours by criterion position in the rubric. Red flags always use the flag style (gold, wavy underline). */
 const palette = [
   "bg-gold-wash decoration-gold-edge",
-  "bg-status-na-bg decoration-indigo",
-  "bg-status-addressed-bg decoration-status-addressed",
+  "bg-surface decoration-indigo",
+  "bg-midnight/10 decoration-midnight",
 ];
-const flagStyle = "bg-status-notfound-bg text-status-notfound decoration-status-notfound";
+const flagStyle = "bg-gold/45 text-midnight decoration-gold-edge decoration-wavy";
 
 const subscribeMedia = (query: string) => (onChange: () => void) => {
   const mql = window.matchMedia(query);

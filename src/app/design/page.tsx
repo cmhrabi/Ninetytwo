@@ -167,9 +167,9 @@ export default function DesignPage() {
         <Block title="Warning" note="Baseline warning, shown above the score whatever the percentage.">
           <div
             role="alert"
-            className="flex max-w-2xl gap-3 rounded-2xl border border-status-notfound/25 bg-status-notfound-bg p-4 text-status-notfound"
+            className="flex max-w-2xl gap-3 rounded-2xl border border-gold-edge/40 bg-gold-wash text-midnight p-4"
           >
-            <TriangleAlert className="mt-0.5 size-5 shrink-0" aria-hidden />
+            <TriangleAlert className="mt-0.5 size-5 shrink-0 text-gold-edge" aria-hidden />
             <div>
               <p className="font-semibold">Baseline warning</p>
               <p className="text-sm">Example: Prohibits discrimination scored 0. A legal baseline is not met.</p>

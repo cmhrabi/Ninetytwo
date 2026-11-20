@@ -190,7 +190,7 @@ function QuoteLine({
         style={{ scale: badge, opacity: badge }}
         className={cn(
           "absolute -right-7 inline-flex size-5 items-center justify-center rounded-full",
-          quote.verified ? "bg-status-addressed-bg text-status-addressed" : "bg-status-notfound-bg text-status-notfound",
+          quote.verified ? "bg-midnight text-gold" : "bg-white text-midnight ring-1 ring-midnight/25",
         )}
       >
         {quote.verified ? <Check className="size-3" strokeWidth={3} /> : <X className="size-3" strokeWidth={3} />}

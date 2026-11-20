@@ -37,7 +37,7 @@ export function Dropzone({ className }: { className?: string }) {
         className: cn(
           "relative flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed px-6 py-10 text-center transition-colors",
           isDragActive ? "border-gold-edge bg-gold-wash" : "border-border bg-surface/60",
-          loaded && "border-solid border-status-addressed/40 bg-status-addressed-bg/50",
+          loaded && "border-solid border-midnight/40 bg-surface",
           className,
         ),
       })}
@@ -50,7 +50,7 @@ export function Dropzone({ className }: { className?: string }) {
         </>
       ) : loaded ? (
         <>
-          <CircleCheck className="size-8 text-status-addressed" aria-hidden />
+          <CircleCheck className="size-8 text-gold-edge" aria-hidden />
           <div>
             <p className="font-medium break-all text-midnight">{upload.fileName}</p>
             <p className="text-sm text-muted-foreground">{state.document?.paragraphs.length} paragraphs read</p>

@@ -53,7 +53,7 @@ export function SampleCards({ className }: { className?: string }) {
                 {loading ? (
                   <LoaderCircle className="size-4 animate-spin text-indigo" aria-label="Loading" />
                 ) : selected && state.document ? (
-                  <CircleCheck className="size-4 text-status-addressed" aria-label="Selected" />
+                  <CircleCheck className="size-4 text-gold-edge" aria-label="Selected" />
                 ) : null}
               </span>
               <span className="font-heading text-xl font-medium leading-tight text-midnight">{s.title}</span>

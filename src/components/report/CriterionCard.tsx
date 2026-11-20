@@ -38,7 +38,7 @@ export function CriterionCard({
       className={cn(
         "@container scroll-mt-24 rounded-3xl bg-white p-5 ring-1 ring-border sm:p-8",
         na && "bg-surface",
-        result?.warning === "baseline" && "ring-2 ring-status-notfound/40",
+        result?.warning === "baseline" && "ring-2 ring-gold-edge/60",
       )}
     >
       <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -112,9 +112,9 @@ function Body({ criterion, result }: { criterion: Criterion; result: CriterionRe
           {flags.length > 0 && (
             <ul className="mb-5 space-y-3">
               {flags.map((f) => (
-                <li key={f.id} className="rounded-xl bg-status-notfound-bg p-3">
-                  <p className="mb-2 flex items-start gap-1.5 text-sm font-medium text-status-notfound">
-                    <TriangleAlert className="mt-0.5 size-4 shrink-0" aria-hidden />
+                <li key={f.id} className="rounded-xl border border-gold-edge/40 bg-gold-wash p-3">
+                  <p className="mb-2 flex items-start gap-1.5 text-sm font-medium text-midnight">
+                    <TriangleAlert className="mt-0.5 size-4 shrink-0 text-gold-edge" aria-hidden />
                     <span>
                       <span className="sr-only">Red flag: </span>
                       {f.label}
@@ -223,11 +223,11 @@ function CardStatus({ card, onRetry }: { card: Exclude<CardState, { kind: "done"
   }
   return (
     <div role="alert" className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <p className="flex items-start gap-2 text-sm text-status-notfound">
+      <p className="flex items-start gap-2 text-sm font-medium text-midnight">
         {card.network ? (
-          <CloudOff className="mt-0.5 size-4 shrink-0" aria-hidden />
+          <CloudOff className="mt-0.5 size-4 shrink-0 text-gold-edge" aria-hidden />
         ) : (
-          <TriangleAlert className="mt-0.5 size-4 shrink-0" aria-hidden />
+          <TriangleAlert className="mt-0.5 size-4 shrink-0 text-gold-edge" aria-hidden />
         )}
         {card.network ? "You're offline, or the request timed out." : messageFor(card.code)}
       </p>
