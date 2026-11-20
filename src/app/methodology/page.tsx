@@ -4,7 +4,7 @@ import { Markdown } from "@/components/Markdown";
 import { Eyebrow, Section } from "@/components/brand/Section";
 import { StatusChip } from "@/components/brand/StatusChip";
 import { LinkList, TeamCopy } from "@/components/report/parts";
-import { getContent, getLinks, getRubric, getSection } from "@/lib/content";
+import { getLinks, getRubric, getSection } from "@/lib/content";
 import { allSources, criteriaRows, workedExample, type CriterionRow } from "@/lib/methodology";
 import type { Criterion } from "@/shared";
 
@@ -13,7 +13,7 @@ export const metadata: Metadata = { title: "Methodology & Sources · NinetyTwo" 
 const LEVELS = ["2", "1", "0"] as const;
 const levelName = { "2": "Addressed", "1": "Partly addressed", "0": "Not found" } as const;
 
-/** How scoring works, what the AI does, the data note and every source. Generated from rubric.json. */
+/** How scoring works, what the AI does, and every source. Generated from rubric.json. */
 export default function MethodologyPage() {
   const rubric = getRubric();
   const rows = criteriaRows(rubric);
@@ -24,8 +24,6 @@ export default function MethodologyPage() {
   }));
   const sources = allSources(rubric, contentLinks);
   const allSourcesCopy = getSection("sources", "All sources");
-  const dataNote = getContent("data-note");
-  const acknowledgement = getContent("acknowledgement");
 
   return (
     <>
@@ -35,7 +33,6 @@ export default function MethodologyPage() {
         <nav aria-label="On this page" className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/80">
           <a href="#scoring" className="hover:text-white">How scoring works</a>
           <a href="#ai" className="hover:text-white">What the AI does</a>
-          <a href="#data" className="hover:text-white">Your data</a>
           <a href="#sources" className="hover:text-white">Sources</a>
           <a href="#version" className="hover:text-white">Version</a>
         </nav>
@@ -153,29 +150,16 @@ export default function MethodologyPage() {
         </div>
       </Section>
 
-      <Section id="data" className="scroll-mt-16 py-14 md:py-20" innerClassName="max-w-3xl">
-        <Eyebrow>Your data</Eyebrow>
-        {dataNote && <Markdown>{dataNote}</Markdown>}
-      </Section>
-
-      <Section id="sources" tone="surface" className="scroll-mt-16 py-14 md:py-20" innerClassName="max-w-3xl space-y-6">
+      <Section id="sources" className="scroll-mt-16 py-14 md:py-20" innerClassName="max-w-3xl space-y-6">
         <div>
           <Eyebrow>Sources and attributions</Eyebrow>
           <h2 className="text-3xl text-midnight sm:text-4xl">Sources</h2>
         </div>
-        {acknowledgement && (
-          <aside
-            aria-label="Acknowledgement"
-            className="rounded-2xl border-l-4 border-gold bg-card p-6 text-ink ring-1 ring-border [&_p:last-child]:text-sm [&_p:last-child]:text-muted-foreground"
-          >
-            <Markdown>{acknowledgement}</Markdown>
-          </aside>
-        )}
         {allSourcesCopy && <Markdown>{allSourcesCopy}</Markdown>}
         <LinkList links={sources} />
       </Section>
 
-      <Section id="version" className="scroll-mt-16 py-10">
+      <Section id="version" tone="surface" className="scroll-mt-16 py-10">
         <p className="text-sm text-muted-foreground">
           Rubric version <span className="font-medium text-midnight tabular-nums">{rubric.version}</span>. Not legal advice.
         </p>
