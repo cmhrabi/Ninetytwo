@@ -16,7 +16,7 @@ export function ScoreSummary({
   running: boolean;
 }) {
   return (
-    <div className="flex flex-col items-center gap-6 rounded-3xl bg-white p-6 ring-1 ring-border sm:flex-row sm:p-8">
+    <div className="flex flex-col items-center gap-6 rounded-3xl bg-white p-6 ring-1 ring-border sm:flex-row sm:p-8 print:break-inside-avoid print:flex-row print:rounded-xl print:border print:border-border print:p-5 print:ring-0">
       <div className="flex size-[176px] shrink-0 items-center justify-center">
         {overall ? (
           <ScoreRing value={overall.percent} label={overall.band} size={176} tone="light" />

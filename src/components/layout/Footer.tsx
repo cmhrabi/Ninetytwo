@@ -6,7 +6,7 @@ import { getContent } from "@/lib/content";
 export function Footer() {
   const acknowledgement = getContent("acknowledgement");
   return (
-    <footer className="border-t border-white/10 bg-midnight-deep text-white/75">
+    <footer className="border-t border-white/10 bg-midnight-deep text-white/75 print:hidden">
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1fr_2fr]">
         <div className="space-y-4">
           <Logo tone="dark" />
