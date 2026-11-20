@@ -3,7 +3,7 @@
 import { createContext, useContext, useReducer, useRef, type ReactNode } from "react";
 import type { DocumentText, ErrorCode, Paragraph, SampleId, ScanResult } from "@/shared";
 import { api, ApiClientError, isAbort } from "@/lib/api";
-import { canRun, checkFile, initialSetup, setupReducer, type SetupState } from "./assessmentReducer";
+import { canRun, checkFile, initialSetup, selectedIds, setupReducer, type SetupState } from "./assessmentReducer";
 import { initialRun, runReducer, type RunState } from "./runReducer";
 
 type AssessmentContextValue = {
@@ -12,6 +12,8 @@ type AssessmentContextValue = {
   chooseSample: (id: SampleId) => void;
   uploadFile: (file: File) => void;
   setConsent: (value: boolean) => void;
+  /** Which criteria the next run checks (ids, rubric order not required). */
+  setCriteria: (ids: string[]) => void;
   /** Starts scan → judges for the loaded document. Returns false if it can't run yet. */
   startAssessment: () => boolean;
   /** Runs the same document again from the scan. */
@@ -74,7 +76,7 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const startRun = async (document: DocumentText) => {
+  const startRun = async (document: DocumentText, selection: SetupState["criteria"]) => {
     abortRun();
     const ctrl = new AbortController();
     controller.current = ctrl;
@@ -89,9 +91,12 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
         api.getRubric(ctrl.signal),
       ]);
       scan = scanResult;
-      dispatchRun({ type: "run/scanned", runId, scan, rubric });
+      // Only the selected criteria are judged, shown and scored: the run sees a rubric scoped to them.
+      const ids = selectedIds({ criteria: selection }, rubric.criteria.map((c) => c.id));
+      const scoped = { ...rubric, criteria: rubric.criteria.filter((c) => ids.includes(c.id)) };
+      dispatchRun({ type: "run/scanned", runId, scan, rubric: scoped });
       // One judge per criterion, in parallel; each card lands on its own.
-      for (const c of rubric.criteria) void judgeOne(runId, c.id, paragraphs, scan, ctrl.signal);
+      for (const c of scoped.criteria) void judgeOne(runId, c.id, paragraphs, scan, ctrl.signal);
     } catch (err) {
       if (isAbort(err) || ctrl.signal.aborted) return;
       dispatchRun({ type: "run/failed", runId, code: codeOf(err), network: isNetwork(err) });
@@ -131,12 +136,12 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
   const startAssessment = () => {
     if (!canRun(state) || !state.document) return false;
     dispatch({ type: "run" });
-    void startRun(state.document);
+    void startRun(state.document, state.criteria);
     return true;
   };
 
   const rerun = () => {
-    if (state.document) void startRun(state.document);
+    if (state.document) void startRun(state.document, state.criteria);
   };
 
   const retryCard = (criterion: string) => {
@@ -152,6 +157,7 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
     chooseSample,
     uploadFile,
     setConsent: (v) => dispatch({ type: "consent", value: v }),
+    setCriteria: (ids) => dispatch({ type: "criteria", ids }),
     startAssessment,
     rerun,
     retryCard,

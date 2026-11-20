@@ -1,17 +1,16 @@
 "use client";
 
 import { Eyebrow, Section } from "@/components/brand/Section";
-import { useAssessment } from "@/state/assessment";
 import { ConsentBox } from "./ConsentBox";
-import { DocTypeSelect } from "./DocTypeSelect";
+import { CriteriaSelect, type CriterionOption } from "./CriteriaSelect";
 import { HealthNotice } from "./HealthNotice";
 import { Dropzone } from "./Dropzone";
 import { LoadError } from "./LoadError";
 import { RunButton } from "./RunButton";
 import { SampleCards } from "./SampleCards";
 
-/** Assess setup screen: document type → document → consent and run. */
-export function AssessSetup() {
+/** Assess setup screen: criteria to check → document → consent and run. */
+export function AssessSetup({ criteria }: { criteria: CriterionOption[] }) {
   return (
     <>
       <Section tone="midnight" className="py-14 md:py-20">
@@ -22,19 +21,18 @@ export function AssessSetup() {
           against your document, and scores it against Call to Action 92.
         </p>
       </Section>
-      <StepsLayout />
+      <StepsLayout criteria={criteria} />
     </>
   );
 }
 
-function StepsLayout() {
-  const { state } = useAssessment();
+function StepsLayout({ criteria }: { criteria: CriterionOption[] }) {
   return (
     <Section className="py-12 md:py-16" innerClassName="max-w-3xl">
       <HealthNotice />
       <ol className="space-y-12">
-        <Step n={1} title="Document type">
-          <DocTypeSelect value={state.docType} />
+        <Step n={1} title="What to check">
+          <CriteriaSelect criteria={criteria} />
         </Step>
         <Step n={2} title="Your document">
           <Dropzone />
