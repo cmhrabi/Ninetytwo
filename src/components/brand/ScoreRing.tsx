@@ -53,7 +53,7 @@ export function ScoreRing({
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span
-          className={cn("font-heading leading-none", dark ? "text-white" : "text-midnight")}
+          className={cn("font-heading font-semibold leading-none", dark ? "text-white" : "text-midnight")}
           style={{ fontSize: size * 0.3 }}
         >
           {pct}

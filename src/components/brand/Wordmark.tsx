@@ -6,7 +6,7 @@ export function Monogram({ className }: { className?: string }) {
     <span
       aria-hidden
       className={cn(
-        "inline-flex size-8 items-center justify-center rounded-lg bg-midnight font-heading text-lg leading-none text-gold ring-1 ring-white/15",
+        "inline-flex size-8 items-center justify-center rounded-lg bg-midnight font-heading text-lg font-semibold leading-none text-gold ring-1 ring-white/15",
         className,
       )}
     >
@@ -20,7 +20,7 @@ export function Wordmark({ tone = "light", className }: { tone?: "light" | "dark
   return (
     <span
       className={cn(
-        "font-heading text-2xl leading-none",
+        "font-heading text-2xl font-medium leading-none",
         tone === "dark" ? "text-white" : "text-midnight",
         className,
       )}

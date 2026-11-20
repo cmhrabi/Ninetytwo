@@ -56,7 +56,7 @@ export function SampleCards({ className }: { className?: string }) {
                   <CircleCheck className="size-4 text-status-addressed" aria-label="Selected" />
                 ) : null}
               </span>
-              <span className="font-heading text-xl leading-tight text-midnight">{s.title}</span>
+              <span className="font-heading text-xl font-medium leading-tight text-midnight">{s.title}</span>
               <span className="text-sm text-muted-foreground">{s.summary}</span>
             </button>
           </li>

@@ -39,13 +39,13 @@ export function ScoreSummary({
       <div className="text-center sm:text-left">
         <p className="text-sm font-medium tracking-[0.12em] text-muted-foreground uppercase">Overall</p>
         {overall ? (
-          <p className="mt-1 font-heading text-4xl text-midnight">
+          <p className="mt-1 font-heading text-4xl font-medium text-midnight">
             {overall.percent}% · {overall.band}
           </p>
         ) : running ? (
-          <p className="mt-1 font-heading text-3xl text-midnight">Working on it</p>
+          <p className="mt-1 font-heading text-3xl font-medium text-midnight">Working on it</p>
         ) : (
-          <p className="mt-1 font-heading text-3xl text-midnight">Incomplete: retry {missing.map((id) => (rubric ? criterionName(rubric, id) : id)).join(", ")}</p>
+          <p className="mt-1 font-heading text-3xl font-medium text-midnight">Incomplete: retry {missing.map((id) => (rubric ? criterionName(rubric, id) : id)).join(", ")}</p>
         )}
         <p className="mt-2 text-sm font-semibold text-ink">Not legal advice.</p>
         {rubric && (

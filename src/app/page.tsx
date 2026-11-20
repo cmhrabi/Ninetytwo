@@ -112,7 +112,7 @@ export default function Home() {
           <ul className="mt-6 divide-y overflow-hidden rounded-2xl bg-card ring-1 ring-border">
             {criteria.map((c) => (
               <li key={c.label} className="grid gap-2 p-5 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-6">
-                <span className="font-heading text-xl text-midnight">{c.label}</span>
+                <span className="font-heading text-xl font-medium text-midnight">{c.label}</span>
                 <span className="flex items-center gap-2 text-sm">
                   <span className="rounded-full bg-secondary px-2.5 py-1 text-midnight">{c.tier}</span>
                   <span className="rounded-full bg-midnight px-2.5 py-1 font-medium text-white">×{c.weight}</span>
@@ -154,7 +154,7 @@ export default function Home() {
           {isTodo(why) ? (
             <Placeholder text={why} />
           ) : (
-            <blockquote className="font-heading text-3xl leading-tight text-balance md:text-5xl">{why}</blockquote>
+            <blockquote className="font-heading text-3xl font-medium leading-tight text-balance md:text-5xl">{why}</blockquote>
           )}
           {whySource && <Markdown className="mt-6 text-sm text-white/70 [&_a]:text-white">{whySource}</Markdown>}
         </Reveal>

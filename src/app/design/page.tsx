@@ -34,10 +34,10 @@ const statuses = [
 ];
 
 const typeScale = [
-  { name: "Display", className: "text-display font-heading", sample: "Ninety Two", spec: "Instrument Serif · clamp(44px, 7vw, 72px)" },
-  { name: "H1", className: "font-heading text-5xl", sample: "Report", spec: "Instrument Serif · 48px" },
-  { name: "H2", className: "font-heading text-4xl", sample: "How it works", spec: "Instrument Serif · 36px" },
-  { name: "H3", className: "font-heading text-2xl", sample: "What it checks", spec: "Instrument Serif · 24px" },
+  { name: "Display", className: "text-display font-heading", sample: "Ninety Two", spec: "Fraunces · clamp(44px, 7vw, 72px)" },
+  { name: "H1", className: "font-heading text-5xl", sample: "Report", spec: "Fraunces · 48px" },
+  { name: "H2", className: "font-heading text-4xl", sample: "How it works", spec: "Fraunces · 36px" },
+  { name: "H3", className: "font-heading text-2xl", sample: "What it checks", spec: "Fraunces · 24px" },
   { name: "Body", className: "text-[17px]", sample: "Code verifies every quote and does the scoring.", spec: "Geist · 17px / 1.6" },
   { name: "Small", className: "text-sm text-muted-foreground", sample: "Processed in memory, never stored.", spec: "Geist · 14px" },
   { name: "Eyebrow", className: "text-sm font-medium tracking-[0.14em] uppercase text-muted-foreground", sample: "Methodology", spec: "Geist · 14px · tracked caps" },
@@ -85,7 +85,7 @@ export default function DesignPage() {
           </ul>
         </Block>
 
-        <Block title="Type" note="Instrument Serif for headings, Geist for everything else.">
+        <Block title="Type" note="Fraunces for headings, Geist for everything else.">
           <ul className="space-y-6">
             {typeScale.map((t) => (
               <li key={t.name} className="grid gap-1 sm:grid-cols-[6rem_1fr] sm:items-baseline">

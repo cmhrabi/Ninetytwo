@@ -29,8 +29,8 @@ export function ExamplePreview({ className }: { className?: string }) {
           { name: "Retention and advancement", status: "Partly addressed" as const },
         ].map((c) => (
           <li key={c.name} className="flex items-center justify-between gap-3 rounded-xl bg-white px-3 py-2.5 text-ink">
-            <span className="min-w-0 truncate text-sm font-medium text-midnight">{c.name}</span>
-            <StatusChip status={c.status} className="text-xs" />
+            <span className="min-w-0 text-sm leading-snug font-medium text-midnight">{c.name}</span>
+            <StatusChip status={c.status} className="shrink-0 text-xs" />
           </li>
         ))}
       </ul>
